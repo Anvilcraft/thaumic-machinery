@@ -34,10 +34,13 @@ minecraft {
 
 repositories {
     maven { url = "https://maven.tilera.xyz" }
+    maven { url = "https://jitpack.io" }
 }
 
 dependencies {
-
+    implementation "thaumcraft:Thaumcraft:1.7.10-4.2.3.5:deobf"
+    implementation "dev.tilera:auracore:1.1.2:deobf"
+    implementation "com.github.tox1cozZ:mixin-booter-legacy:1.1.2"
 }
 
 processResources {
