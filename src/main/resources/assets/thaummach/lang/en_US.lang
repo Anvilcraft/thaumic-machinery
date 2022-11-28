@@ -1,0 +1,24 @@
+itemGroup.thaummach=Thaumic Machinery
+
+# ---- BLOCKS ----
+
+tile.thaummach:apparatus_fragile_conduit.name=Vis Conduit
+tile.thaummach:apparatus_fragile_conduit_pump.name=Vis Pump
+tile.thaummach:apparatus_fragile_conduit_tank.name=Vis Tank
+tile.thaummach:apparatus_fragile_conduit_valve.name=Vis Valve
+tile.thaummach:apparatus_fragile_conduit_valve_advanced.name=Advanced Vis Valve
+tile.thaummach:apparatus_fragile_filter.name=Vis Filter
+tile.thaummach:apparatus_fragile_purifier.name=Vis Purifier
+
+tile.thaummach:apparatus_metal_normal_crucible.name=Crucible
+tile.thaummach:apparatus_metal_eyes_crucible.name=Crucible of Eyes
+tile.thaummach:apparatus_metal_thaumium_crucible.name=Thaumium Crucible
+tile.thaummach:apparatus_metal_soul_crucible.name=Soul Crucible
+tile.thaummach:apparatus_metal_arcane_furnace.name=Arcane Furnace
+tile.thaummach:apparatus_metal_generator.name=Thaumic Generator
+tile.thaummach:apparatus_metal_crystallizer.name=Thaumic Crystallizer
+tile.thaummach:apparatus_metal_bore.name=Arcane Bore
+tile.thaummach:apparatus_metal_void_chest.name=Void Chest
+tile.thaummach:apparatus_metal_void_interface.name=Void Interface
+tile.thaummach:apparatus_metal_tank.name=Thaumium Reinforced Tank
+tile.thaummach:apparatus_metal_soul_brazier.name=Soul Brazier
