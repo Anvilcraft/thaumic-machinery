@@ -5,6 +5,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
+import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
@@ -33,12 +34,14 @@ public class ClientProxy extends CommonProxy {
             TileConduitValveAdvanced.class, "conduit_valve_advanced"
         );
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
-        GameRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
 
         ClientRegistry.registerTileEntity(
             TileConduitPump.class, "conduit_pump", new TileConduitPumpRenderer()
+        );
+        ClientRegistry.registerTileEntity(
+            TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer()
         );
     }
 }
