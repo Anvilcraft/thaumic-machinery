@@ -3,9 +3,13 @@ package net.anvilcraft.thaummach;
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
+import net.anvilcraft.thaummach.render.entity.EntitySingularityRenderer;
+import net.anvilcraft.thaummach.render.tile.TileBoreRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
+import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
@@ -26,6 +30,13 @@ public class ClientProxy extends CommonProxy {
     }
 
     @Override
+    public void init() {
+        RenderingRegistry.registerEntityRenderingHandler(
+            EntitySingularity.class, new EntitySingularityRenderer()
+        );
+    }
+
+    @Override
     public void registerTileEntities() {
         GameRegistry.registerTileEntity(TileConduit.class, "conduit");
         GameRegistry.registerTileEntity(TileConduitTank.class, "conduit_tank");
@@ -37,6 +48,7 @@ public class ClientProxy extends CommonProxy {
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
 
+        ClientRegistry.registerTileEntity(TileBore.class, "bore", new TileBoreRenderer());
         ClientRegistry.registerTileEntity(
             TileConduitPump.class, "conduit_pump", new TileConduitPumpRenderer()
         );

@@ -22,3 +22,13 @@ tile.thaummach:apparatus_metal_void_chest.name=Void Chest
 tile.thaummach:apparatus_metal_void_interface.name=Void Interface
 tile.thaummach:apparatus_metal_tank.name=Thaumium Reinforced Tank
 tile.thaummach:apparatus_metal_soul_brazier.name=Soul Brazier
+
+# ---- ITEMS ----
+
+item.thaummach:focus_0.name=Arcane Focus
+item.thaummach:focus_1.name=Arcane Focus: Air
+item.thaummach:focus_2.name=Arcane Focus: Water
+item.thaummach:focus_3.name=Arcane Focus: Earth
+item.thaummach:focus_4.name=Arcane Focus: Fire
+
+item.thaummach:singularity.name=Arcane Singularity

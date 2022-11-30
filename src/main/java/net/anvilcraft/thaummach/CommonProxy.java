@@ -1,6 +1,7 @@
 package net.anvilcraft.thaummach;
 
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
@@ -14,7 +15,10 @@ import net.anvilcraft.thaummach.tiles.TilePurifier;
 public class CommonProxy {
     public void preInit() {}
 
+    public void init() {}
+
     public void registerTileEntities() {
+        GameRegistry.registerTileEntity(TileBore.class, "bore");
         GameRegistry.registerTileEntity(TileConduit.class, "conduit");
         GameRegistry.registerTileEntity(TileConduitPump.class, "conduit_pump");
         GameRegistry.registerTileEntity(TileConduitTank.class, "conduit_tank");

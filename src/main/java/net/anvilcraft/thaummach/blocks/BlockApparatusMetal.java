@@ -9,9 +9,11 @@ import net.anvilcraft.thaummach.AuraUtils;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.ArcaneFurnaceApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
+import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
@@ -30,6 +32,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -148,6 +151,9 @@ public class BlockApparatusMetal extends BlockApparatus {
             case CRYSTALLIZER:
                 return CrystallizerApparatusRenderer.INSTANCE;
 
+            case BORE:
+                return BoreApparatusRenderer.INSTANCE;
+
             default:
                 return null;
         }
@@ -167,7 +173,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (md == MetaVals.CRYSTALLIZER) {
             return new TileCrystallizer();
         } else if (md == MetaVals.BORE) {
-            //return new TileBore();
+            return new TileBore();
         } else if (md == MetaVals.VOID_CHEST) {
             //return new TileVoidChest();
         } else if (md == MetaVals.VOID_INTERFACE) {
@@ -327,6 +333,7 @@ public class BlockApparatusMetal extends BlockApparatus {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
     public void addCollisionBoxesToList(
         World world,
         int i,
@@ -748,39 +755,38 @@ public class BlockApparatusMetal extends BlockApparatus {
             //    world.setBlock(i, j, k, 0);
             //}
         } else if (md == MetaVals.BORE) {
-            // TODO: bore
-            //TileBore tb = (TileBore) world.getTileEntity(i, j, k);
-            //if (MathHelper.abs((float) entityliving.posX - (float) i) < 1.0F
-            //    && MathHelper.abs((float) entityliving.posZ - (float) k) < 1.0F) {
-            //    double d = entityliving.posY + 1.82 - (double) entityliving.yOffset;
-            //    if (d - (double) j > 2.0) {
-            //        tb.orientation = 1;
-            //    }
+            TileBore tb = (TileBore) world.getTileEntity(i, j, k);
+            if (MathHelper.abs((float) entityliving.posX - (float) i) < 1.0F
+                && MathHelper.abs((float) entityliving.posZ - (float) k) < 1.0F) {
+                double d = entityliving.posY + 1.82 - (double) entityliving.yOffset;
+                if (d - (double) j > 2.0) {
+                    tb.orientation = 1;
+                }
 
-            //    if ((double) j - d > 0.0) {
-            //        tb.orientation = 0;
-            //    }
-            //} else {
-            //    int l = MathHelper.floor_double(
-            //                (double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5
-            //            )
-            //        & 3;
-            //    if (l == 0) {
-            //        tb.orientation = 2;
-            //    }
+                if ((double) j - d > 0.0) {
+                    tb.orientation = 0;
+                }
+            } else {
+                int l = MathHelper.floor_double(
+                            (double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5
+                        )
+                    & 3;
+                if (l == 0) {
+                    tb.orientation = 2;
+                }
 
-            //    if (l == 1) {
-            //        tb.orientation = 5;
-            //    }
+                if (l == 1) {
+                    tb.orientation = 5;
+                }
 
-            //    if (l == 2) {
-            //        tb.orientation = 3;
-            //    }
+                if (l == 2) {
+                    tb.orientation = 3;
+                }
 
-            //    if (l == 3) {
-            //        tb.orientation = 4;
-            //    }
-            //}
+                if (l == 3) {
+                    tb.orientation = 4;
+                }
+            }
         }
 
         super.onBlockPlacedBy(world, i, j, k, entityliving, is);
