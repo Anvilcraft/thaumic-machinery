@@ -102,15 +102,12 @@ public class CrucibleApparatusRenderer implements IApparatusRenderer {
                     block, (double) i, (double) j, (double) ((float) k + 1.0F - f5), c
                 );
                 rb.renderFaceYPos(
-                    block, (double) i, (double) ((float) j - 1.0F + 0.25F), (double) k,
-                    c1
+                    block, (double) i, (double) ((float) j - 1.0F + 0.25F), (double) k, c1
                 );
                 rb.renderFaceYNeg(
-                    block, (double) i, (double) ((float) j + 1.0F - 0.75F), (double) k,
-                    c1
+                    block, (double) i, (double) ((float) j + 1.0F - 0.75F), (double) k, c1
                 );
 
-            } else if (block.getRenderBlockPass() == 1) {
                 TileCrucible tc = (TileCrucible) w.getTileEntity(i, j, k);
                 float tvis = tc.pureVis + tc.taintedVis;
                 if (tvis > 0.1F) {

@@ -5,6 +5,7 @@ import java.util.List;
 import dev.tilera.auracore.api.HelperLocation;
 import dev.tilera.auracore.api.machine.IConnection;
 import dev.tilera.auracore.aura.AuraManager;
+import net.anvilcraft.thaummach.RecipesCrucible;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
@@ -85,6 +86,10 @@ public class TileCrucible extends TileEntity implements IConnection {
         this.taintedVis = nbt.getFloat("taintedVis");
         this.type = nbt.getShort("type");
         this.bellows = nbt.getInteger("bellows");
+
+        this.worldObj.markBlockRangeForRenderUpdate(
+            this.xCoord, this.yCoord, this.zCoord, this.xCoord, this.yCoord, this.zCoord
+        );
     }
 
     public void setTier(short t) {
@@ -237,10 +242,8 @@ public class TileCrucible extends TileEntity implements IConnection {
                         }
                     }
 
-                    // TODO: recipes
-                    //tconv
-                    //    = RecipesCrucible.smelting().getSmeltingResult(item, true,
-                    //    false);
+                    tconv
+                        = RecipesCrucible.smelting().getSmeltingResult(item, true, false);
                     sa = this.conversion;
                     if (aboveFurnace) {
                         sa += 0.1F
@@ -497,15 +500,13 @@ public class TileCrucible extends TileEntity implements IConnection {
     }
 
     private boolean canCook(ItemStack items) {
-        // TODO: recipes
-        //if (items == null) {
-        //    return false;
-        //} else {
-        //    float cookvalue
-        //        = RecipesCrucible.smelting().getSmeltingResult(items, true, false);
-        //    return cookvalue != 0.0F;
-        //}
-        return false;
+        if (items == null) {
+            return false;
+        } else {
+            float cookvalue
+                = RecipesCrucible.smelting().getSmeltingResult(items, true, false);
+            return cookvalue != 0.0F;
+        }
     }
 
     public boolean getConnectable(ForgeDirection face) {

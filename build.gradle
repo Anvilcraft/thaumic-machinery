@@ -34,7 +34,6 @@ minecraft {
 
 repositories {
     maven { url = "https://maven.tilera.xyz" }
-    maven { url = "https://jitpack.io" }
 }
 
 dependencies {
