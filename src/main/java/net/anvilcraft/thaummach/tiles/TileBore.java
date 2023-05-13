@@ -1,10 +1,13 @@
 package net.anvilcraft.thaummach.tiles;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import dev.tilera.auracore.api.HelperLocation;
+import net.anvilcraft.thaummach.TMItems;
+import net.anvilcraft.thaummach.items.ItemFocus;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
@@ -15,6 +18,9 @@ import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
@@ -57,189 +63,152 @@ public class TileBore extends TileEntity implements ISidedInventory {
             this.rotation -= 360;
         }
 
-        // TODO: actually implement the bore
-        //if (!super.worldObj.isRemote) {
-        //    int a;
-        //    if (this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            != mod_ThaumCraft.itemFocus0.shiftedIndex
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            != mod_ThaumCraft.itemFocus1.shiftedIndex
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            != mod_ThaumCraft.itemFocus2.shiftedIndex
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            != mod_ThaumCraft.itemFocus3.shiftedIndex
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            != mod_ThaumCraft.itemFocus4.shiftedIndex) {
-        //        if (this.boreItemStacks[0].getItem().shiftedIndex
-        //            == mod_ThaumCraft.itemSingularity.shiftedIndex) {
-        //            if (this.boreItemStacks[1] == null) {
-        //                this.boreItemStacks[1] = this.boreItemStacks[0];
-        //                this.boreItemStacks[0] = null;
-        //            } else if (this.boreItemStacks[1].getItem().shiftedIndex ==
-        //            mod_ThaumCraft.itemSingularity.shiftedIndex) {
-        //                a = Math.min(
-        //                    this.boreItemStacks[0].stackSize,
-        //                    64 - this.boreItemStacks[1].stackSize
-        //                );
-        //                ItemStack var10000 = this.boreItemStacks[1];
-        //                var10000.stackSize += a;
-        //                var10000 = this.boreItemStacks[0];
-        //                var10000.stackSize -= a;
-        //            }
-        //        }
+        if (!super.worldObj.isRemote) {
+            int a;
+            if (this.boreItemStacks[0] != null
+                && this.boreItemStacks[0].getItem() instanceof ItemFocus) {
+                if (this.boreItemStacks[0] != null) {
+                    float f = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
+                    float f1 = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
+                    float f2 = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
+                    EntityItem entityitem = new EntityItem(
+                        super.worldObj,
+                        (double) ((float) super.xCoord + f),
+                        (double) ((float) super.yCoord + f1),
+                        (double) ((float) super.zCoord + f2),
+                        ItemStack.copyItemStack(this.boreItemStacks[0])
+                    );
+                    float f3 = 0.05F;
+                    entityitem.motionX
+                        = (double) ((float) super.worldObj.rand.nextGaussian() * f3);
+                    entityitem.motionY = (double
+                    ) ((float) super.worldObj.rand.nextGaussian() * f3 + 0.2F);
+                    entityitem.motionZ
+                        = (double) ((float) super.worldObj.rand.nextGaussian() * f3);
+                    super.worldObj.spawnEntityInWorld(entityitem);
+                    this.boreItemStacks[0] = null;
+                }
+            }
 
-        //        if (this.boreItemStacks[0] != null) {
-        //            float f = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
-        //            float f1 = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
-        //            float f2 = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
-        //            EntityItem entityitem = new EntityItem(
-        //                super.worldObj,
-        //                (double) ((float) super.xCoord + f),
-        //                (double) ((float) super.yCoord + f1),
-        //                (double) ((float) super.zCoord + f2),
-        //                ItemStack.copyItemStack(this.boreItemStacks[0])
-        //            );
-        //            float f3 = 0.05F;
-        //            entityitem.motionX
-        //                = (double) ((float) super.worldObj.rand.nextGaussian() * f3);
-        //            entityitem.motionY = (double
-        //            ) ((float) super.worldObj.rand.nextGaussian() * f3 + 0.2F);
-        //            entityitem.motionZ
-        //                = (double) ((float) super.worldObj.rand.nextGaussian() * f3);
-        //            super.worldObj.spawnEntityInWorld(entityitem);
-        //            this.boreItemStacks[0] = null;
-        //        }
-        //    }
+            this.focus = -1;
+            if (this.boreItemStacks[0] != null
+                && this.boreItemStacks[0].getItem() == TMItems.focus0) {
+                this.range = 40;
+                this.area = 2;
+                this.delay = 4;
+                this.conserve = false;
+                this.focus = 0;
+            }
 
-        //    this.focus = -1;
-        //    if (this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            == mod_ThaumCraft.itemFocus0.shiftedIndex) {
-        //        this.range = 40;
-        //        this.area = 2;
-        //        this.delay = 4;
-        //        this.conserve = false;
-        //        this.focus = 0;
-        //    }
+            if (this.boreItemStacks[0] != null
+                && this.boreItemStacks[0].getItem() == TMItems.focus1) {
+                this.range = 40;
+                this.area = 3;
+                this.delay = 2;
+                this.conserve = false;
+                this.focus = 1;
+            }
 
-        //    if (this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            == mod_ThaumCraft.itemFocus1.shiftedIndex) {
-        //        this.range = 40;
-        //        this.area = 3;
-        //        this.delay = 2;
-        //        this.conserve = false;
-        //        this.focus = 1;
-        //    }
+            if (this.boreItemStacks[0] != null
+                && this.boreItemStacks[0].getItem() == TMItems.focus2) {
+                this.range = 80;
+                this.area = 3;
+                this.delay = 4;
+                this.conserve = false;
+                this.focus = 2;
+            }
 
-        //    if (this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            == mod_ThaumCraft.itemFocus2.shiftedIndex) {
-        //        this.range = 80;
-        //        this.area = 3;
-        //        this.delay = 4;
-        //        this.conserve = false;
-        //        this.focus = 2;
-        //    }
+            if (this.boreItemStacks[0] != null
+                && this.boreItemStacks[0].getItem() == TMItems.focus3) {
+                this.range = 40;
+                this.area = 5;
+                this.delay = 4;
+                this.conserve = false;
+                this.focus = 3;
+            }
 
-        //    if (this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            == mod_ThaumCraft.itemFocus3.shiftedIndex) {
-        //        this.range = 40;
-        //        this.area = 5;
-        //        this.delay = 4;
-        //        this.conserve = false;
-        //        this.focus = 3;
-        //    }
+            if (this.boreItemStacks[0] != null
+                && this.boreItemStacks[0].getItem() == TMItems.focus4) {
+                this.range = 40;
+                this.area = 3;
+                this.delay = 4;
+                this.conserve = true;
+                this.focus = 4;
+            }
 
-        //    if (this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[0].getItem().shiftedIndex
-        //            == mod_ThaumCraft.itemFocus4.shiftedIndex) {
-        //        this.range = 40;
-        //        this.area = 3;
-        //        this.delay = 4;
-        //        this.conserve = true;
-        //        this.focus = 4;
-        //    }
+            ++this.minedelay;
+            if (this.minedelay > this.delay) {
+                this.minedelay = 0;
+            }
 
-        //    ++this.minedelay;
-        //    if (this.minedelay > this.delay) {
-        //        this.minedelay = 0;
-        //    }
+            if (this.duration > 0 && this.gettingPower() && this.minedelay == 0
+                && this.boreItemStacks[0] != null) {
+                for (a = 0; a < 4; ++a) {
+                    if (this.minedBlock()) {
+                        this.boreItemStacks[0].setItemDamage(
+                            this.boreItemStacks[0].getItemDamage() + 1
+                        );
+                        if (this.boreItemStacks[0].getItemDamage()
+                            > this.boreItemStacks[0].getMaxDamage()) {
+                            this.boreItemStacks[0] = null;
+                        }
+                        break;
+                    }
+                }
 
-        //    if (this.duration > 0 && this.gettingPower() && this.minedelay == 0
-        //        && this.boreItemStacks[0] != null) {
-        //        for (a = 0; a < 4; ++a) {
-        //            if (this.minedBlock()) {
-        //                this.boreItemStacks[0].setItemDamage(
-        //                    this.boreItemStacks[0].getItemDamage() + 1
-        //                );
-        //                if (this.boreItemStacks[0].getItemDamage()
-        //                    > this.boreItemStacks[0].getMaxDamage()) {
-        //                    this.boreItemStacks[0] = null;
-        //                }
-        //                break;
-        //            }
-        //        }
+                super.worldObj.playSoundEffect(
+                    (double) super.xCoord,
+                    (double) super.yCoord,
+                    (double) super.zCoord,
+                    "mob.slimeattack",
+                    0.3F,
+                    0.1F + super.worldObj.rand.nextFloat() * 0.3F
+                );
+                --this.duration;
+                HelperLocation hl = new HelperLocation(this, this.orientation);
+                HelperLocation hl2 = new HelperLocation(this, this.orientation);
+                hl.moveForwards(1.0);
+                hl2.moveForwards(5.0);
+                FXWisp ef = new FXWisp(
+                    super.worldObj,
+                    hl.x + 0.5,
+                    hl.y + 0.5,
+                    hl.z + 0.5,
+                    hl2.x + 0.5,
+                    hl2.y + 0.5,
+                    hl2.z + 0.5,
+                    0.6F,
+                    this.focus == 0 ? 5 : this.focus
+                );
+                ef.shrink = true;
+                ef.blendmode = 1;
+                Minecraft.getMinecraft().effectRenderer.addEffect(ef);
+            }
 
-        //        super.worldObj.playSoundEffect(
-        //            (double) super.xCoord,
-        //            (double) super.yCoord,
-        //            (double) super.zCoord,
-        //            "mob.slimeattack",
-        //            0.3F,
-        //            0.1F + super.worldObj.rand.nextFloat() * 0.3F
-        //        );
-        //        --this.duration;
-        //        if (!Config.lowGfx) {
-        //            HelperLocation hl = new HelperLocation(this, this.orientation);
-        //            HelperLocation hl2 = new HelperLocation(this, this.orientation);
-        //            hl.moveForwards(1.0);
-        //            hl2.moveForwards(5.0);
-        //            FXWisp ef = new FXWisp(
-        //                super.worldObj,
-        //                hl.x + 0.5,
-        //                hl.y + 0.5,
-        //                hl.z + 0.5,
-        //                hl2.x + 0.5,
-        //                hl2.y + 0.5,
-        //                hl2.z + 0.5,
-        //                0.6F,
-        //                this.focus == 0 ? 5 : this.focus
-        //            );
-        //            ef.shrink = true;
-        //            ef.blendmode = 1;
-        //            ModLoader.getMinecraftInstance().effectRenderer.addEffect(ef);
-        //        }
-        //    }
+            Collection<EntityItem> c = this.entities.values();
 
-        //    Collection c = this.entities.values();
+            for (EntityItem ac : c) {
+                ac.noClip = false;
+                ac.fireResistance = 1;
+            }
 
-        //    EntityItem ac;
-        //    for (Iterator i$ = c.iterator(); i$.hasNext(); ac.fireResistance = 1) {
-        //        ac = (EntityItem) i$.next();
-        //        ac.noClip = false;
-        //    }
+            this.entities.clear();
+            if (this.duration > 0 && this.gettingPower() && this.focus >= 0) {
+                this.suckItems();
+            }
 
-        //    this.entities.clear();
-        //    if (this.duration > 0 && this.gettingPower() && this.focus >= 0) {
-        //        this.suckItems();
-        //    }
-
-        //    if (this.duration == 0 && this.boreItemStacks[0] != null
-        //        && this.boreItemStacks[1] != null && this.gettingPower()
-        //        && this.boreItemStacks[1].isItemEqual(
-        //            new ItemStack(mod_ThaumCraft.itemSingularity)
-        //        )) {
-        //        this.maxDuration = 250;
-        //        this.duration = this.maxDuration;
-        //        --this.boreItemStacks[1].stackSize;
-        //        if (this.boreItemStacks[1].stackSize == 0) {
-        //            this.boreItemStacks[1] = null;
-        //        }
-        //    }
-        //}
+            if (this.duration == 0 && this.boreItemStacks[0] != null
+                && this.boreItemStacks[1] != null && this.gettingPower()
+                && this.boreItemStacks[1].isItemEqual(new ItemStack(TMItems.singularity)
+                )) {
+                this.maxDuration = 250;
+                this.duration = this.maxDuration;
+                --this.boreItemStacks[1].stackSize;
+                if (this.boreItemStacks[1].stackSize == 0) {
+                    this.boreItemStacks[1] = null;
+                }
+            }
+        }
     }
 
     public boolean gettingPower() {
@@ -914,5 +883,27 @@ public class TileBore extends TileEntity implements ISidedInventory {
     @Override
     public boolean canExtractItem(int slot, ItemStack stack, int side) {
         return false;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+
+        nbt.setShort("orientation", (short) this.orientation);
+        nbt.setShort("duration", (short) this.duration);
+        nbt.setShort("maxDuration", (short) this.maxDuration);
+
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound nbt = pkt.func_148857_g();
+
+        this.orientation = nbt.getShort("orientation");
+        this.duration = nbt.getShort("duration");
+        this.maxDuration = nbt.getShort("maxDuration");
     }
 }

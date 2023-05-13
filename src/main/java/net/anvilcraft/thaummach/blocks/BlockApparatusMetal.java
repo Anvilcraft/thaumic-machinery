@@ -12,11 +12,13 @@ import net.anvilcraft.thaummach.render.apparatus.apparati.metal.ArcaneFurnaceApp
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidChestApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
+import net.anvilcraft.thaummach.tiles.TileVoidChest;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -154,6 +156,8 @@ public class BlockApparatusMetal extends BlockApparatus {
             case BORE:
                 return BoreApparatusRenderer.INSTANCE;
 
+            case VOID_CHEST:
+                return VoidChestApparatusRenderer.INSTANCE;
             default:
                 return null;
         }
@@ -167,7 +171,7 @@ public class BlockApparatusMetal extends BlockApparatus {
             tc.setTier((short) (md.ordinal() + 1));
             return tc;
         } else if (md == MetaVals.ARCANE_FURNACE) {
-            //return new TileArcaneFurnace();
+            return new TileArcaneFurnace();
         } else if (md == MetaVals.GENERATOR) {
             //return new TileGenerator();
         } else if (md == MetaVals.CRYSTALLIZER) {
@@ -175,7 +179,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (md == MetaVals.BORE) {
             return new TileBore();
         } else if (md == MetaVals.VOID_CHEST) {
-            //return new TileVoidChest();
+            return new TileVoidChest();
         } else if (md == MetaVals.VOID_INTERFACE) {
             //return new TileVoidInterface();
         } else if (md == MetaVals.TANK) {
@@ -241,11 +245,9 @@ public class BlockApparatusMetal extends BlockApparatus {
         if (meta == MetaVals.GENERATOR) {
             return this.iconGenerator2;
         } else if (meta == MetaVals.VOID_CHEST) {
-            if (i == 0) {
-                return this.iconVoidChestBottom;
-            } else {
-                return i == 1 ? this.iconVoidChestTop : this.iconVoidChestSide;
-            }
+            return i == 0 ? this.iconVoidChestBottom
+                : i == 1  ? this.iconVoidChestTop
+                          : this.iconVoidChestSide;
         } else if (meta == MetaVals.VOID_INTERFACE) {
             return i <= 1 ? this.iconVoidInterfaceBottom : this.iconVoidInterfaceSide;
         } else if (meta == MetaVals.SOUL_BRAZIER) {
@@ -312,6 +314,10 @@ public class BlockApparatusMetal extends BlockApparatus {
             } else {
                 return this.iconCrystallizerSide;
             }
+        } else if (meta == MetaVals.VOID_CHEST) {
+            return side == 0 ? this.iconVoidChestBottom
+                : side == 1  ? this.iconVoidChestTop
+                          : this.iconVoidChestSide;
         }
         //else if (meta == 8) {
         //    if (side == 0) {

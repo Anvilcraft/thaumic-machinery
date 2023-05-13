@@ -42,6 +42,7 @@ public class CrystallizerApparatusRenderer implements IApparatusRenderer {
                 rb.renderStandardBlock(block, i, j, k);
             }
 
+            // TODO: no inside in inventory
             if (!inv) {
                 float w3 = 0.1875F;
                 rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F + w2, 1.0F);

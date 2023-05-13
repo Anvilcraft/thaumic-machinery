@@ -22,6 +22,7 @@ import net.anvilcraft.thaummach.tiles.TileCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
 import net.anvilcraft.thaummach.tiles.TileSeal;
+import net.anvilcraft.thaummach.tiles.TileVoidChest;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -52,6 +53,7 @@ public class ClientProxy extends CommonProxy {
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
+        GameRegistry.registerTileEntity(TileVoidChest.class, "voidChest");
 
         ClientRegistry.registerTileEntity(TileBore.class, "bore", new TileBoreRenderer());
         ClientRegistry.registerTileEntity(
