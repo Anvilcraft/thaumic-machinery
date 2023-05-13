@@ -1,0 +1,20 @@
+{
+    "popen": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "popen",
+                "stream": false
+            }
+        ]
+    },
+    "pclose": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "pclose",
+                "stream": false
+            }
+        ]
+    }
+}

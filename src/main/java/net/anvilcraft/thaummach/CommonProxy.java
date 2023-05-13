@@ -11,6 +11,7 @@ import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
+import net.anvilcraft.thaummach.tiles.TileSeal;
 
 public class CommonProxy {
     public void preInit() {}
@@ -30,5 +31,6 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
+        GameRegistry.registerTileEntity(TileSeal.class, "seal");
     }
 }

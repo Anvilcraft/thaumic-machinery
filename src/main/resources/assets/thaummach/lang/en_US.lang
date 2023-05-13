@@ -2,6 +2,8 @@ itemGroup.thaummach=Thaumic Machinery
 
 # ---- BLOCKS ----
 
+tile.thaummach:seal.name=Arcane Seal
+
 tile.thaummach:apparatus_fragile_conduit.name=Vis Conduit
 tile.thaummach:apparatus_fragile_conduit_pump.name=Vis Pump
 tile.thaummach:apparatus_fragile_conduit_tank.name=Vis Tank
@@ -32,3 +34,10 @@ item.thaummach:focus_3.name=Arcane Focus: Earth
 item.thaummach:focus_4.name=Arcane Focus: Fire
 
 item.thaummach:singularity.name=Arcane Singularity
+
+thaummach:runic_essence.0.name=Runic Essence: Magic
+thaummach:runic_essence.1.name=Runic Essence: Air
+thaummach:runic_essence.2.name=Runic Essence: Water
+thaummach:runic_essence.3.name=Runic Essence: Earth
+thaummach:runic_essence.4.name=Runic Essence: Fire
+thaummach:runic_essence.5.name=Runic Essence: Dark

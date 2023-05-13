@@ -2,9 +2,11 @@ package net.anvilcraft.thaummach;
 
 import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
+import net.anvilcraft.thaummach.render.TileSealRenderer;
 import net.anvilcraft.thaummach.render.entity.EntitySingularityRenderer;
 import net.anvilcraft.thaummach.render.tile.TileBoreRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
@@ -19,6 +21,7 @@ import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
+import net.anvilcraft.thaummach.tiles.TileSeal;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -34,6 +37,8 @@ public class ClientProxy extends CommonProxy {
         RenderingRegistry.registerEntityRenderingHandler(
             EntitySingularity.class, new EntitySingularityRenderer()
         );
+
+        FMLCommonHandler.instance().bus().register(new RenderTicker());
     }
 
     @Override
@@ -55,5 +60,6 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerTileEntity(
             TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer()
         );
+        ClientRegistry.registerTileEntity(TileSeal.class, "seal", new TileSealRenderer());
     }
 }
