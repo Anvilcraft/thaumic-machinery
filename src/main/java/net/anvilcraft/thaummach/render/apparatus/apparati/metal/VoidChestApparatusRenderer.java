@@ -24,6 +24,7 @@ public class VoidChestApparatusRenderer implements IApparatusRenderer {
     ) {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
         if (inv) {
+            rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             ApparatusRenderingHelper.drawFaces(
                 rb,
                 block,
