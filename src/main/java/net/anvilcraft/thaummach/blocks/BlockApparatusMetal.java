@@ -12,6 +12,7 @@ import net.anvilcraft.thaummach.render.apparatus.apparati.metal.ArcaneFurnaceApp
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.metal.SoulBrazierApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidChestApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidInterfaceApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
@@ -19,6 +20,7 @@ import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
+import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
 import net.minecraft.block.Block;
@@ -166,6 +168,10 @@ public class BlockApparatusMetal extends BlockApparatus {
 
             case VOID_INTERFACE:
                 return VoidInterfaceApparatusRenderer.INSTANCE;
+
+            case SOUL_BRAZIER:
+                return SoulBrazierApparatusRenderer.INSTANCE;
+
             default:
                 return null;
         }
@@ -193,7 +199,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (md == MetaVals.TANK) {
             return new TileConduitTank();
         } else if (md == MetaVals.SOUL_BRAZIER) {
-            //return new TileSoulBrazier();
+            return new TileSoulBrazier();
         }
 
         return null;
@@ -310,6 +316,9 @@ public class BlockApparatusMetal extends BlockApparatus {
             } else {
                 return this.iconArcaneFurnaceSide;
             }
+        } else if (meta == MetaVals.SOUL_BRAZIER) {
+            return side == 0 || side == 1 ? this.iconSoulBrazierBottom
+                                          : this.iconSoulBrazierSide;
         }
         //else if (meta == 5) {
         //    return 144;
@@ -865,12 +874,11 @@ public class BlockApparatusMetal extends BlockApparatus {
                 //    ? 13
                 //    : 0;
             } else if (md == MetaVals.SOUL_BRAZIER) {
-                // TODO: soul brazier
-                //tsb = iba.getTileEntity(i, j, k);
-                //return tsb != null && tsb instanceof TileSoulBrazier
-                //        && ((TileSoulBrazier) tsb).isWorking()
-                //    ? 15
-                //    : 0;
+                tsb = iba.getTileEntity(i, j, k);
+                return tsb != null && tsb instanceof TileSoulBrazier
+                        && ((TileSoulBrazier) tsb).isWorking()
+                    ? 15
+                    : 0;
             } else {
                 return super.getLightValue(iba, i, j, k);
             }
