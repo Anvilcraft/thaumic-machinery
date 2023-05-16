@@ -13,6 +13,7 @@ import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
+import net.anvilcraft.thaummach.tiles.TileVoidInterface;
 
 public class CommonProxy {
     public void preInit() {}
@@ -34,5 +35,6 @@ public class CommonProxy {
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
         GameRegistry.registerTileEntity(TileSeal.class, "seal");
         GameRegistry.registerTileEntity(TileVoidChest.class, "voidChest");
+        GameRegistry.registerTileEntity(TileVoidInterface.class, "voidInterface");
     }
 }

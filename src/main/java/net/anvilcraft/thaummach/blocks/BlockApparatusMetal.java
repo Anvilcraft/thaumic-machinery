@@ -13,12 +13,14 @@ import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRen
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidChestApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidInterfaceApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
+import net.anvilcraft.thaummach.tiles.TileVoidInterface;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -28,6 +30,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.item.EntityItem;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -38,6 +41,8 @@ import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.client.fx.WRVector3;
+import thaumcraft.client.fx.bolt.FXLightningBolt;
 import thaumcraft.common.entities.monster.EntityThaumicSlime;
 import thaumcraft.common.tiles.TileBellows;
 
@@ -158,6 +163,9 @@ public class BlockApparatusMetal extends BlockApparatus {
 
             case VOID_CHEST:
                 return VoidChestApparatusRenderer.INSTANCE;
+
+            case VOID_INTERFACE:
+                return VoidInterfaceApparatusRenderer.INSTANCE;
             default:
                 return null;
         }
@@ -181,7 +189,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (md == MetaVals.VOID_CHEST) {
             return new TileVoidChest();
         } else if (md == MetaVals.VOID_INTERFACE) {
-            //return new TileVoidInterface();
+            return new TileVoidInterface();
         } else if (md == MetaVals.TANK) {
             return new TileConduitTank();
         } else if (md == MetaVals.SOUL_BRAZIER) {
@@ -247,7 +255,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (meta == MetaVals.VOID_CHEST) {
             return i == 0 ? this.iconVoidChestBottom
                 : i == 1  ? this.iconVoidChestTop
-                          : this.iconVoidChestSide;
+                          : this.iconVoidChestSideTransparent;
         } else if (meta == MetaVals.VOID_INTERFACE) {
             return i <= 1 ? this.iconVoidInterfaceBottom : this.iconVoidInterfaceSide;
         } else if (meta == MetaVals.SOUL_BRAZIER) {
@@ -317,15 +325,16 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (meta == MetaVals.VOID_CHEST) {
             return side == 0 ? this.iconVoidChestBottom
                 : side == 1  ? this.iconVoidChestTop
-                          : this.iconVoidChestSide;
+                             : this.iconVoidChestSideTransparent;
+        } else if (meta == MetaVals.VOID_INTERFACE) {
+            if (side == 0) {
+                return this.iconVoidChestBottom;
+            } else {
+                return side == 1 ? this.iconVoidInterfaceBottom
+                                 : this.iconVoidInterfaceSide;
+            }
         }
-        //else if (meta == 8) {
-        //    if (side == 0) {
-        //        return 104;
-        //    } else {
-        //        return side == 1 ? 97 : 255;
-        //    }
-        //} else if (meta == 10) {
+        // else if (meta == 10) {
         //    return side <= 1 ? 78 : 79;
         //} else {
         //    return super.getBlockTexture(iblockaccess, i, j, k, side);
@@ -672,27 +681,25 @@ public class BlockApparatusMetal extends BlockApparatus {
         }
 
         if (meta == MetaVals.VOID_INTERFACE) {
-            // TODO: void interface
-            //TileVoidInterface tvi = (TileVoidInterface) w.getTileEntity(i, j, k);
-            //if (tvi != null && tvi.linked && w.rand.nextInt(10) == 0) {
-            //    LightningBolt bolt = new LightningBolt(
-            //        w,
-            //        new WRVector3((double) i + 0.5, (double) j + 0.75, (double) k +
-            //        0.5), new WRVector3(
-            //            (double) i + 0.5 + (double) w.rand.nextFloat()
-            //                - (double) w.rand.nextFloat(),
-            //            (double) (j + 2),
-            //            (double) k + 0.5 + (double) w.rand.nextFloat()
-            //                - (double) w.rand.nextFloat()
-            //        ),
-            //        w.rand.nextLong()
-            //    );
-            //    bolt.setMultiplier(4.0F);
-            //    bolt.defaultFractal();
-            //    bolt.setType(5);
-            //    bolt.setNonLethal();
-            //    bolt.finalizeBolt();
-            //}
+            TileVoidInterface tvi = (TileVoidInterface) w.getTileEntity(i, j, k);
+            if (tvi != null && tvi.linked && w.rand.nextInt(10) == 0) {
+                FXLightningBolt bolt = new FXLightningBolt(
+                    w,
+                    new WRVector3((double) i + 0.5, (double) j + 0.75, (double) k + 0.5),
+                    new WRVector3(
+                        (double) i + 0.5 + (double) w.rand.nextFloat()
+                            - (double) w.rand.nextFloat(),
+                        (double) (j + 2),
+                        (double) k + 0.5 + (double) w.rand.nextFloat()
+                            - (double) w.rand.nextFloat()
+                    ),
+                    w.rand.nextLong()
+                );
+                bolt.setMultiplier(4.0F);
+                bolt.defaultFractal();
+                bolt.setType(5);
+                bolt.finalizeBolt();
+            }
         }
     }
 
@@ -704,20 +711,10 @@ public class BlockApparatusMetal extends BlockApparatus {
         }
 
         if (meta == MetaVals.VOID_INTERFACE) {
-            // TODO: void interface
-            //TileVoidInterface ts = (TileVoidInterface) world.getTileEntity(i, j,
-            //k); if (ts != null) {
-            //    ts.invalidateLinks();
-            //    SISpecialTile pd = new SISpecialTile(
-            //        i,
-            //        j,
-            //        k,
-            //        ts.network,
-            //        (byte) ModLoader.getMinecraftInstance().thePlayer.dimension,
-            //        (byte) 1
-            //    );
-            //    mod_ThaumCraft.DeleteSpecialTileFromList(pd);
-            //}
+            TileVoidInterface ts = (TileVoidInterface) world.getTileEntity(i, j, k);
+            if (ts != null) {
+                ts.invalidateLinks();
+            }
 
         } else {
             super.breakBlock(world, i, j, k, block, meta_);
@@ -737,29 +734,11 @@ public class BlockApparatusMetal extends BlockApparatus {
     ) {
         MetaVals md = MetaVals.get(world.getBlockMetadata(i, j, k));
         if (md == MetaVals.VOID_INTERFACE) {
-            // TODO: void interface
-            //if (world.getBlock(i, j - 1, k) == this
-            //    && world.getBlockMetadata(i, j - 1, k) == 8) {
-            //    TileVoidInterface tvi
-            //        = (TileVoidInterface) world.getTileEntity(i, j, k);
-            //    if (tvi != null) {
-            //        tvi.network = (byte) world.rand.nextInt(6);
-            //        SISpecialTile pd = new SISpecialTile(
-            //            i,
-            //            j,
-            //            k,
-            //            tvi.network,
-            //            (byte) ModLoader.getMinecraftInstance().thePlayer.dimension,
-            //            (byte) 1
-            //        );
-            //        mod_ThaumCraft.AddSpecialTileToList(pd);
-            //        tvi.invalidateLinks();
-            //        tvi.establishLinks();
-            //    }
-            //} else {
-            //    this.dropBlockAsItem(world, i, j, k, md, 0);
-            //    world.setBlock(i, j, k, 0);
-            //}
+            if (world.getBlock(i, j - 1, k) != this
+                || world.getBlockMetadata(i, j - 1, k) != MetaVals.VOID_CHEST.ordinal()) {
+                this.dropBlockAsItem(world, i, j, k, md.ordinal(), 0);
+                world.setBlock(i, j, k, Blocks.air);
+            }
         } else if (md == MetaVals.BORE) {
             TileBore tb = (TileBore) world.getTileEntity(i, j, k);
             if (MathHelper.abs((float) entityliving.posX - (float) i) < 1.0F

@@ -2,8 +2,9 @@ package net.anvilcraft.thaummach;
 
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.tileentity.TileEntity;
 
-public class SealData {
+public class RuneTileData {
     public int dim;
     public int x;
     public int y;
@@ -11,9 +12,17 @@ public class SealData {
     public short orientation;
     public byte rune;
 
-    public SealData() {}
+    public RuneTileData() {}
 
-    public SealData(TileSeal seal) {
+    public RuneTileData(TileEntity te, byte rune) {
+        this.dim = te.getWorldObj().provider.dimensionId;
+        this.x = te.xCoord;
+        this.y = te.yCoord;
+        this.z = te.zCoord;
+        this.rune = rune;
+    }
+
+    public RuneTileData(TileSeal seal) {
         this.dim = seal.getWorldObj().provider.dimensionId;
 
         this.x = seal.xCoord;
@@ -36,8 +45,8 @@ public class SealData {
         return nbt;
     }
 
-    public static SealData readFromNbt(NBTTagCompound nbt) {
-        SealData self = new SealData();
+    public static RuneTileData readFromNbt(NBTTagCompound nbt) {
+        RuneTileData self = new RuneTileData();
 
         self.dim = nbt.getInteger("dim");
         self.x = nbt.getInteger("x");
@@ -70,7 +79,7 @@ public class SealData {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        SealData other = (SealData) obj;
+        RuneTileData other = (RuneTileData) obj;
         if (dim != other.dim)
             return false;
         if (x != other.x)

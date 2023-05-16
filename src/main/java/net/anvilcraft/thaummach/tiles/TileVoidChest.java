@@ -143,7 +143,7 @@ public class TileVoidChest extends TileEntity implements ISidedInventory {
 
     @Override
     public int[] getAccessibleSlotsFromSide(int p_94128_1_) {
-        return IntStream.rangeClosed(0, this.vcItemStacks.length - 1).toArray();
+        return IntStream.range(0, this.vcItemStacks.length).toArray();
     }
 
     @Override

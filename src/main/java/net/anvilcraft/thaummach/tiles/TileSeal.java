@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Set;
 
 import dev.tilera.auracore.api.AuraNode;
+import dev.tilera.auracore.api.HelperLocation;
 import dev.tilera.auracore.aura.AuraManager;
 import dev.tilera.auracore.client.FXSparkle;
 import dev.tilera.auracore.helper.Utils;
-import net.anvilcraft.thaummach.SealData;
+import net.anvilcraft.thaummach.RuneTileData;
 import net.anvilcraft.thaummach.render.PortalRenderer;
-import net.anvilcraft.thaummach.utils.HelperLocation;
 import net.anvilcraft.thaummach.utils.UtilsFX;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -52,8 +52,8 @@ import thaumcraft.client.fx.particles.FXScorch;
 import thaumcraft.client.fx.particles.FXWisp;
 
 public class TileSeal extends TileEntity {
-    public static Set<SealData> SEALS = new HashSet<>();
-    public SealData otherSeal;
+    public static Set<RuneTileData> SEALS = new HashSet<>();
+    public RuneTileData otherSeal;
     public PortalRenderer renderer;
 
     public int delay = 0;
@@ -198,7 +198,7 @@ public class TileSeal extends TileEntity {
                         return;
                 }
             case 1:
-                SealData sd = new SealData(this);
+                RuneTileData sd = new RuneTileData(this);
                 if (!SEALS.contains(sd)) {
                     SEALS.add(sd);
                     this.worldObj.markBlockForUpdate(
@@ -1513,11 +1513,11 @@ public class TileSeal extends TileEntity {
         }
 
         if (list.size() > 0) {
-            Iterator<SealData> i$ = SEALS.iterator();
+            Iterator<RuneTileData> i$ = SEALS.iterator();
 
             boolean fs = false;
         label74: {
-            SealData pd;
+            RuneTileData pd;
             do {
                 do {
                     do {
@@ -1650,7 +1650,7 @@ public class TileSeal extends TileEntity {
                 if (this.otherSeal == null) {
                     return false;
                 } else {
-                    SealData targetDest = this.otherSeal;
+                    RuneTileData targetDest = this.otherSeal;
                     TileEntity ts = super.worldObj.getTileEntity(
                         targetDest.x, targetDest.y, targetDest.z
                     );
@@ -2500,7 +2500,7 @@ public class TileSeal extends TileEntity {
         this.runes = nbt.getByteArray("runes");
         this.portalWindow = nbt.getInteger("window");
         if (nbt.hasKey("other"))
-            this.otherSeal = SealData.readFromNbt(nbt.getCompoundTag("other"));
+            this.otherSeal = RuneTileData.readFromNbt(nbt.getCompoundTag("other"));
         else
             this.otherSeal = null;
     }
@@ -2540,7 +2540,7 @@ public class TileSeal extends TileEntity {
         this.runes = nbt.getByteArray("runes");
         this.portalWindow = nbt.getInteger("window");
         if (nbt.hasKey("other"))
-            this.otherSeal = SealData.readFromNbt(nbt.getCompoundTag("other"));
+            this.otherSeal = RuneTileData.readFromNbt(nbt.getCompoundTag("other"));
         else
             this.otherSeal = null;
         //this.pSize = nbt.getFloat("pSize");
@@ -2608,7 +2608,7 @@ public class TileSeal extends TileEntity {
     public void invalidate() {
         super.invalidate();
         if (!this.worldObj.isRemote)
-            SEALS.remove(new SealData(this));
+            SEALS.remove(new RuneTileData(this));
         else if (this.renderer != null)
             this.renderer.deinit();
     }

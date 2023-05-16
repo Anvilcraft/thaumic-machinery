@@ -11,6 +11,8 @@ import net.anvilcraft.thaummach.render.entity.EntitySingularityRenderer;
 import net.anvilcraft.thaummach.render.tile.TileBoreRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
+import net.anvilcraft.thaummach.render.tile.TileVoidChestRenderer;
+import net.anvilcraft.thaummach.render.tile.TileVoidInterfaceRenderer;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
@@ -23,6 +25,7 @@ import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
+import net.anvilcraft.thaummach.tiles.TileVoidInterface;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -53,7 +56,6 @@ public class ClientProxy extends CommonProxy {
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
-        GameRegistry.registerTileEntity(TileVoidChest.class, "voidChest");
 
         ClientRegistry.registerTileEntity(TileBore.class, "bore", new TileBoreRenderer());
         ClientRegistry.registerTileEntity(
@@ -63,5 +65,11 @@ public class ClientProxy extends CommonProxy {
             TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer()
         );
         ClientRegistry.registerTileEntity(TileSeal.class, "seal", new TileSealRenderer());
+        ClientRegistry.registerTileEntity(
+            TileVoidChest.class, "voidChest", new TileVoidChestRenderer()
+        );
+        ClientRegistry.registerTileEntity(
+            TileVoidInterface.class, "voidInterface", new TileVoidInterfaceRenderer()
+        );
     }
 }

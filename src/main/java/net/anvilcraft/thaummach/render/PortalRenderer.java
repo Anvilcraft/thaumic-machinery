@@ -4,7 +4,7 @@ import java.nio.ByteBuffer;
 import java.util.HashSet;
 import java.util.Set;
 
-import net.anvilcraft.thaummach.SealData;
+import net.anvilcraft.thaummach.RuneTileData;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
@@ -55,7 +55,7 @@ public class PortalRenderer {
         if (this.seal.otherSeal == null)
             return;
 
-        SealData target = this.seal.otherSeal;
+        RuneTileData target = this.seal.otherSeal;
         Minecraft mc = Minecraft.getMinecraft();
         GL11.glPushMatrix();
         GL11.glLoadIdentity();

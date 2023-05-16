@@ -27,16 +27,25 @@ public class AuraUtils {
             }
         }
 
-        /*for(xx = 0; xx < 100; ++xx) {
-           FXWisp ef = new FXWisp(w, (double)((float)x + 0.5F), (double)((float)y +
-        0.5F), (double)((float)z + 0.5F), (double)((float)x + 0.5F +
-        (w.rand.nextFloat() - w.rand.nextFloat()) * 2.0F), (double)((float)y + 0.5F
-        + (w.rand.nextFloat() - w.rand.nextFloat()) * 2.0F), (double)((float)z +
-        0.5F + (w.rand.nextFloat() - w.rand.nextFloat()) * 2.0F), 1.0F, 5);
-           ef.setGravity(0.02F);
-           ef.shrink = true;
-           ModLoader.getMinecraftInstance().effectRenderer.addEffect(ef);
-        }*/
+        //for (xx = 0; xx < 100; ++xx) {
+        //    FXWisp ef = new FXWisp(
+        //        w,
+        //        (double) ((float) x + 0.5F),
+        //        (double) ((float) y + 0.5F),
+        //        (double) ((float) z + 0.5F),
+        //        (double
+        //        ) ((float) x + 0.5F + (w.rand.nextFloat() - w.rand.nextFloat()) * 2.0F),
+        //        (double
+        //        ) ((float) y + 0.5F + (w.rand.nextFloat() - w.rand.nextFloat()) * 2.0F),
+        //        (double
+        //        ) ((float) z + 0.5F + (w.rand.nextFloat() - w.rand.nextFloat()) * 2.0F),
+        //        1.0F,
+        //        5
+        //    );
+        //    ef.setGravity(0.02F);
+        //    ef.shrink = true;
+        //    ModLoader.getMinecraftInstance().effectRenderer.addEffect(ef);
+        //}
     }
 
     public static void spillTaint(World world, int x, int y, int z) {
