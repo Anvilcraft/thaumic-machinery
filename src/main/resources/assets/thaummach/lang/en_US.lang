@@ -40,6 +40,7 @@ item.thaummach:focus_3.name=Arcane Focus: Earth
 item.thaummach:focus_4.name=Arcane Focus: Fire
 
 item.thaummach:singularity.name=Arcane Singularity
+item.thaummach:crystalline_bell.name=Crystalline Bell
 
 thaummach:runic_essence.0.name=Runic Essence: Magic
 thaummach:runic_essence.1.name=Runic Essence: Air
