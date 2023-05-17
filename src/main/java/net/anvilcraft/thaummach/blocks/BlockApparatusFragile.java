@@ -396,6 +396,7 @@ public class BlockApparatusFragile extends BlockApparatus {
         return BlockApparatusRenderer.RI;
     }
 
+    // TODO: WTF
     //public int getBlockTextureFromSide(int i) {
     //    return 15;
     //}

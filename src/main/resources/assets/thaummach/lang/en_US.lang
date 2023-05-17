@@ -25,6 +25,12 @@ tile.thaummach:apparatus_metal_void_interface.name=Void Interface
 tile.thaummach:apparatus_metal_tank.name=Thaumium Reinforced Tank
 tile.thaummach:apparatus_metal_soul_brazier.name=Soul Brazier
 
+tile.thaummach:apparatus_wood_condenser.name=Vis Condenser
+tile.thaummach:apparatus_wood_duplicator.name=Thaumic Duplicator
+tile.thaummach:apparatus_wood_repairer.name=Thaumic Restorer
+tile.thaummach:apparatus_wood_dawn_totem.name=Dawn Totem
+tile.thaummach:apparatus_wood_dusk_totem.name=Dusk Totem
+
 # ---- ITEMS ----
 
 item.thaummach:focus_0.name=Arcane Focus

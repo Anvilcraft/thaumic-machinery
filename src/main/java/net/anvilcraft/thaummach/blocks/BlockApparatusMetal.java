@@ -13,6 +13,7 @@ import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRen
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.SoulBrazierApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.metal.TankApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidChestApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidInterfaceApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
@@ -70,6 +71,8 @@ public class BlockApparatusMetal extends BlockApparatus {
     public IIcon iconSoulCrucibleFace3;
     public IIcon iconSoulCrucibleTop;
     public IIcon iconSoulCrucibleTopInv;
+    public IIcon iconTankBottom;
+    public IIcon iconTankSide;
     public IIcon iconVoidChestBottom;
     public IIcon iconVoidChestSide;
     public IIcon iconVoidChestSideTransparent;
@@ -114,6 +117,8 @@ public class BlockApparatusMetal extends BlockApparatus {
         this.iconSoulCrucibleFace3 = reg.registerIcon("thaummach:soul_crucible_face_3");
         this.iconSoulCrucibleTop = reg.registerIcon("thaummach:soul_crucible_top");
         this.iconSoulCrucibleTopInv = reg.registerIcon("thaummach:soul_crucible_top_inv");
+        this.iconTankBottom = reg.registerIcon("thaummach:reinforced_tank_bottom");
+        this.iconTankSide = reg.registerIcon("thaummach:reinforced_tank_side");
         this.iconVoidChestBottom = reg.registerIcon("thaummach:void_chest_bottom");
         this.iconVoidChestSide = reg.registerIcon("thaummach:void_chest_side");
         this.iconVoidChestSideTransparent
@@ -171,6 +176,9 @@ public class BlockApparatusMetal extends BlockApparatus {
 
             case SOUL_BRAZIER:
                 return SoulBrazierApparatusRenderer.INSTANCE;
+
+            case TANK:
+                return TankApparatusRenderer.INSTANCE;
 
             default:
                 return null;
@@ -342,12 +350,9 @@ public class BlockApparatusMetal extends BlockApparatus {
                 return side == 1 ? this.iconVoidInterfaceBottom
                                  : this.iconVoidInterfaceSide;
             }
+        } else if (meta == MetaVals.TANK) {
+            return side <= 1 ? this.iconTankBottom : this.iconTankSide;
         }
-        // else if (meta == 10) {
-        //    return side <= 1 ? 78 : 79;
-        //} else {
-        //    return super.getBlockTexture(iblockaccess, i, j, k, side);
-        //}
         return null;
     }
 
@@ -796,18 +801,17 @@ public class BlockApparatusMetal extends BlockApparatus {
     isProvidingStrongPower(IBlockAccess iblockaccess, int i, int j, int k, int l) {
         MetaVals meta = MetaVals.get(iblockaccess.getBlockMetadata(i, j, k));
         if (meta == MetaVals.EYES_CRUCIBLE || meta == MetaVals.THAUMIUM_CRUCIBLE) {
-            // TODO: crucibles
-            //TileCrucible data = (TileCrucible) iblockaccess.getTileEntity(i, j, k);
-            //if (l == 1) {
-            //    TileEntity below = iblockaccess.getTileEntity(i, j - 1, k);
-            //    if (below != null && below instanceof TileArcaneFurnace) {
-            //        return 0;
-            //    }
-            //}
+            TileCrucible data = (TileCrucible) iblockaccess.getTileEntity(i, j, k);
+            if (l == 1) {
+                TileEntity below = iblockaccess.getTileEntity(i, j - 1, k);
+                if (below != null && below instanceof TileArcaneFurnace) {
+                    return 0;
+                }
+            }
 
-            //if (data.isPowering) {
-            //    return 15;
-            //}
+            if (data.isPowering) {
+                return 15;
+            }
         }
 
         return 0;
@@ -840,14 +844,11 @@ public class BlockApparatusMetal extends BlockApparatus {
         }
 
         if (meta.isCrucible()) {
-            // TODO: crucibles
-            //TileCrucible data = (TileCrucible) world.getTileEntity(i, j, k);
-            //data.bellows = bellows;
+            TileCrucible data = (TileCrucible) world.getTileEntity(i, j, k);
+            data.bellows = bellows;
         } else if (meta == MetaVals.ARCANE_FURNACE) {
-            // TODO: arcane furnace
-            //TileArcaneFurnace data
-            //    = (TileArcaneFurnace) world.getTileEntity(i, j, k);
-            //data.bellows = bellows;
+            TileArcaneFurnace data = (TileArcaneFurnace) world.getTileEntity(i, j, k);
+            data.bellows = bellows;
         } else {
             if (meta == MetaVals.VOID_INTERFACE
                 && (world.getBlock(i, j - 1, k) != this
@@ -867,12 +868,11 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else {
             TileEntity tsb;
             if (md == MetaVals.ARCANE_FURNACE) {
-                // TODO: arcane furnace
-                //tsb = iba.getTileEntity(i, j, k);
-                //return tsb != null && tsb instanceof TileArcaneFurnace
-                //        && ((TileArcaneFurnace) tsb).isWorking()
-                //    ? 13
-                //    : 0;
+                tsb = iba.getTileEntity(i, j, k);
+                return tsb != null && tsb instanceof TileArcaneFurnace
+                        && ((TileArcaneFurnace) tsb).isWorking()
+                    ? 13
+                    : 0;
             } else if (md == MetaVals.SOUL_BRAZIER) {
                 tsb = iba.getTileEntity(i, j, k);
                 return tsb != null && tsb instanceof TileSoulBrazier
@@ -883,64 +883,7 @@ public class BlockApparatusMetal extends BlockApparatus {
                 return super.getLightValue(iba, i, j, k);
             }
         }
-        return 0;
     }
-
-    //@Override
-    //public boolean renderAppMetalBlock(
-    //    World w, RenderBlocks rb, int i, int j, int k, Block block, boolean inv, int md
-    //) {
-    //    if (md == -9) {
-    //        md = w.getBlockMetadata(i, j, k);
-    //    }
-
-    //    switch (md) {
-    //        case 0:
-    //        case 1:
-    //        case 2:
-    //        case 3:
-    //            ThaumCraftRenderer.renderBlockCrucible(w, rb, i, j, k, block, md, inv);
-    //            return true;
-    //        case 4:
-    //            ThaumCraftRenderer.renderBlockArcaneFurnace(
-    //                w, rb, i, j, k, block, md, inv
-    //            );
-    //            return true;
-    //        case 5:
-    //            ThaumCraftRenderer.renderBlockGenerator(w, rb, i, j, k, block, md, inv);
-    //            return true;
-    //        case 6:
-    //            ThaumCraftRenderer.renderBlockCrystalizer(w, rb, i, j, k, block, md,
-    //            inv); return true;
-    //        case 7:
-    //            ThaumCraftRenderer.renderBlockBore(w, rb, i, j, k, block, md, inv);
-    //            return true;
-    //        case 8:
-    //            block.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-    //            if (block.getRenderBlockPass() == 0 && !inv) {
-    //                rb.renderStandardBlock(block, i, j, k);
-    //            } else if (inv) {
-    //                ThaumCraftRenderer.DrawFaces(
-    //                    rb, block, 97, 104, 103, 103, 103, 103, false
-    //                );
-    //            }
-
-    //            return true;
-    //        case 9:
-    //            ThaumCraftRenderer.renderBlockVoidInterface(
-    //                w, rb, i, j, k, block, md, inv
-    //            );
-    //            return true;
-    //        case 10:
-    //            ThaumCraftRenderer.renderBlockTank(w, rb, i, j, k, block, md, inv);
-    //            return true;
-    //        case 11:
-    //            ThaumCraftRenderer.renderBlockSoulBrazier(w, rb, i, j, k, block, md,
-    //            inv); return true;
-    //        default:
-    //            return false;
-    //    }
-    //}
 
     public static enum MetaVals {
         NORMAL_CRUCIBLE, // 0

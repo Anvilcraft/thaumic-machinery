@@ -183,7 +183,7 @@ public class FXWisp extends EntityFX {
         GL11.glDepthMask(true);
         GL11.glPopMatrix();
         Minecraft.getMinecraft().renderEngine.bindTexture(
-            new ResourceLocation("textures/particles/particles.png")
+            new ResourceLocation("textures/particle/particles.png")
         );
         tessellator.startDrawingQuads();
     }

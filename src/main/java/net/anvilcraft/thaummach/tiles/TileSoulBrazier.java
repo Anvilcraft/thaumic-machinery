@@ -10,6 +10,9 @@ import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 
@@ -37,6 +40,9 @@ public class TileSoulBrazier extends TileEntity implements ISidedInventory {
 
     @Override
     public void updateEntity() {
+        if (this.worldObj.isRemote)
+            return;
+
         if (this.lightingDelay <= 0 && this.isWorking() != this.previousLight) {
             super.worldObj.markBlockForUpdate(super.xCoord, super.yCoord, super.zCoord);
             super.worldObj.updateLightByType(
@@ -282,5 +288,31 @@ public class TileSoulBrazier extends TileEntity implements ISidedInventory {
     @Override
     public boolean isUseableByPlayer(EntityPlayer p_70300_1_) {
         return true;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+
+        nbt.setInteger("delay", this.delay);
+        nbt.setInteger("burnTime", this.burnTime);
+        nbt.setBoolean("previousLight", this.previousLight);
+        nbt.setInteger("lightingDelay", this.lightingDelay);
+
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound nbt = pkt.func_148857_g();
+        this.delay = nbt.getInteger("delay");
+        this.burnTime = nbt.getInteger("burnTime");
+        this.previousLight = nbt.getBoolean("previousLight");
+        this.lightingDelay = nbt.getInteger("lightingDelay");
+
+        // schedule light update
+        this.worldObj.func_147451_t(this.xCoord, this.yCoord, this.zCoord);
     }
 }

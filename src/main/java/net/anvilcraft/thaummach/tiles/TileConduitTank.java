@@ -3,6 +3,7 @@ package net.anvilcraft.thaummach.tiles;
 import dev.tilera.auracore.api.HelperLocation;
 import dev.tilera.auracore.api.machine.IConnection;
 import net.anvilcraft.thaummach.AuraUtils;
+import net.anvilcraft.thaummach.blocks.BlockApparatusFragile;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -41,12 +42,14 @@ public class TileConduitTank extends TileEntity implements IConnection {
                 this.wait = 10;
                 this.calculateSuction();
                 int breakchance = 999;
-                if (this.getBlockMetadata() != 3) {
+                if (this.getBlockMetadata()
+                    != BlockApparatusFragile.MetaVals.CONDUIT_TANK.ordinal()) {
                     breakchance = 3333;
                 }
 
                 if (this.taintedVis > this.getMaxVis() * 0.9F) {
-                    if (this.getBlockMetadata() == 3
+                    if (this.getBlockMetadata()
+                            == BlockApparatusFragile.MetaVals.CONDUIT_TANK.ordinal()
                         && super.worldObj.rand.nextInt(breakchance) == 123) {
                         AuraUtils.taintExplosion(
                             super.worldObj, super.xCoord, super.yCoord, super.zCoord
@@ -269,7 +272,10 @@ public class TileConduitTank extends TileEntity implements IConnection {
     }
 
     public float getMaxVis() {
-        return this.getBlockMetadata() != 3 ? 1000.0F : 500.0F;
+        return this.getBlockMetadata()
+                != BlockApparatusFragile.MetaVals.CONDUIT_TANK.ordinal()
+            ? 1000.0F
+            : 500.0F;
     }
 
     public float[] subtractVis(float amount) {
