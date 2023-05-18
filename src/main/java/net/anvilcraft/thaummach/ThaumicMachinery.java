@@ -18,6 +18,9 @@ import net.minecraft.world.World;
 
 @Mod(modid = "thaummach")
 public class ThaumicMachinery {
+    @Mod.Instance("thaummach")
+    public static ThaumicMachinery INSTANCE;
+
     @SidedProxy(
         modId = "thaummach",
         serverSide = "net.anvilcraft.thaummach.CommonProxy",
@@ -37,6 +40,8 @@ public class ThaumicMachinery {
         channel.registerMessage(
             new PacketFXSparkle.Handler(), PacketFXSparkle.class, pktid++, Side.CLIENT
         );
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 
         proxy.registerTileEntities();
         TMBlocks.init();

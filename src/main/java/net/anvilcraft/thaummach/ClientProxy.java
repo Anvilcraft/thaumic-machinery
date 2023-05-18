@@ -5,6 +5,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
+import net.anvilcraft.thaummach.gui.GuiBore;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.TileSealRenderer;
 import net.anvilcraft.thaummach.render.entity.EntitySingularityRenderer;
@@ -27,6 +28,9 @@ import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.World;
 
 public class ClientProxy extends CommonProxy {
     @Override
@@ -73,5 +77,18 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerTileEntity(
             TileVoidInterface.class, "voidInterface", new TileVoidInterfaceRenderer()
         );
+    }
+
+    @Override
+    public Object
+    getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
+        TileEntity te = world.getTileEntity(x, y, z);
+        switch (GuiID.get(id)) {
+            case BORE:
+                return new GuiBore(player.inventory, (TileBore) te);
+
+            default:
+                throw new IllegalArgumentException("ALEC");
+        }
     }
 }

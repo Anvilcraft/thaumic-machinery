@@ -75,9 +75,6 @@ public class EntitySingularity extends Entity {
 
     @Override
     public void onUpdate() {
-        System.out.println(
-            "AAALEC: " + this.motionX + " " + this.motionY + " " + this.motionZ
-        );
         if (this.fuse-- == 0) {
             this.explode();
         }

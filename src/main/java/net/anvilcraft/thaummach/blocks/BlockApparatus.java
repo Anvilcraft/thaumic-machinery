@@ -2,7 +2,10 @@ package net.anvilcraft.thaummach.blocks;
 
 import java.util.Random;
 
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
 import net.anvilcraft.thaummach.TMTab;
+import net.anvilcraft.thaummach.ThaumicMachinery;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockContainer;
@@ -55,9 +58,9 @@ public abstract class BlockApparatus extends BlockContainer {
     @Override
     public boolean onBlockActivated(
         World world,
-        int i,
-        int j,
-        int k,
+        int x,
+        int y,
+        int z,
         EntityPlayer entityplayer,
         // useless parameters
         int alec1,
@@ -65,20 +68,21 @@ public abstract class BlockApparatus extends BlockContainer {
         float alec3,
         float alec4
     ) {
-        if (!world.isRemote && !entityplayer.isSneaking()) {
-            // TODO: WTF
-            //TileEntity te = world.getTileEntity(i, j, k);
-            //if (te != null && te instanceof ITileGui) {
-            //    ModLoader.openGUI(entityplayer, ((ITileGui) te).getGui(entityplayer));
-            //    return true;
-            //} else {
-            //    return false;
-            //}
+        if (!entityplayer.isSneaking()) {
+            TileEntity te = world.getTileEntity(x, y, z);
+            if (te instanceof ITileGui) {
+                if (world.isRemote)
+                    return true;
+                GuiID id = ((ITileGui) te).getGuiID();
 
-            return false;
-        } else {
-            return false;
+                entityplayer.openGui(
+                    ThaumicMachinery.INSTANCE, id.ordinal(), world, x, y, z
+                );
+
+                return true;
+            }
         }
+        return false;
     }
 
     @Override
@@ -138,5 +142,11 @@ public abstract class BlockApparatus extends BlockContainer {
     public void onPostBlockPlaced(World world, int x, int y, int z, int meta) {
         world.setBlockMetadataWithNotify(x, y, z, meta, 3);
         super.onPostBlockPlaced(world, x, y, z, meta);
+    }
+
+    @Override
+    public void onNeighborBlockChange(World world, int x, int y, int z, Block neighbor) {
+        super.onNeighborBlockChange(world, x, y, z, neighbor);
+        world.markBlockForUpdate(x, y, z);
     }
 }

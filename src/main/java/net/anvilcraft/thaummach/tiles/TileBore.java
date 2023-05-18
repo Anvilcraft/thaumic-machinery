@@ -6,10 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import dev.tilera.auracore.api.HelperLocation;
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
 import net.anvilcraft.thaummach.TMItems;
+import net.anvilcraft.thaummach.ThaumicMachinery;
 import net.anvilcraft.thaummach.items.ItemFocus;
+import net.anvilcraft.thaummach.items.ItemSingularity;
+import net.anvilcraft.thaummach.packets.PacketFXWisp;
 import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -25,9 +29,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
-import thaumcraft.client.fx.particles.FXWisp;
 
-public class TileBore extends TileEntity implements ISidedInventory {
+public class TileBore extends TileEntity implements ISidedInventory, ITileGui {
     public int orientation = 0;
     public int duration;
     public int maxDuration;
@@ -38,19 +41,15 @@ public class TileBore extends TileEntity implements ISidedInventory {
     private int area = 2;
     private int delay = 4;
     private boolean conserve = false;
-    private ItemStack[] boreItemStacks;
+    public ItemStack[] boreItemStacks;
     private Map<Integer, EntityItem> entities;
+    private boolean isActive;
 
     public TileBore() {
         this.orientation = 0;
         this.boreItemStacks = new ItemStack[2];
         this.entities = new HashMap<>();
     }
-
-    // TODO: GUIs
-    //public GuiScreen getGui(EntityPlayer player) {
-    //    return new GuiBore(player.inventory, this);
-    //}
 
     @Override
     public void updateEntity() {
@@ -65,31 +64,6 @@ public class TileBore extends TileEntity implements ISidedInventory {
 
         if (!super.worldObj.isRemote) {
             int a;
-            if (this.boreItemStacks[0] != null
-                && this.boreItemStacks[0].getItem() instanceof ItemFocus) {
-                if (this.boreItemStacks[0] != null) {
-                    float f = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
-                    float f1 = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
-                    float f2 = super.worldObj.rand.nextFloat() * 0.8F + 0.1F;
-                    EntityItem entityitem = new EntityItem(
-                        super.worldObj,
-                        (double) ((float) super.xCoord + f),
-                        (double) ((float) super.yCoord + f1),
-                        (double) ((float) super.zCoord + f2),
-                        ItemStack.copyItemStack(this.boreItemStacks[0])
-                    );
-                    float f3 = 0.05F;
-                    entityitem.motionX
-                        = (double) ((float) super.worldObj.rand.nextGaussian() * f3);
-                    entityitem.motionY = (double
-                    ) ((float) super.worldObj.rand.nextGaussian() * f3 + 0.2F);
-                    entityitem.motionZ
-                        = (double) ((float) super.worldObj.rand.nextGaussian() * f3);
-                    super.worldObj.spawnEntityInWorld(entityitem);
-                    this.boreItemStacks[0] = null;
-                }
-            }
-
             this.focus = -1;
             if (this.boreItemStacks[0] != null
                 && this.boreItemStacks[0].getItem() == TMItems.focus0) {
@@ -151,6 +125,7 @@ public class TileBore extends TileEntity implements ISidedInventory {
                         if (this.boreItemStacks[0].getItemDamage()
                             > this.boreItemStacks[0].getMaxDamage()) {
                             this.boreItemStacks[0] = null;
+                            this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
                         }
                         break;
                     }
@@ -169,20 +144,23 @@ public class TileBore extends TileEntity implements ISidedInventory {
                 HelperLocation hl2 = new HelperLocation(this, this.orientation);
                 hl.moveForwards(1.0);
                 hl2.moveForwards(5.0);
-                FXWisp ef = new FXWisp(
-                    super.worldObj,
-                    hl.x + 0.5,
-                    hl.y + 0.5,
-                    hl.z + 0.5,
-                    hl2.x + 0.5,
-                    hl2.y + 0.5,
-                    hl2.z + 0.5,
-                    0.6F,
-                    this.focus == 0 ? 5 : this.focus
+
+                ThaumicMachinery.sendFXPacket(
+                    this.worldObj,
+                    new PacketFXWisp(
+                        hl.x + 0.5,
+                        hl.y + 0.5,
+                        hl.z + 0.5,
+                        hl2.x + 0.5,
+                        hl2.y + 0.5,
+                        hl2.z + 0.5,
+                        0.6f,
+                        this.focus == 0 ? 5 : this.focus,
+                        true,
+                        0.0f
+                    )
                 );
-                ef.shrink = true;
-                ef.blendmode = 1;
-                Minecraft.getMinecraft().effectRenderer.addEffect(ef);
+                //ef.blendmode = 1;
             }
 
             Collection<EntityItem> c = this.entities.values();
@@ -212,12 +190,10 @@ public class TileBore extends TileEntity implements ISidedInventory {
     }
 
     public boolean gettingPower() {
-        return super.worldObj.isBlockIndirectlyGettingPowered(
-                   super.xCoord, super.yCoord, super.zCoord
-               )
-            || super.worldObj.isBlockIndirectlyGettingPowered(
-                super.xCoord, super.yCoord + 1, super.zCoord
-            );
+        return this.worldObj.isRemote ? this.isActive
+                                      : super.worldObj.isBlockIndirectlyGettingPowered(
+                                          super.xCoord, super.yCoord, super.zCoord
+                                      );
     }
 
     @SuppressWarnings("unchecked")
@@ -319,21 +295,20 @@ public class TileBore extends TileEntity implements ISidedInventory {
                 entity.delayBeforeCanPickup = 2;
                 entity.fireResistance = 50;
                 entity.noClip = true;
-                boolean dp = true;
 
-                if (dp) {
-                    FXWisp ef = new FXWisp(
-                        super.worldObj,
+                ThaumicMachinery.sendFXPacket(
+                    this.worldObj,
+                    new PacketFXWisp(
                         (double) ((float) entity.prevPosX),
                         (double) ((float) entity.prevPosY + 0.1F),
                         (double) ((float) entity.prevPosZ),
                         0.4F,
-                        this.focus == 0 ? 5 : this.focus
-                    );
-                    ef.shrink = true;
-                    ef.blendmode = 1;
-                    Minecraft.getMinecraft().effectRenderer.addEffect(ef);
-                }
+                        this.focus == 0 ? 5 : this.focus,
+                        true,
+                        0.0f
+                    )
+                );
+                //ef.blendmode = 1;
 
                 if (this.entities.get(entity.getEntityId()) == null) {
                     this.entities.put(entity.getEntityId(), entity);
@@ -356,16 +331,18 @@ public class TileBore extends TileEntity implements ISidedInventory {
                 entity.motionZ = 0.0;
                 entity.noClip = false;
                 entity.fireResistance = 1;
-                FXWisp ef = new FXWisp(
-                    super.worldObj,
-                    (double) ((float) entity.prevPosX),
-                    (double) ((float) entity.prevPosY + 0.1F),
-                    (double) ((float) entity.prevPosZ),
-                    1.0F,
-                    this.focus == 0 ? 5 : this.focus
+                ThaumicMachinery.sendFXPacket(
+                    this.worldObj,
+                    new PacketFXWisp(
+                        (double) ((float) entity.prevPosX),
+                        (double) ((float) entity.prevPosY + 0.1F),
+                        (double) ((float) entity.prevPosZ),
+                        1.0F,
+                        this.focus == 0 ? 5 : this.focus,
+                        true,
+                        0.0f
+                    )
                 );
-                ef.shrink = true;
-                Minecraft.getMinecraft().effectRenderer.addEffect(ef);
 
                 switch (this.orientation) {
                     case 0:
@@ -679,6 +656,7 @@ public class TileBore extends TileEntity implements ISidedInventory {
 
     @Override
     public void setInventorySlotContents(int i, ItemStack itemstack) {
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
         this.boreItemStacks[i] = itemstack;
         if (itemstack != null && itemstack.stackSize > this.getInventoryStackLimit()) {
             itemstack.stackSize = this.getInventoryStackLimit();
@@ -862,8 +840,12 @@ public class TileBore extends TileEntity implements ISidedInventory {
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        // TODO: filtering
-        return true;
+        if (slot == 0) {
+            return stack.getItem() instanceof ItemFocus;
+        } else if (slot == 1) {
+            return stack.getItem() instanceof ItemSingularity;
+        }
+        return false;
     }
 
     @Override
@@ -892,6 +874,13 @@ public class TileBore extends TileEntity implements ISidedInventory {
         nbt.setShort("orientation", (short) this.orientation);
         nbt.setShort("duration", (short) this.duration);
         nbt.setShort("maxDuration", (short) this.maxDuration);
+        nbt.setBoolean("isActive", this.gettingPower());
+
+        if (this.boreItemStacks[0] != null) {
+            NBTTagCompound focus = new NBTTagCompound();
+            this.boreItemStacks[0].writeToNBT(focus);
+            nbt.setTag("focus", focus);
+        }
 
         return new S35PacketUpdateTileEntity(
             this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
@@ -905,5 +894,16 @@ public class TileBore extends TileEntity implements ISidedInventory {
         this.orientation = nbt.getShort("orientation");
         this.duration = nbt.getShort("duration");
         this.maxDuration = nbt.getShort("maxDuration");
+        this.isActive = nbt.getBoolean("isActive");
+
+        if (nbt.hasKey("focus")) {
+            this.boreItemStacks[0]
+                = ItemStack.loadItemStackFromNBT(nbt.getCompoundTag("focus"));
+        }
+    }
+
+    @Override
+    public GuiID getGuiID() {
+        return GuiID.BORE;
     }
 }

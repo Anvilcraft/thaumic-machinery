@@ -12,6 +12,11 @@ public class PacketFXWisp implements IPacketFX {
     double x;
     double y;
     double z;
+
+    double mx;
+    double my;
+    double mz;
+
     float f;
     int type;
     boolean shrink;
@@ -29,6 +34,34 @@ public class PacketFXWisp implements IPacketFX {
         this.type = type;
         this.shrink = shrink;
         this.gravity = gravity;
+
+        this.mx = x;
+        this.my = y;
+        this.mz = z;
+    }
+
+    public PacketFXWisp(
+        double x,
+        double y,
+        double z,
+        double mx,
+        double my,
+        double mz,
+        float f,
+        int type,
+        boolean shrink,
+        float gravity
+    ) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.mx = mx;
+        this.my = my;
+        this.mz = mz;
+        this.f = f;
+        this.type = type;
+        this.shrink = shrink;
+        this.gravity = gravity;
     }
 
     @Override
@@ -36,6 +69,9 @@ public class PacketFXWisp implements IPacketFX {
         this.x = buf.readDouble();
         this.y = buf.readDouble();
         this.z = buf.readDouble();
+        this.mx = buf.readDouble();
+        this.my = buf.readDouble();
+        this.mz = buf.readDouble();
         this.f = buf.readFloat();
         this.type = buf.readInt();
         this.shrink = buf.readBoolean();
@@ -47,6 +83,9 @@ public class PacketFXWisp implements IPacketFX {
         buf.writeDouble(this.x);
         buf.writeDouble(this.y);
         buf.writeDouble(this.z);
+        buf.writeDouble(this.mx);
+        buf.writeDouble(this.my);
+        buf.writeDouble(this.mz);
         buf.writeFloat(this.f);
         buf.writeInt(this.type);
         buf.writeBoolean(this.shrink);
@@ -58,7 +97,15 @@ public class PacketFXWisp implements IPacketFX {
         @SideOnly(Side.CLIENT)
         public EntityFX readFX(PacketFXWisp msg) {
             FXWisp fx = new FXWisp(
-                Minecraft.getMinecraft().theWorld, msg.x, msg.y, msg.z, msg.f, msg.type
+                Minecraft.getMinecraft().theWorld,
+                msg.x,
+                msg.y,
+                msg.z,
+                msg.mx,
+                msg.my,
+                msg.mz,
+                msg.f,
+                msg.type
             );
 
             fx.shrink = msg.shrink;
