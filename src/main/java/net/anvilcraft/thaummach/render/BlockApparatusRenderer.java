@@ -37,6 +37,8 @@ public class BlockApparatusRenderer implements ISimpleBlockRenderingHandler {
                 = ((BlockApparatus) block).getApparatusRenderer(meta);
             if (ren != null)
                 ren.renderApparatus(world, renderer, x, y, z, block, meta, false);
+            if (block.getRenderBlockPass() == 0)
+                return true;
         }
         return false;
     }
