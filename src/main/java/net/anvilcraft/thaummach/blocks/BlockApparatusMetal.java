@@ -696,7 +696,7 @@ public class BlockApparatusMetal extends BlockApparatus {
 
         if (meta == MetaVals.VOID_INTERFACE) {
             TileVoidInterface tvi = (TileVoidInterface) w.getTileEntity(i, j, k);
-            if (tvi != null && tvi.linked && w.rand.nextInt(10) == 0) {
+            if (tvi != null && tvi.getLinkedSize() > 1 && w.rand.nextInt(10) == 0) {
                 FXLightningBolt bolt = new FXLightningBolt(
                     w,
                     new WRVector3((double) i + 0.5, (double) j + 0.75, (double) k + 0.5),

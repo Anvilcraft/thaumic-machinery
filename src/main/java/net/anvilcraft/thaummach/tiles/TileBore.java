@@ -135,7 +135,7 @@ public class TileBore extends TileEntity implements ISidedInventory, ITileGui {
                     (double) super.xCoord,
                     (double) super.yCoord,
                     (double) super.zCoord,
-                    "mob.slimeattack",
+                    "mob.slime.attack",
                     0.3F,
                     0.1F + super.worldObj.rand.nextFloat() * 0.3F
                 );

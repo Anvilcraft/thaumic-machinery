@@ -6,6 +6,8 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.gui.GuiBore;
+import net.anvilcraft.thaummach.gui.GuiVoidChest;
+import net.anvilcraft.thaummach.gui.GuiVoidInterface;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.TileSealRenderer;
 import net.anvilcraft.thaummach.render.entity.EntitySingularityRenderer;
@@ -86,6 +88,12 @@ public class ClientProxy extends CommonProxy {
         switch (GuiID.get(id)) {
             case BORE:
                 return new GuiBore(player.inventory, (TileBore) te);
+
+            case VOID_CHEST:
+                return new GuiVoidChest(player.inventory, (TileVoidChest) te);
+
+            case VOID_INTERFACE:
+                return new GuiVoidInterface(player.inventory, (TileVoidInterface) te);
 
             default:
                 throw new IllegalArgumentException("ALEC");

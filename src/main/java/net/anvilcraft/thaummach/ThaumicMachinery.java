@@ -4,6 +4,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerAboutToStartEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
@@ -12,8 +13,12 @@ import cpw.mods.fml.relauncher.Side;
 import dev.tilera.auracore.api.HelperLocation;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.packets.IPacketFX;
+import net.anvilcraft.thaummach.packets.PacketChangeVoidInterfaceChannel;
+import net.anvilcraft.thaummach.packets.PacketChangeVoidInterfaceContainerPage;
 import net.anvilcraft.thaummach.packets.PacketFXSparkle;
 import net.anvilcraft.thaummach.packets.PacketFXWisp;
+import net.anvilcraft.thaummach.tiles.TileSeal;
+import net.anvilcraft.thaummach.tiles.TileVoidInterface;
 import net.minecraft.world.World;
 
 @Mod(modid = "thaummach")
@@ -40,6 +45,18 @@ public class ThaumicMachinery {
         channel.registerMessage(
             new PacketFXSparkle.Handler(), PacketFXSparkle.class, pktid++, Side.CLIENT
         );
+        channel.registerMessage(
+            new PacketChangeVoidInterfaceChannel.Handler(),
+            PacketChangeVoidInterfaceChannel.class,
+            pktid++,
+            Side.SERVER
+        );
+        channel.registerMessage(
+            new PacketChangeVoidInterfaceContainerPage.Handler(),
+            PacketChangeVoidInterfaceContainerPage.class,
+            pktid++,
+            Side.SERVER
+        );
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 
@@ -56,6 +73,12 @@ public class ThaumicMachinery {
             EntitySingularity.class, "singularity", entId++, this, 64, 2, true
         );
         proxy.init();
+    }
+
+    @Mod.EventHandler
+    public void onServerAboutToStart(FMLServerAboutToStartEvent ev) {
+        TileVoidInterface.VOID_INTERFACES.clear();
+        TileSeal.SEALS.clear();
     }
 
     public static void sendFXPacket(World worldObj, IPacketFX pkt) {

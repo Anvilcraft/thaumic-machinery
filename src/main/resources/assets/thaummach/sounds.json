@@ -1,6 +1,6 @@
 {
     "popen": {
-        "category": "master",
+        "category": "block",
         "sounds": [
             {
                 "name": "popen",
@@ -9,10 +9,37 @@
         ]
     },
     "pclose": {
-        "category": "master",
+        "category": "block",
         "sounds": [
             {
                 "name": "pclose",
+                "stream": false
+            }
+        ]
+    },
+    "stoneopen": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "stoneopen",
+                "stream": false
+            }
+        ]
+    },
+    "stoneclose": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "stoneclose",
+                "stream": false
+            }
+        ]
+    },
+    "heal": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "heal",
                 "stream": false
             }
         ]

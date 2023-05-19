@@ -2,29 +2,41 @@ package net.anvilcraft.thaummach.tiles;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import java.util.stream.IntStream;
 
 import dev.tilera.auracore.api.HelperLocation;
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
 import net.anvilcraft.thaummach.RuneTileData;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileVoidInterface extends TileEntity implements ISidedInventory {
+public class TileVoidInterface extends TileEntity implements ISidedInventory, ITileGui {
     // TODO: WTF
     public static Set<RuneTileData> VOID_INTERFACES = new HashSet<>();
     public byte network = 0;
     public ArrayList<HelperLocation> links = new ArrayList<>();
-    public boolean linked = false;
     public int current = 0;
     public boolean init = false;
 
+    private int linkSize;
+
+    @Override
+    public GuiID getGuiID() {
+        return GuiID.VOID_INTERFACE;
+    }
+
     public int getLinkedSize() {
-        return this.links.size();
+        return this.worldObj.isRemote ? this.linkSize : this.links.size();
     }
 
     @Override
@@ -74,34 +86,17 @@ public class TileVoidInterface extends TileEntity implements ISidedInventory {
         } catch (Exception var6) {}
     }
 
-    // TODO: WTF
-    //@Override
-    //public ItemStack getStackInSlotVirtual(int i) {
-    //    try {
-    //        return this.getInventory(this.links.get(this.current)).getStackInSlot(i %
-    //        72);
-    //    } catch (Exception var3) {
-    //        return null;
-    //    }
-    //}
+    public ItemStack getStackInSlotForCurrentLink(int i) {
+        return this.getStackInSlot(i + this.current * 72);
+    }
 
-    //@Override
-    //public ItemStack decrStackSizeVirtual(int i, int j) {
-    //    try {
-    //        return this.getInventory(this.links.get(this.current))
-    //            .decrStackSize(i % 72, j);
-    //    } catch (Exception var4) {
-    //        return null;
-    //    }
-    //}
+    public ItemStack decrStackSizeForCurrentLink(int i, int j) {
+        return this.decrStackSize(i + this.current * 72, j);
+    }
 
-    //@Override
-    //public void setInventorySlotContentsVirtual(int i, ItemStack itemstack) {
-    //    try {
-    //        this.getInventory(this.links.get(this.current))
-    //            .setInventorySlotContents(i % 72, itemstack);
-    //    } catch (Exception var4) {}
-    //}
+    public void setInventorySlotContentsForCurrentLink(int i, ItemStack stack) {
+        this.setInventorySlotContents(i + this.current * 72, stack);
+    }
 
     public void establishLinks() {
         this.current = 0;
@@ -130,29 +125,49 @@ public class TileVoidInterface extends TileEntity implements ISidedInventory {
             }
         }
 
-        this.linked = this.links.size() > 1;
+        this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
     }
 
     public void invalidateLinks() {
-        for (RuneTileData rtd : VOID_INTERFACES) {
-            if (rtd.rune != this.network)
+        Iterator<RuneTileData> iter = VOID_INTERFACES.iterator();
+        while (iter.hasNext()) {
+            RuneTileData rtd = iter.next();
+            if (rtd.dim != this.worldObj.provider.dimensionId)
                 continue;
 
             TileEntity te = this.worldObj.getTileEntity(rtd.x, rtd.y, rtd.z);
             if (!(te instanceof TileVoidInterface)) {
-                VOID_INTERFACES.remove(rtd);
-                // TODO: WTF WTF WTF WTF
-                this.invalidateLinks();
-                break;
-            }
-
-            if (te != null) {
+                iter.remove();
+            } else {
                 TileVoidInterface tvi = (TileVoidInterface) te;
-                tvi.markDirty();
                 tvi.clearLinks();
+                this.worldObj.markBlockForUpdate(tvi.xCoord, tvi.yCoord, tvi.zCoord);
             }
         }
     }
+
+    //public void invalidateLinks() {
+    //    for (RuneTileData rtd : VOID_INTERFACES) {
+    //        if (rtd.rune != this.network)
+    //            continue;
+
+    //        TileEntity te = this.worldObj.getTileEntity(rtd.x, rtd.y, rtd.z);
+    //        if (!(te instanceof TileVoidInterface)) {
+    //            VOID_INTERFACES.remove(rtd);
+    //            // TODO: WTF WTF WTF WTF
+    //            this.invalidateLinks();
+    //            break;
+    //        }
+
+    //        if (te != null) {
+    //            TileVoidInterface tvi = (TileVoidInterface) te;
+    //            tvi.markDirty();
+    //            tvi.clearLinks();
+    //            this.worldObj.markBlockForUpdate(tvi.xCoord, tvi.yCoord, tvi.zCoord);
+    //        }
+    //    }
+    //    this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+    //}
 
     public void clearLinks() {
         this.current = 0;
@@ -179,10 +194,14 @@ public class TileVoidInterface extends TileEntity implements ISidedInventory {
     @Override
     public void updateEntity() {
         super.updateEntity();
+        if (this.worldObj.isRemote)
+            return;
+
         if (!this.init) {
             this.init = true;
 
             VOID_INTERFACES.add(new RuneTileData(this, this.network));
+            this.invalidateLinks();
         }
 
         if (this.links.size() == 0) {
@@ -206,7 +225,16 @@ public class TileVoidInterface extends TileEntity implements ISidedInventory {
     }
 
     @Override
-    public void openInventory() {}
+    public void openInventory() {
+        this.worldObj.playSoundEffect(
+            (double) ((float) this.xCoord + 0.5F),
+            (double) ((float) this.yCoord + 0.5F),
+            (double) ((float) this.zCoord + 0.5F),
+            "thaummach:heal",
+            1.0F,
+            1.4F
+        );
+    }
 
     @Override
     public void closeInventory() {}
@@ -236,5 +264,27 @@ public class TileVoidInterface extends TileEntity implements ISidedInventory {
 
         return thisStack != null && thisStack.isItemEqual(otherStack)
             && thisStack.stackSize >= otherStack.stackSize;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+
+        nbt.setByte("network", this.network);
+        nbt.setInteger("linkSize", this.getLinkedSize());
+        nbt.setInteger("current", this.current);
+
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound nbt = pkt.func_148857_g();
+
+        this.network = nbt.getByte("network");
+        this.linkSize = nbt.getInteger("linkSize");
+        this.current = nbt.getInteger("current");
     }
 }

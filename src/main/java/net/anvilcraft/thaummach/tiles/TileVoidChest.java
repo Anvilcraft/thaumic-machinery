@@ -2,22 +2,22 @@ package net.anvilcraft.thaummach.tiles;
 
 import java.util.stream.IntStream;
 
-import net.minecraft.client.gui.GuiScreen;
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 
-public class TileVoidChest extends TileEntity implements ISidedInventory {
-    private ItemStack[] vcItemStacks = new ItemStack[72];
+public class TileVoidChest extends TileEntity implements ISidedInventory, ITileGui {
+    public ItemStack[] vcItemStacks = new ItemStack[72];
 
-    // TODO: GUIs
-    //public GuiScreen getGui(EntityPlayer player) {
-    //    return new GuiVoidChest(player.inventory, this);
-    //}
+    @Override
+    public GuiID getGuiID() {
+        return GuiID.VOID_CHEST;
+    }
 
     @Override
     public void invalidate() {
@@ -129,7 +129,16 @@ public class TileVoidChest extends TileEntity implements ISidedInventory {
     }
 
     @Override
-    public void openInventory() {}
+    public void openInventory() {
+        super.worldObj.playSoundEffect(
+            (double) ((float) super.xCoord + 0.5F),
+            (double) ((float) super.yCoord + 0.5F),
+            (double) ((float) super.zCoord + 0.5F),
+            "thaummach:stoneopen",
+            1.0F,
+            1.0F
+        );
+    }
 
     @Override
     public boolean hasCustomInventoryName() {
