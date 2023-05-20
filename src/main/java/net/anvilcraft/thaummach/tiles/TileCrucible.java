@@ -308,7 +308,7 @@ public class TileCrucible extends TileEntity implements IConnection {
                             (double) ((float) super.xCoord + 0.5F),
                             (double) ((float) super.yCoord + 0.5F),
                             (double) ((float) super.zCoord + 0.5F),
-                            "thaumcraft.bubbling",
+                            "thaumcraft:bubble",
                             0.25F,
                             0.9F + super.worldObj.rand.nextFloat() * 0.2F
                         );

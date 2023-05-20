@@ -4,8 +4,8 @@ import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class SlotInventory extends Slot {
-    public SlotInventory(IInventory inv, int idx, int x, int y) {
+public class InventorySlot extends Slot {
+    public InventorySlot(IInventory inv, int idx, int x, int y) {
         super(inv, idx, x, y);
     }
 

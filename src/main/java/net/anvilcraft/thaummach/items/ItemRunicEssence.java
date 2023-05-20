@@ -1,6 +1,7 @@
 package net.anvilcraft.thaummach.items;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 import net.anvilcraft.thaummach.TMBlocks;
 import net.anvilcraft.thaummach.TMTab;
@@ -15,7 +16,7 @@ import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 
 public class ItemRunicEssence extends Item {
-    private IIcon[] icons = new IIcon[6];
+    private IIcon[] icons;
 
     public ItemRunicEssence() {
         super();
@@ -27,9 +28,10 @@ public class ItemRunicEssence extends Item {
 
     @Override
     public void registerIcons(IIconRegister reg) {
-        for (int i = 0; i < 6; i++) {
-            this.icons[i] = reg.registerIcon("thaummach:runic_essence_" + i);
-        }
+        this.icons
+            = IntStream.range(0, 6)
+                  .mapToObj((i) -> reg.registerIcon("thaummach:runic_essence_" + i))
+                  .toArray(IIcon[] ::new);
     }
 
     @Override

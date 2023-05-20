@@ -1,7 +1,7 @@
 package net.anvilcraft.thaummach.render.tile;
 
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.tiles.TileBore;
+import net.anvilcraft.thaummach.utils.UtilsFX;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.texture.TextureMap;
@@ -50,7 +50,7 @@ public class TileBoreRenderer extends TileEntitySpecialRenderer {
         if (cr.boreItemStacks[0] != null) {
             mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);
             IIcon icon = cr.boreItemStacks[0].getIconIndex();
-            ApparatusRenderingHelper.renderItemIn2D(
+            UtilsFX.renderItemIn2D(
                 Tessellator.instance,
                 icon.getMaxU(),
                 icon.getMinV(),

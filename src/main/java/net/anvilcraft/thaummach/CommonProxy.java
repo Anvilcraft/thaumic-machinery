@@ -3,6 +3,7 @@ package net.anvilcraft.thaummach;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.container.ContainerBore;
+import net.anvilcraft.thaummach.container.ContainerCrystallizer;
 import net.anvilcraft.thaummach.container.ContainerVoidChest;
 import net.anvilcraft.thaummach.container.ContainerVoidInterface;
 import net.anvilcraft.thaummach.tiles.TileBore;
@@ -62,6 +63,9 @@ public class CommonProxy implements IGuiHandler {
                 return new ContainerVoidInterface(
                     player.inventory, (TileVoidInterface) te
                 );
+
+            case CRYSTALLIZER:
+                return new ContainerCrystallizer(player.inventory, (TileCrystallizer) te);
 
             default:
                 throw new IllegalArgumentException("ALEC");

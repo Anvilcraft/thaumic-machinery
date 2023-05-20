@@ -43,5 +43,14 @@
                 "stream": false
             }
         ]
+    },
+    "upgrade": {
+        "category": "master",
+        "sounds": [
+            {
+                "name": "upgrade",
+                "stream": false
+            }
+        ]
     }
 }

@@ -1,6 +1,6 @@
 package net.anvilcraft.thaummach.container;
 
-import net.anvilcraft.thaummach.SlotInventory;
+import net.anvilcraft.thaummach.InventorySlot;
 import net.anvilcraft.thaummach.items.ItemFocus;
 import net.anvilcraft.thaummach.items.ItemSingularity;
 import net.anvilcraft.thaummach.tiles.TileBore;
@@ -15,8 +15,8 @@ public class ContainerBore extends Container {
 
     public ContainerBore(InventoryPlayer inventoryplayer, TileBore tileBore) {
         this.arcaneBore = tileBore;
-        this.addSlotToContainer(new SlotInventory(tileBore, 0, 65, 17));
-        this.addSlotToContainer(new SlotInventory(tileBore, 1, 65, 55));
+        this.addSlotToContainer(new InventorySlot(tileBore, 0, 65, 17));
+        this.addSlotToContainer(new InventorySlot(tileBore, 1, 65, 55));
 
         int j;
         for (j = 0; j < 3; ++j) {

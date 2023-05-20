@@ -1,22 +1,30 @@
 package net.anvilcraft.thaummach.tiles;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 import dev.tilera.auracore.api.machine.IUpgradable;
 import dev.tilera.auracore.api.machine.TileVisUser;
 import dev.tilera.auracore.aura.AuraManager;
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 import thaumcraft.common.config.ConfigItems;
+import thaumcraft.common.lib.world.biomes.BiomeHandler;
 
 public class TileCrystallizer
-    extends TileVisUser implements ISidedInventory, IUpgradable {
+    extends TileVisUser implements ISidedInventory, IUpgradable, ITileGui {
     private ItemStack[] crystalizerItemStacks = new ItemStack[10];
     public float crystalTime = 0.0F;
     public float maxTime = 30.0F;
@@ -25,10 +33,23 @@ public class TileCrystallizer
     private byte[] upgrades = new byte[] { -1 };
     int boostDelay = 20;
 
-    // TODO: GUIs
-    //public GuiScreen getGui(EntityPlayer player) {
-    //    return new GuiCrystalizer(player.inventory, this);
-    //}
+    private static Map<Aspect, Integer> CRYSTAL_MAP = new HashMap<>();
+
+    static {
+        CRYSTAL_MAP.put(Aspect.AIR, 0);
+        CRYSTAL_MAP.put(Aspect.FIRE, 1);
+        CRYSTAL_MAP.put(Aspect.WATER, 2);
+        CRYSTAL_MAP.put(Aspect.EARTH, 3);
+        CRYSTAL_MAP.put(Aspect.MAGIC, 4);
+        CRYSTAL_MAP.put(Aspect.ORDER, 4);
+        CRYSTAL_MAP.put(Aspect.TAINT, 5);
+        CRYSTAL_MAP.put(Aspect.ENTROPY, 5);
+    }
+
+    @Override
+    public GuiID getGuiID() {
+        return GuiID.CRYSTALLIZER;
+    }
 
     @Override
     public int getSizeInventory() {
@@ -138,6 +159,7 @@ public class TileCrystallizer
                     + (this.hasUpgrade((byte) 0) ? 0.025F : 0.0F);
                 this.sucked = this.getAvailablePureVis(sa);
                 this.crystalTime -= this.sucked;
+                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             } else {
                 this.sucked = 0.0F;
             }
@@ -159,13 +181,25 @@ public class TileCrystallizer
 
             if (this.crystalTime < 0.0F && this.crystalizerItemStacks[6] != null
                 && this.crystalizerItemStacks[6].getItem() == ConfigItems.itemShard) {
-                // TODO: WTF
-                //this.addCrystal(ThaumCraftCore.getCrystalByBiome(
-                //    super.worldObj,
-                //    super.xCoord,
-                //    super.zCoord,
-                //    this.hasUpgrade((byte) 3) ? 3 : 0
-                //));
+
+                int rand = this.worldObj.rand.nextInt(11);
+
+                int crystalN = -1;
+
+                if (rand > 5) {
+                    Aspect biomeAspect = BiomeHandler.getRandomBiomeTag(
+                        this.worldObj.getBiomeGenForCoords(this.xCoord, this.zCoord)
+                            .biomeID,
+                        this.worldObj.rand
+                    );
+
+                    crystalN = CRYSTAL_MAP.getOrDefault(biomeAspect, -1);
+                }
+
+                if (crystalN == -1)
+                    crystalN = rand % 6;
+
+                this.addCrystal(crystalN);
                 this.crystalTime = 0.0F;
                 AuraManager.addFluxToClosest(
                     this.worldObj,
@@ -174,14 +208,13 @@ public class TileCrystallizer
                     this.zCoord,
                     new AspectList().add(Aspect.CRYSTAL, 5)
                 );
+
+                this.markDirty();
             }
 
-            if (this.crystalTime == 0.0F && this.crystalizerItemStacks[6] != null
+            if (this.crystalTime <= 0.0F && this.crystalizerItemStacks[6] != null
                 && this.crystalizerItemStacks[6].getItem() == ConfigItems.itemShard) {
-                if (this.crystalizerItemStacks[6].isItemEqual(
-                        // TODO: definetely wrong meta
-                        new ItemStack(ConfigItems.itemShard, 1, 6)
-                    )) {
+                if (this.crystalizerItemStacks[6].getItemDamage() == 8) {
                     this.crystalTime = this.maxTime;
                 } else {
                     this.crystalTime = this.maxTime * 2.0F / 3.0F;
@@ -212,7 +245,25 @@ public class TileCrystallizer
     }
 
     private void addCrystal(int type) {
-        ItemStack itemstack = new ItemStack(ConfigItems.itemShard, 1, type);
+        int meta = -1;
+        switch (type) {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+                meta = type;
+                break;
+
+            case 4:
+                meta = 7;
+                break;
+
+            case 5:
+                meta = 9;
+                break;
+        }
+
+        ItemStack itemstack = new ItemStack(ConfigItems.itemShard, 1, meta);
         if (this.crystalizerItemStacks[type] == null) {
             this.crystalizerItemStacks[type] = itemstack.copy();
         } else if (this.crystalizerItemStacks[type].isItemEqual(itemstack) && this.crystalizerItemStacks[type].stackSize < itemstack.getMaxStackSize()) {
@@ -357,5 +408,29 @@ public class TileCrystallizer
     public boolean canExtractItem(int slot, ItemStack stack, int side) {
         // TODO: WTF
         return true;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+
+        nbt.setFloat("crystalTime", this.crystalTime);
+        nbt.setFloat("maxTime", this.maxTime);
+        nbt.setInteger("boost", this.boost);
+        nbt.setByteArray("upgrades", this.upgrades);
+
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound nbt = pkt.func_148857_g();
+
+        this.crystalTime = nbt.getFloat("crystalTime");
+        this.maxTime = nbt.getFloat("maxTime");
+        this.boost = nbt.getInteger("boost");
+        this.upgrades = nbt.getByteArray("upgrades");
     }
 }

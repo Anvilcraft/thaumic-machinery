@@ -39,6 +39,14 @@ item.thaummach:focus_2.name=Arcane Focus: Water
 item.thaummach:focus_3.name=Arcane Focus: Earth
 item.thaummach:focus_4.name=Arcane Focus: Fire
 
+item.thaummach:upgrade_0.name=Quicksilver Core
+item.thaummach:upgrade_1.name=Stabilized Singularity
+item.thaummach:upgrade_2.name=Harnessed Rage
+item.thaummach:upgrade_3.name=Concentrated Evil
+item.thaummach:upgrade_4.name=Infinite Sadness
+item.thaummach:upgrade_5.name=Contained Emptiness
+item.thaummach:upgrade_6.name=Collected Wisdom
+
 item.thaummach:singularity.name=Arcane Singularity
 item.thaummach:crystalline_bell.name=Crystalline Bell
 
