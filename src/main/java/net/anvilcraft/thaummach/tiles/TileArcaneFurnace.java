@@ -4,12 +4,17 @@ import java.util.stream.IntStream;
 
 import dev.tilera.auracore.api.machine.TileVisUser;
 import dev.tilera.auracore.aura.AuraManager;
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.FurnaceRecipes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.NetworkManager;
+import net.minecraft.network.Packet;
+import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityFurnace;
 import net.minecraft.world.EnumSkyBlock;
@@ -17,7 +22,7 @@ import net.minecraftforge.common.util.ForgeDirection;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
-public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
+public class TileArcaneFurnace extends TileVisUser implements ISidedInventory, ITileGui {
     private ItemStack[] furnaceItemStacks = new ItemStack[19];
     public int furnaceBurnTime = 0;
     public int currentItemBurnTime = 0;
@@ -27,10 +32,10 @@ public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
     public float vis;
     public boolean boost;
 
-    // TODO: GUIs
-    //public GuiScreen getGui(EntityPlayer player) {
-    //   return new GuiArcaneFurnace(player.inventory, this);
-    //}
+    @Override
+    public GuiID getGuiID() {
+        return GuiID.ARCANE_FURNACE;
+    }
 
     @Override
     public int getSizeInventory() {
@@ -198,10 +203,12 @@ public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
             if (this.furnaceBurnTime > 0
                 && (this.furnaceCookTime > 0 || this.belowHeatableTile())) {
                 --this.furnaceBurnTime;
+                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
             }
 
             if (this.furnaceBurnTime <= 0
                 && (this.canSmelt() || this.belowHeatableTile())) {
+                this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
                 this.currentItemBurnTime = this.furnaceBurnTime
                     = getItemBurnTime(this.furnaceItemStacks[18]);
                 if (this.furnaceBurnTime > 0) {
@@ -227,20 +234,10 @@ public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
                         this.furnaceMaxCookTime = (int
                         ) ((float) this.furnaceMaxCookTime
                            * (1.0F - (float) this.bellows * 0.1F));
-                        this.worldObj.markBlockForUpdate(
-                            this.xCoord, this.yCoord, this.zCoord
-                        );
                         super.worldObj.updateLightByType(
                             EnumSkyBlock.Block, super.xCoord, super.yCoord, super.zCoord
                         );
-                        // TODO: WTF
-                        //if (this.furnaceItemStacks[18].getItem().func_46056_k()) {
-                        //    this.furnaceItemStacks[18] = new ItemStack(
-                        //        this.furnaceItemStacks[18].getItem().setFull3D()
-                        //    );
-                        //} else {
                         --this.furnaceItemStacks[18].stackSize;
-                        //}
 
                         if (this.furnaceItemStacks[18].stackSize == 0) {
                             this.furnaceItemStacks[18] = null;
@@ -284,8 +281,7 @@ public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
         }
 
         if (flag1) {
-            // TODO: WTF
-            //this.onInventoryChanged();
+            this.markDirty();
         }
     }
 
@@ -364,14 +360,7 @@ public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
                 } while (tryAgain);
 
                 if (smelted) {
-                    // TODO: WTF
-                    //if (this.furnaceItemStacks[input].getItem().func_46056_k()) {
-                    //    this.furnaceItemStacks[input] = new ItemStack(
-                    //        this.furnaceItemStacks[input].getItem().setFull3D()
-                    //    );
-                    //} else {
                     --this.furnaceItemStacks[input].stackSize;
-                    //}
 
                     if (this.furnaceItemStacks[input].stackSize <= 0) {
                         this.furnaceItemStacks[input] = null;
@@ -477,14 +466,40 @@ public class TileArcaneFurnace extends TileVisUser implements ISidedInventory {
     }
 
     @Override
-    public boolean
-    canInsertItem(int slot, ItemStack is, int side) {
+    public boolean canInsertItem(int slot, ItemStack is, int side) {
         return this.isItemValidForSlot(slot, is);
     }
 
     @Override
-    public boolean
-    canExtractItem(int slot, ItemStack is, int side) {
+    public boolean canExtractItem(int slot, ItemStack is, int side) {
         return slot >= 9 && slot <= 17;
+    }
+
+    @Override
+    public Packet getDescriptionPacket() {
+        NBTTagCompound nbt = new NBTTagCompound();
+
+        nbt.setInteger("furnaceBurnTime", this.furnaceBurnTime);
+        nbt.setInteger("currentItemBurnTime", this.currentItemBurnTime);
+        nbt.setInteger("furnaceCookTime", this.furnaceCookTime);
+        nbt.setInteger("furnaceMaxCookTime", this.furnaceMaxCookTime);
+        nbt.setFloat("vis", this.vis);
+        nbt.setBoolean("boost", this.boost);
+
+        return new S35PacketUpdateTileEntity(
+            this.xCoord, this.yCoord, this.zCoord, this.getBlockMetadata(), nbt
+        );
+    }
+
+    @Override
+    public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
+        NBTTagCompound nbt = pkt.func_148857_g();
+
+        this.furnaceBurnTime = nbt.getInteger("furnaceBurnTime");
+        this.currentItemBurnTime = nbt.getInteger("currentItemBurnTime");
+        this.furnaceCookTime = nbt.getInteger("furnaceCookTime");
+        this.furnaceMaxCookTime = nbt.getInteger("furnaceMaxCookTime");
+        this.vis = nbt.getFloat("vis");
+        this.boost = nbt.getBoolean("boost");
     }
 }

@@ -2,10 +2,12 @@ package net.anvilcraft.thaummach;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.anvilcraft.thaummach.container.ContainerArcaneFurnace;
 import net.anvilcraft.thaummach.container.ContainerBore;
 import net.anvilcraft.thaummach.container.ContainerCrystallizer;
 import net.anvilcraft.thaummach.container.ContainerVoidChest;
 import net.anvilcraft.thaummach.container.ContainerVoidInterface;
+import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
@@ -30,6 +32,7 @@ public class CommonProxy implements IGuiHandler {
     public void init() {}
 
     public void registerTileEntities() {
+        GameRegistry.registerTileEntity(TileArcaneFurnace.class, "arcane_furnace");
         GameRegistry.registerTileEntity(TileBore.class, "bore");
         GameRegistry.registerTileEntity(TileConduit.class, "conduit");
         GameRegistry.registerTileEntity(TileConduitPump.class, "conduit_pump");
@@ -53,8 +56,16 @@ public class CommonProxy implements IGuiHandler {
     getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         switch (GuiID.get(id)) {
+            case ARCANE_FURNACE:
+                return new ContainerArcaneFurnace(
+                    player.inventory, (TileArcaneFurnace) te
+                );
+
             case BORE:
                 return new ContainerBore(player.inventory, (TileBore) te);
+
+            case CRYSTALLIZER:
+                return new ContainerCrystallizer(player.inventory, (TileCrystallizer) te);
 
             case VOID_CHEST:
                 return new ContainerVoidChest(player.inventory, (TileVoidChest) te);
@@ -63,9 +74,6 @@ public class CommonProxy implements IGuiHandler {
                 return new ContainerVoidInterface(
                     player.inventory, (TileVoidInterface) te
                 );
-
-            case CRYSTALLIZER:
-                return new ContainerCrystallizer(player.inventory, (TileCrystallizer) te);
 
             default:
                 throw new IllegalArgumentException("ALEC");

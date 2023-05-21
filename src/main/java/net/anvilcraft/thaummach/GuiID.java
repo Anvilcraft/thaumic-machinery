@@ -1,10 +1,11 @@
 package net.anvilcraft.thaummach;
 
 public enum GuiID {
+    ARCANE_FURNACE,
     BORE,
+    CRYSTALLIZER,
     VOID_CHEST,
-    VOID_INTERFACE,
-    CRYSTALLIZER;
+    VOID_INTERFACE;
 
     public static GuiID get(int id) {
         if (id >= 0 && id < GuiID.values().length) {

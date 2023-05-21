@@ -5,6 +5,7 @@ import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
+import net.anvilcraft.thaummach.gui.GuiArcaneFurnace;
 import net.anvilcraft.thaummach.gui.GuiBore;
 import net.anvilcraft.thaummach.gui.GuiCrystallizer;
 import net.anvilcraft.thaummach.gui.GuiVoidChest;
@@ -17,6 +18,7 @@ import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidChestRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidInterfaceRenderer;
+import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
@@ -55,6 +57,7 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerTileEntities() {
+        GameRegistry.registerTileEntity(TileArcaneFurnace.class, "arcane_furnace");
         GameRegistry.registerTileEntity(TileConduit.class, "conduit");
         GameRegistry.registerTileEntity(TileConduitTank.class, "conduit_tank");
         GameRegistry.registerTileEntity(TileConduitValve.class, "conduit_valve");
@@ -87,17 +90,20 @@ public class ClientProxy extends CommonProxy {
     getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         TileEntity te = world.getTileEntity(x, y, z);
         switch (GuiID.get(id)) {
+            case ARCANE_FURNACE:
+                return new GuiArcaneFurnace(player.inventory, (TileArcaneFurnace) te);
+
             case BORE:
                 return new GuiBore(player.inventory, (TileBore) te);
+
+            case CRYSTALLIZER:
+                return new GuiCrystallizer(player.inventory, (TileCrystallizer) te);
 
             case VOID_CHEST:
                 return new GuiVoidChest(player.inventory, (TileVoidChest) te);
 
             case VOID_INTERFACE:
                 return new GuiVoidInterface(player.inventory, (TileVoidInterface) te);
-
-            case CRYSTALLIZER:
-                return new GuiCrystallizer(player.inventory, (TileCrystallizer) te);
 
             default:
                 throw new IllegalArgumentException("ALEC");
