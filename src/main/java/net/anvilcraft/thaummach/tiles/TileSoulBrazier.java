@@ -2,11 +2,13 @@ package net.anvilcraft.thaummach.tiles;
 
 import dev.tilera.auracore.api.AuraNode;
 import dev.tilera.auracore.aura.AuraManager;
+import net.anvilcraft.thaummach.GuiID;
+import net.anvilcraft.thaummach.ITileGui;
+import net.anvilcraft.thaummach.TMItems;
 import net.anvilcraft.thaummach.ThaumicMachinery;
 import net.anvilcraft.thaummach.packets.PacketFXSparkle;
 import net.anvilcraft.thaummach.packets.PacketFXWisp;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -16,20 +18,19 @@ import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.EnumSkyBlock;
 
-public class TileSoulBrazier extends TileEntity implements ISidedInventory {
+public class TileSoulBrazier extends TileEntity implements ISidedInventory, ITileGui {
     private ItemStack stack = null;
     private int delay;
     public int burnTime;
     private boolean previousLight;
     private int lightingDelay;
 
-    // TODO: implement soul fragment
-    public static ItemStack VALID_ITEM = new ItemStack(Blocks.soul_sand);
+    public static ItemStack VALID_ITEM = new ItemStack(TMItems.soul_fragment);
 
-    // TODO: GUIs
-    //public GuiScreen getGui(EntityPlayer player) {
-    //    return new GuiSoulBrazier(player.inventory, this);
-    //}
+    @Override
+    public GuiID getGuiID() {
+        return GuiID.SOUL_BRAZIER;
+    }
 
     public boolean isWorking() {
         return this.burnTime > 0
@@ -56,13 +57,11 @@ public class TileSoulBrazier extends TileEntity implements ISidedInventory {
         if (!super.worldObj.isBlockIndirectlyGettingPowered(
                 super.xCoord, super.yCoord, super.zCoord
             )) {
+            super.worldObj.markBlockForUpdate(super.xCoord, super.yCoord, super.zCoord);
             if (this.burnTime <= 0 && this.stack != null
                 && this.stack.isItemEqual(VALID_ITEM)) {
                 this.burnTime = 6000;
                 this.lightingDelay = 0;
-                super.worldObj.markBlockForUpdate(
-                    super.xCoord, super.yCoord, super.zCoord
-                );
                 super.worldObj.updateLightByType(
                     EnumSkyBlock.Block, super.xCoord, super.yCoord, super.zCoord
                 );

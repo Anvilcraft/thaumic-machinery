@@ -5,6 +5,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.container.ContainerArcaneFurnace;
 import net.anvilcraft.thaummach.container.ContainerBore;
 import net.anvilcraft.thaummach.container.ContainerCrystallizer;
+import net.anvilcraft.thaummach.container.ContainerSoulBrazier;
 import net.anvilcraft.thaummach.container.ContainerVoidChest;
 import net.anvilcraft.thaummach.container.ContainerVoidInterface;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
@@ -66,6 +67,9 @@ public class CommonProxy implements IGuiHandler {
 
             case CRYSTALLIZER:
                 return new ContainerCrystallizer(player.inventory, (TileCrystallizer) te);
+
+            case SOUL_BRAZIER:
+                return new ContainerSoulBrazier(player.inventory, (TileSoulBrazier) te);
 
             case VOID_CHEST:
                 return new ContainerVoidChest(player.inventory, (TileVoidChest) te);

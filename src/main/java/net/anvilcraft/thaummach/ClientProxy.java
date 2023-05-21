@@ -8,6 +8,7 @@ import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.gui.GuiArcaneFurnace;
 import net.anvilcraft.thaummach.gui.GuiBore;
 import net.anvilcraft.thaummach.gui.GuiCrystallizer;
+import net.anvilcraft.thaummach.gui.GuiSoulBrazier;
 import net.anvilcraft.thaummach.gui.GuiVoidChest;
 import net.anvilcraft.thaummach.gui.GuiVoidInterface;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
@@ -98,6 +99,9 @@ public class ClientProxy extends CommonProxy {
 
             case CRYSTALLIZER:
                 return new GuiCrystallizer(player.inventory, (TileCrystallizer) te);
+
+            case SOUL_BRAZIER:
+                return new GuiSoulBrazier(player.inventory, (TileSoulBrazier) te);
 
             case VOID_CHEST:
                 return new GuiVoidChest(player.inventory, (TileVoidChest) te);

@@ -4,6 +4,7 @@ public enum GuiID {
     ARCANE_FURNACE,
     BORE,
     CRYSTALLIZER,
+    SOUL_BRAZIER,
     VOID_CHEST,
     VOID_INTERFACE;
 

@@ -19,8 +19,8 @@ public class GuiArcaneFurnace extends GuiContainer {
 
     @Override
     protected void drawGuiContainerForegroundLayer(int alec1, int alec2) {
-        super.fontRendererObj.drawString("Thaumic Furnace", 48, 5, 4210752);
-        super.fontRendererObj.drawString("Inventory", 8, super.ySize - 96 + 2, 4210752);
+        super.fontRendererObj.drawString("Thaumic Furnace", 48, 5, 0x404040);
+        super.fontRendererObj.drawString("Inventory", 8, super.ySize - 96 + 2, 0x404040);
     }
 
     @Override

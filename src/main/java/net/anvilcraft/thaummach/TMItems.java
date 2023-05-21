@@ -5,6 +5,7 @@ import net.anvilcraft.thaummach.items.ItemCrystallineBell;
 import net.anvilcraft.thaummach.items.ItemFocus;
 import net.anvilcraft.thaummach.items.ItemRunicEssence;
 import net.anvilcraft.thaummach.items.ItemSingularity;
+import net.anvilcraft.thaummach.items.ItemSoulFragment;
 import net.anvilcraft.thaummach.items.ItemUpgrade;
 import net.minecraft.item.Item;
 
@@ -17,6 +18,7 @@ public class TMItems {
     public static Item focus4;
     public static Item runicEssence;
     public static Item singularity;
+    public static Item soul_fragment;
     public static Item upgrade;
 
     public static void init() {
@@ -32,6 +34,8 @@ public class TMItems {
 
         singularity = new ItemSingularity();
 
+        soul_fragment = new ItemSoulFragment();
+
         upgrade = new ItemUpgrade();
 
         GameRegistry.registerItem(crystallineBell, "crystalline_bell");
@@ -45,6 +49,8 @@ public class TMItems {
         GameRegistry.registerItem(runicEssence, "runic_essence");
 
         GameRegistry.registerItem(singularity, "singularity");
+
+        GameRegistry.registerItem(soul_fragment, "soul_fragment");
 
         GameRegistry.registerItem(upgrade, "upgrade");
     }
