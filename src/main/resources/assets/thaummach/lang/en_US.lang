@@ -33,6 +33,10 @@ tile.thaummach:apparatus_wood_dusk_totem.name=Dusk Totem
 
 # ---- ITEMS ----
 
+item.thaummach:detector_0.name=Vis Detector
+item.thaummach:detector_1.name=Taint Detector
+item.thaummach:detector_2.name=Thaumic Detector
+
 item.thaummach:focus_0.name=Arcane Focus
 item.thaummach:focus_1.name=Arcane Focus: Air
 item.thaummach:focus_2.name=Arcane Focus: Water

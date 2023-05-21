@@ -2,6 +2,7 @@ package net.anvilcraft.thaummach;
 
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.items.ItemCrystallineBell;
+import net.anvilcraft.thaummach.items.ItemDetector;
 import net.anvilcraft.thaummach.items.ItemFocus;
 import net.anvilcraft.thaummach.items.ItemRunicEssence;
 import net.anvilcraft.thaummach.items.ItemSingularity;
@@ -11,6 +12,7 @@ import net.minecraft.item.Item;
 
 public class TMItems {
     public static Item crystallineBell;
+    public static Item detector;
     public static Item focus0;
     public static Item focus1;
     public static Item focus2;
@@ -23,6 +25,8 @@ public class TMItems {
 
     public static void init() {
         crystallineBell = new ItemCrystallineBell();
+
+        detector = new ItemDetector();
 
         focus0 = new ItemFocus(0);
         focus1 = new ItemFocus(1);
@@ -39,6 +43,8 @@ public class TMItems {
         upgrade = new ItemUpgrade();
 
         GameRegistry.registerItem(crystallineBell, "crystalline_bell");
+
+        GameRegistry.registerItem(detector, "detector");
 
         GameRegistry.registerItem(focus0, "focus0");
         GameRegistry.registerItem(focus1, "focus1");
