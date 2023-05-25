@@ -51,9 +51,9 @@ public class ItemCrystallineBell extends Item implements IRepairable {
         ItemStack itemstack,
         EntityPlayer player,
         World world,
-        int i,
-        int j,
-        int k,
+        int x,
+        int y,
+        int z,
         int l,
         // useless parameters
         float alec1,
@@ -63,15 +63,16 @@ public class ItemCrystallineBell extends Item implements IRepairable {
         if (itemstack.stackSize == 0)
             return false;
 
-        int meta = world.getBlockMetadata(i, j, k);
-        TileEntity te = world.getTileEntity(i, j, k);
+        int meta = world.getBlockMetadata(x, y, z);
+        TileEntity te = world.getTileEntity(x, y, z);
         if (te != null && te instanceof ICrystal) {
-            if (((ICrystal) te).getCrystalCount(meta) == 1)
+            if (!((ICrystal) te).canHarvest(player))
                 return false;
+
             world.playSoundEffect(
-                (double) ((float) i + 0.5F),
-                (double) ((float) j + 0.5F),
-                (double) ((float) k + 0.5F),
+                (double) ((float) x + 0.5F),
+                (double) ((float) y + 0.5F),
+                (double) ((float) z + 0.5F),
                 "random.orb",
                 0.5F,
                 0.8F + (float) ((ICrystal) te).getCrystalCount(meta) * 0.1F
@@ -80,10 +81,10 @@ public class ItemCrystallineBell extends Item implements IRepairable {
             ((ICrystal) te).harvestShard(player);
 
             itemstack.damageItem(1, player);
-            world.markBlockForUpdate(i, j, k);
+            world.markBlockForUpdate(x, y, z);
             return true;
         }
-        return super.onItemUse(itemstack, player, world, i, j, k, l, alec1, alec2, alec3);
+        return super.onItemUse(itemstack, player, world, x, y, z, l, alec1, alec2, alec3);
     }
 
     // TODO: WTF

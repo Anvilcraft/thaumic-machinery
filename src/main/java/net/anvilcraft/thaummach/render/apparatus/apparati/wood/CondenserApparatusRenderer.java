@@ -63,11 +63,11 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
                 rb.renderStandardBlock(block, i, j, k);
             }
 
-            rb.overrideBlockTexture = block.iconCondenserPart1;
+            rb.overrideBlockTexture = block.iconCondenserPart;
             rb.setRenderBounds(0.5F - w2, w2, 0.0F, 0.5F + w2, 1.0F - w2, 1.0F);
             if (inv) {
                 ApparatusRenderingHelper.drawFaces(
-                    rb, block, block.iconCondenserPart1, false
+                    rb, block, block.iconCondenserPart, false
                 );
             } else {
                 rb.renderStandardBlock(block, i, j, k);
@@ -76,7 +76,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
             rb.setRenderBounds(0.0F, w2, 0.5F - w2, 1.0F, 1.0F - w2, 0.5F + w2);
             if (inv) {
                 ApparatusRenderingHelper.drawFaces(
-                    rb, block, block.iconCondenserPart1, false
+                    rb, block, block.iconCondenserPart, false
                 );
             } else {
                 rb.renderStandardBlock(block, i, j, k);
@@ -85,7 +85,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
             rb.setRenderBounds(0.5F - w2, w2, 0.0F, 0.5F + w2, 1.0F - w2, 1.0F);
             if (inv) {
                 ApparatusRenderingHelper.drawFaces(
-                    rb, block, block.iconCondenserPart1, false
+                    rb, block, block.iconCondenserPart, false
                 );
             } else {
                 rb.renderStandardBlock(block, i, j, k);
@@ -94,7 +94,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
             rb.setRenderBounds(0.0F, w2, 0.5F - w2, 1.0F, 1.0F - w2, 0.5F + w2);
             if (inv) {
                 ApparatusRenderingHelper.drawFaces(
-                    rb, block, block.iconCondenserPart1, false
+                    rb, block, block.iconCondenserPart, false
                 );
             } else {
                 rb.renderStandardBlock(block, i, j, k);

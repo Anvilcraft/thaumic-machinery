@@ -87,20 +87,18 @@ public class TileCondenser
                     );
                     if (nodeID >= 0) {
                         AuraNode node = AuraManager.getNode(nodeID);
-                        if (this.currentType != 9) {
-                            if (node.level > 0) {
-                                AuraManager.queueNodeChanges(
-                                    nodeID, -1, 0, false, null, 0, 0, 0
-                                );
-                                this.progress = 0.0f;
-                                ++this.currentVis;
-                            } else if (this.hasUpgrade((byte) 3) && node.taint > 0) {
-                                AuraManager.queueNodeChanges(
-                                    nodeID, 0, 0, -1, false, null, 0, 0, 0
-                                );
-                                this.progress = 0.0f;
-                                ++this.currentTaint;
-                            }
+                        if (this.currentType != 9 && node.level > 0) {
+                            AuraManager.queueNodeChanges(
+                                nodeID, -1, 0, false, null, 0, 0, 0
+                            );
+                            this.progress = 0.0f;
+                            ++this.currentVis;
+                        } else if (this.hasUpgrade((byte) 3) && node.taint > 0) {
+                            AuraManager.queueNodeChanges(
+                                nodeID, 0, 0, -1, false, null, 0, 0, 0
+                            );
+                            this.progress = 0.0f;
+                            ++this.currentTaint;
                         }
 
                         this.worldObj.markBlockForUpdate(

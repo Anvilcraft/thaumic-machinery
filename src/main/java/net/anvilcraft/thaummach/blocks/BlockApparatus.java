@@ -2,6 +2,7 @@ package net.anvilcraft.thaummach.blocks;
 
 import java.util.Random;
 
+import net.anvilcraft.thaummach.AuraUtils;
 import net.anvilcraft.thaummach.GuiID;
 import net.anvilcraft.thaummach.ITileGui;
 import net.anvilcraft.thaummach.TMTab;
@@ -124,6 +125,9 @@ public abstract class BlockApparatus extends BlockContainer {
                 }
             }
         }
+
+        AuraUtils.spillTaint(world, x, y, z);
+
         super.breakBlock(world, x, y, z, block, meta);
     }
 

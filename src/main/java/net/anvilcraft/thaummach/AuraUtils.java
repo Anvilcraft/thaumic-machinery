@@ -2,10 +2,10 @@ package net.anvilcraft.thaummach;
 
 import dev.tilera.auracore.api.machine.IConnection;
 import dev.tilera.auracore.aura.AuraManager;
+import net.anvilcraft.thaummach.particles.FXWisp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
-import thaumcraft.client.fx.particles.FXWisp;
 
 public class AuraUtils {
     public static void taintExplosion(World w, int x, int y, int z) {

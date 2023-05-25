@@ -720,16 +720,12 @@ public class BlockApparatusMetal extends BlockApparatus {
     @Override
     public void breakBlock(World world, int i, int j, int k, Block block, int meta_) {
         MetaVals meta = MetaVals.get(meta_);
-        if (meta.isCrucible() || meta == MetaVals.TANK) {
-            AuraUtils.spillTaint(world, i, j, k);
-        }
 
         if (meta == MetaVals.VOID_INTERFACE) {
             TileVoidInterface ts = (TileVoidInterface) world.getTileEntity(i, j, k);
             if (ts != null) {
                 ts.invalidateLinks();
             }
-
         } else {
             super.breakBlock(world, i, j, k, block, meta_);
         }

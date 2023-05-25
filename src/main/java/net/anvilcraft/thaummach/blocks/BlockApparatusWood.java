@@ -28,8 +28,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockApparatusWood extends BlockApparatus {
-    public IIcon iconCondenserPart1;
-    public IIcon iconCondenserPart2;
+    public IIcon iconCondenserPart;
     public IIcon iconCondenserSide;
     public IIcon iconCondenserSpeedUpgrade;
     public IIcon iconCondenserTop;
@@ -62,8 +61,7 @@ public class BlockApparatusWood extends BlockApparatus {
     public void registerBlockIcons(IIconRegister register) {
         Function<String, IIcon> reg = (s) -> register.registerIcon("thaummach:" + s);
 
-        this.iconCondenserPart1 = reg.apply("condenser_part_1");
-        this.iconCondenserPart2 = reg.apply("condenser_part_2");
+        this.iconCondenserPart = reg.apply("condenser_part");
         this.iconCondenserSide = reg.apply("condenser_side");
         this.iconCondenserSpeedUpgrade = reg.apply("condenser_speed_upgrade");
         this.iconCondenserTop = reg.apply("condenser_top");

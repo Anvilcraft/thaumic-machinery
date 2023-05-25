@@ -389,17 +389,6 @@ public class BlockApparatusFragile extends BlockApparatus {
     }
 
     @Override
-    public void breakBlock(World world, int x, int y, int z, Block block, int meta_) {
-        // TODO: not sure if param 6 is meta
-        MetaVals meta = MetaVals.get(meta_);
-
-        if (meta != MetaVals.CONDUIT_PUMP) {
-            AuraUtils.spillTaint(world, x, y, z);
-        }
-        super.breakBlock(world, x, y, z, block, meta_);
-    }
-
-    @Override
     public int getRenderType() {
         return BlockApparatusRenderer.RI;
     }
