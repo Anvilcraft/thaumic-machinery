@@ -1,4 +1,4 @@
-package net.anvilcraft.thaummach.render;
+package net.anvilcraft.thaummach.render.tile;
 
 import net.anvilcraft.thaummach.TMBlocks;
 import net.anvilcraft.thaummach.tiles.TileSeal;

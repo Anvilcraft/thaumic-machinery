@@ -101,7 +101,6 @@ public class ItemUpgrade extends Item {
         float alec2,
         float alec3
     ) {
-        System.out.println("ALEC");
         TileEntity ent = world.getTileEntity(x, y, z);
         if (ent != null && ent instanceof IUpgradable) {
             IUpgradable ue = (IUpgradable) ent;

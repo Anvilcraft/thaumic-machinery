@@ -3,6 +3,7 @@ package net.anvilcraft.thaummach;
 public enum GuiID {
     ARCANE_FURNACE,
     BORE,
+    CONDENSER,
     CRYSTALLIZER,
     SOUL_BRAZIER,
     VOID_CHEST,

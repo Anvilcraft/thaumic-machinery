@@ -1,30 +1,55 @@
 package net.anvilcraft.thaummach.blocks;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.IntStream;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.anvilcraft.thaummach.particles.FXWisp;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.wood.CondenserApparatusRenderer;
+import net.anvilcraft.thaummach.tiles.TileCondenser;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.RenderBlocks;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.IIcon;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockApparatusWood extends BlockApparatus {
+    public IIcon iconCondenserPart1;
+    public IIcon iconCondenserPart2;
+    public IIcon iconCondenserSide;
+    public IIcon iconCondenserSpeedUpgrade;
+    public IIcon iconCondenserTop;
+
+    public IIcon iconDawnTotemBottom;
+    public IIcon[] iconsDawnTotemSide;
+
+    public IIcon iconDuskTotemBottom;
+    public IIcon[] iconsDuskTotemSide;
+
+    public IIcon iconDuplicatorBottom;
+    public IIcon iconDuplicatorInside;
+    public IIcon iconDuplicatorSide;
+    public IIcon iconDuplicatorTop;
+
+    public IIcon iconRestorerBottom;
+    public IIcon iconRestorerSide;
+    public IIcon iconRestorerSidePipes;
+    public IIcon iconRestorerTop;
+
     public BlockApparatusWood() {
         super(Material.wood);
         this.setHardness(2.0F);
@@ -34,14 +59,49 @@ public class BlockApparatusWood extends BlockApparatus {
     }
 
     @Override
+    public void registerBlockIcons(IIconRegister register) {
+        Function<String, IIcon> reg = (s) -> register.registerIcon("thaummach:" + s);
+
+        this.iconCondenserPart1 = reg.apply("condenser_part_1");
+        this.iconCondenserPart2 = reg.apply("condenser_part_2");
+        this.iconCondenserSide = reg.apply("condenser_side");
+        this.iconCondenserSpeedUpgrade = reg.apply("condenser_speed_upgrade");
+        this.iconCondenserTop = reg.apply("condenser_top");
+
+        this.iconDawnTotemBottom = reg.apply("dawn_totem_bottom");
+        this.iconsDawnTotemSide = IntStream.rangeClosed(1, 6)
+                                      .mapToObj((i) -> reg.apply("dawn_totem_side_" + i))
+                                      .toArray(IIcon[] ::new);
+
+        this.iconDuskTotemBottom = reg.apply("dusk_totem_bottom");
+        this.iconsDuskTotemSide = IntStream.rangeClosed(1, 6)
+                                      .mapToObj((i) -> reg.apply("dusk_totem_side_" + i))
+                                      .toArray(IIcon[] ::new);
+
+        this.iconDuplicatorBottom = reg.apply("duplicator_bottom");
+        this.iconDuplicatorSide = reg.apply("duplicator_side");
+        this.iconDuplicatorInside = reg.apply("duplicator_inside");
+        this.iconDuplicatorTop = reg.apply("duplicator_top");
+
+        this.iconRestorerBottom = reg.apply("restorer_bottom");
+        this.iconRestorerSide = reg.apply("restorer_side");
+        this.iconRestorerSidePipes = reg.apply("restorer_side_pipes");
+        this.iconRestorerTop = reg.apply("restorer_top");
+    }
+
+    @Override
     public IApparatusRenderer getApparatusRenderer(int meta) {
         switch (MetaVals.get(meta)) {
+            case CONDENSER:
+                return CondenserApparatusRenderer.INSTANCE;
+
             default:
                 return null;
         }
     }
 
     @Override
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List itemList) {
         itemList.add(new ItemStack(this, 1, 0));
         itemList.add(new ItemStack(this, 1, 1));
@@ -55,9 +115,9 @@ public class BlockApparatusWood extends BlockApparatus {
         MetaVals md = MetaVals.get(meta);
 
         switch (md) {
-                //case CONDENSER:
-                //    return new TileCondenser();
-                //
+            case CONDENSER:
+                return new TileCondenser();
+
                 //case DUPLICATOR:
                 //    return new TileDuplicator();
                 //
@@ -222,46 +282,49 @@ public class BlockApparatusWood extends BlockApparatus {
     //    }
     //}
 
-    //@Override
-    //public int getBlockTexture(IBlockAccess iblockaccess, int i, int j, int k, int l) {
-    //    int md = iblockaccess.getBlockMetadata(i, j, k);
-    //    if (md == 0) {
-    //        return l <= 1 ? 113 : 112;
-    //    } else if (md == 1) {
-    //        if (l <= 1) {
-    //            return 70;
-    //        } else {
-    //            TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
-    //            if (te != null && te instanceof TileDuplicator) {
-    //                if (((TileDuplicator) te).orientation == 0 && l == 2) {
-    //                    return 71;
-    //                }
+    @Override
+    public IIcon getIcon(IBlockAccess iblockaccess, int i, int j, int k, int l) {
+        MetaVals md = MetaVals.get(iblockaccess.getBlockMetadata(i, j, k));
+        if (md == MetaVals.CONDENSER) {
+            return l <= 1 ? this.iconCondenserTop : this.iconCondenserSide;
+        }
+        //else if (md == 1) {
+        //    if (l <= 1) {
+        //        return 70;
+        //    } else {
+        //        TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
+        //        if (te != null && te instanceof TileDuplicator) {
+        //            if (((TileDuplicator) te).orientation == 0 && l == 2) {
+        //                return 71;
+        //            }
 
-    //                if (((TileDuplicator) te).orientation == 1 && l == 5) {
-    //                    return 71;
-    //                }
+        //            if (((TileDuplicator) te).orientation == 1 && l == 5) {
+        //                return 71;
+        //            }
 
-    //                if (((TileDuplicator) te).orientation == 2 && l == 3) {
-    //                    return 71;
-    //                }
+        //            if (((TileDuplicator) te).orientation == 2 && l == 3) {
+        //                return 71;
+        //            }
 
-    //                if (((TileDuplicator) te).orientation == 3 && l == 4) {
-    //                    return 71;
-    //                }
-    //            }
+        //            if (((TileDuplicator) te).orientation == 3 && l == 4) {
+        //                return 71;
+        //            }
+        //        }
 
-    //            return 72;
-    //        }
-    //    } else if (md == 2) {
-    //        return l <= 1 ? 86 : 87;
-    //    } else if (md == 3) {
-    //        return l <= 1 ? 127 : 121 + Math.abs((i + j + k) % 6);
-    //    } else if (md == 4) {
-    //        return l <= 1 ? 143 : 137 + Math.abs((i + j + k) % 6);
-    //    } else {
-    //        return 15;
-    //    }
-    //}
+        //        return 72;
+        //    }
+        //} else if (md == 2) {
+        //    return l <= 1 ? 86 : 87;
+        //} else if (md == 3) {
+        //    return l <= 1 ? 127 : 121 + Math.abs((i + j + k) % 6);
+        //} else if (md == 4) {
+        //    return l <= 1 ? 143 : 137 + Math.abs((i + j + k) % 6);
+        //} else {
+        //    return 15;
+        //}
+
+        return null;
+    }
 
     @Override
     public int damageDropped(int i) {

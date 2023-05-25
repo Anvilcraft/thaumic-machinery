@@ -7,20 +7,23 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.gui.GuiArcaneFurnace;
 import net.anvilcraft.thaummach.gui.GuiBore;
+import net.anvilcraft.thaummach.gui.GuiCondenser;
 import net.anvilcraft.thaummach.gui.GuiCrystallizer;
 import net.anvilcraft.thaummach.gui.GuiSoulBrazier;
 import net.anvilcraft.thaummach.gui.GuiVoidChest;
 import net.anvilcraft.thaummach.gui.GuiVoidInterface;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
-import net.anvilcraft.thaummach.render.TileSealRenderer;
 import net.anvilcraft.thaummach.render.entity.EntitySingularityRenderer;
 import net.anvilcraft.thaummach.render.tile.TileBoreRenderer;
+import net.anvilcraft.thaummach.render.tile.TileCondenserRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
+import net.anvilcraft.thaummach.render.tile.TileSealRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidChestRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidInterfaceRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
+import net.anvilcraft.thaummach.tiles.TileCondenser;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.anvilcraft.thaummach.tiles.TileConduitPump;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
@@ -58,32 +61,25 @@ public class ClientProxy extends CommonProxy {
 
     @Override
     public void registerTileEntities() {
+        // clang-format off
         GameRegistry.registerTileEntity(TileArcaneFurnace.class, "arcane_furnace");
         GameRegistry.registerTileEntity(TileConduit.class, "conduit");
         GameRegistry.registerTileEntity(TileConduitTank.class, "conduit_tank");
         GameRegistry.registerTileEntity(TileConduitValve.class, "conduit_valve");
-        GameRegistry.registerTileEntity(
-            TileConduitValveAdvanced.class, "conduit_valve_advanced"
-        );
+        GameRegistry.registerTileEntity(TileConduitValveAdvanced.class, "conduit_valve_advanced");
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
         GameRegistry.registerTileEntity(TileSoulBrazier.class, "soulBrazier");
 
         ClientRegistry.registerTileEntity(TileBore.class, "bore", new TileBoreRenderer());
-        ClientRegistry.registerTileEntity(
-            TileConduitPump.class, "conduit_pump", new TileConduitPumpRenderer()
-        );
-        ClientRegistry.registerTileEntity(
-            TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer()
-        );
+        ClientRegistry.registerTileEntity(TileCondenser.class, "condenser", new TileCondenserRenderer());
+        ClientRegistry.registerTileEntity(TileConduitPump.class, "conduit_pump", new TileConduitPumpRenderer());
+        ClientRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer());
         ClientRegistry.registerTileEntity(TileSeal.class, "seal", new TileSealRenderer());
-        ClientRegistry.registerTileEntity(
-            TileVoidChest.class, "voidChest", new TileVoidChestRenderer()
-        );
-        ClientRegistry.registerTileEntity(
-            TileVoidInterface.class, "voidInterface", new TileVoidInterfaceRenderer()
-        );
+        ClientRegistry.registerTileEntity(TileVoidChest.class, "voidChest", new TileVoidChestRenderer());
+        ClientRegistry.registerTileEntity(TileVoidInterface.class, "voidInterface", new TileVoidInterfaceRenderer());
+        // clang-format on
     }
 
     @Override
@@ -96,6 +92,9 @@ public class ClientProxy extends CommonProxy {
 
             case BORE:
                 return new GuiBore(player.inventory, (TileBore) te);
+
+            case CONDENSER:
+                return new GuiCondenser(player.inventory, (TileCondenser) te);
 
             case CRYSTALLIZER:
                 return new GuiCrystallizer(player.inventory, (TileCrystallizer) te);
