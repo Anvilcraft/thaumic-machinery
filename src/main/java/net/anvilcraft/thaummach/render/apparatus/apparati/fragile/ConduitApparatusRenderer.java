@@ -133,7 +133,7 @@ public class ConduitApparatusRenderer implements IApparatusRenderer {
                                 rb.renderStandardBlock(block, x, y, z);
                         }
 
-                        if (visible || !((IConnection) te).isVisConduit()) {
+                        if (visible) {
                             rb.overrideBlockTexture = null;
                             tessellator.setBrightness(20 + (int) (b * 210.0F));
                             tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
