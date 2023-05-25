@@ -27,6 +27,7 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -181,9 +182,18 @@ public class BlockApparatusFragile extends BlockApparatus {
     }
 
     @Override
+    @SuppressWarnings("rawtypes")
+    public void addCollisionBoxesToList(
+        World world, int x, int y, int z, AxisAlignedBB bb, List list, Entity e
+    ) {
+        this.setBlockBoundsBasedOnState(world, x, y, z);
+        super.addCollisionBoxesToList(world, x, y, z, bb, list, e);
+    }
+
+    @Override
     public void
-    setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
-        MetaVals md = MetaVals.get(iblockaccess.getBlockMetadata(i, j, k));
+    setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int x, int y, int z) {
+        MetaVals md = MetaVals.get(iblockaccess.getBlockMetadata(x, y, z));
         float w1;
         if (md != MetaVals.CONDUIT && md != MetaVals.CONDUIT_VALVE
             && md != MetaVals.CONDUIT_VALVE_ADVANCED) {
@@ -191,8 +201,6 @@ public class BlockApparatusFragile extends BlockApparatus {
                 if (md == MetaVals.CONDUIT_VALVE) {
                     w1 = 0.0625F;
                     this.setBlockBounds(w1, 0.0F, w1, 1.0F - w1, 1.0F, 1.0F - w1);
-                } else if (md == null) {
-                    this.setBlockBounds(0.0F, 0.0F, 0.0F, 0.0F, 0.0F, 0.0F);
                 } else {
                     this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
                 }
@@ -207,8 +215,8 @@ public class BlockApparatusFragile extends BlockApparatus {
     }
 
     @Override
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World w, int i, int j, int k) {
-        MetaVals md = MetaVals.get(w.getBlockMetadata(i, j, k));
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World w, int x, int y, int z) {
+        MetaVals md = MetaVals.get(w.getBlockMetadata(x, y, z));
         float w1;
         if (md != MetaVals.CONDUIT && md != MetaVals.CONDUIT_VALVE
             && md != MetaVals.CONDUIT_VALVE_ADVANCED) {
@@ -249,7 +257,7 @@ public class BlockApparatusFragile extends BlockApparatus {
             );
         }
 
-        return super.getSelectedBoundingBoxFromPool(w, i, j, k);
+        return super.getSelectedBoundingBoxFromPool(w, x, y, z);
     }
 
     @Override

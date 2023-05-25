@@ -434,8 +434,8 @@ public class BlockApparatusMetal extends BlockApparatus {
 
     @Override
     public void
-    setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
-        MetaVals md = MetaVals.get(iblockaccess.getBlockMetadata(i, j, k));
+    setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int x, int y, int z) {
+        MetaVals md = MetaVals.get(iblockaccess.getBlockMetadata(x, y, z));
         float t4;
         if (md != MetaVals.GENERATOR && md != MetaVals.BORE) {
             if (md == MetaVals.TANK) {
