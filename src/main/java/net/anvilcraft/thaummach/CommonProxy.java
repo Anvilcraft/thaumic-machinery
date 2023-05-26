@@ -21,13 +21,16 @@ import net.anvilcraft.thaummach.tiles.TileConduitValveAdvanced;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileFilter;
+import net.anvilcraft.thaummach.tiles.TileGenerator;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
 import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
 
@@ -49,6 +52,7 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
         GameRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
+        GameRegistry.registerTileEntity(TileGenerator.class, "generator");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
         GameRegistry.registerTileEntity(TileRepairer.class, "repairer");
         GameRegistry.registerTileEntity(TileSeal.class, "seal");
@@ -90,6 +94,15 @@ public class CommonProxy implements IGuiHandler {
                 return new ContainerVoidInterface(
                     player.inventory, (TileVoidInterface) te
                 );
+
+            // GUIs with no meaningful container
+            case GENERATOR:
+                return new Container() {
+                    @Override
+                    public boolean canInteractWith(EntityPlayer player) {
+                        return true;
+                    }
+                };
 
             default:
                 throw new IllegalArgumentException("ALEC");

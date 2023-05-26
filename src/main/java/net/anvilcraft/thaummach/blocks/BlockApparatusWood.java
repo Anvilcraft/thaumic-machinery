@@ -11,7 +11,7 @@ import net.anvilcraft.thaummach.particles.FXWisp;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.wood.CondenserApparatusRenderer;
-import net.anvilcraft.thaummach.render.apparatus.apparati.wood.RepairerAparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.wood.RepairerApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
 import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.minecraft.block.Block;
@@ -96,7 +96,7 @@ public class BlockApparatusWood extends BlockApparatus {
                 return CondenserApparatusRenderer.INSTANCE;
 
             case REPAIRER:
-                return RepairerAparatusRenderer.INSTANCE;
+                return RepairerApparatusRenderer.INSTANCE;
 
             default:
                 return null;

@@ -9,9 +9,9 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-public class RepairerAparatusRenderer implements IApparatusRenderer {
-    public static final RepairerAparatusRenderer INSTANCE
-        = new RepairerAparatusRenderer();
+public class RepairerApparatusRenderer implements IApparatusRenderer {
+    public static final RepairerApparatusRenderer INSTANCE
+        = new RepairerApparatusRenderer();
 
     @Override
     public void renderApparatus(

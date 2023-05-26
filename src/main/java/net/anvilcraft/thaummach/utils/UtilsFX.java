@@ -3,7 +3,7 @@ package net.anvilcraft.thaummach.utils;
 import dev.tilera.auracore.client.FXSparkle;
 import net.anvilcraft.thaummach.TMItems;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 import thaumcraft.client.fx.particles.FXWisp;
@@ -279,7 +279,7 @@ public class UtilsFX {
      * Draws an upgrade into the GuiContainer.
      */
     public static void
-    renderUpgradeIntoGUI(GuiContainer gui, int upgrade, int x, int y) {
+    renderUpgradeIntoGUI(Gui gui, int upgrade, int x, int y) {
         if (upgrade < 0)
             return;
 

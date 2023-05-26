@@ -53,6 +53,15 @@
             }
         ]
     },
+    "alecloop": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "alecloop",
+                "stream": false
+            }
+        ]
+    },
     "upgrade": {
         "category": "master",
         "sounds": [

@@ -2,6 +2,7 @@ package net.anvilcraft.thaummach.blocks;
 
 import java.util.Random;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.anvilcraft.thaummach.AuraUtils;
 import net.anvilcraft.thaummach.GuiID;
 import net.anvilcraft.thaummach.ITileGui;
@@ -19,6 +20,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.client.MinecraftForgeClient;
 
 public abstract class BlockApparatus extends BlockContainer {
     protected int currentPass;
@@ -74,6 +76,7 @@ public abstract class BlockApparatus extends BlockContainer {
             if (te instanceof ITileGui) {
                 if (world.isRemote)
                     return true;
+
                 GuiID id = ((ITileGui) te).getGuiID();
 
                 entityplayer.openGui(

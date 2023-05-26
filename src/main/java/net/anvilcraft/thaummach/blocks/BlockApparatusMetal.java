@@ -5,13 +5,13 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 import dev.tilera.auracore.client.FXSparkle;
-import net.anvilcraft.thaummach.AuraUtils;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.ArcaneFurnaceApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.metal.GeneratorApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.SoulBrazierApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.TankApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidChestApparatusRenderer;
@@ -21,6 +21,7 @@ import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileConduitTank;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
+import net.anvilcraft.thaummach.tiles.TileGenerator;
 import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
@@ -62,6 +63,7 @@ public class BlockApparatusMetal extends BlockApparatus {
     public IIcon iconGenerator1;
     public IIcon iconGenerator2;
     public IIcon iconGenerator3;
+    public IIcon iconGenerator4;
     public IIcon iconSoulBrazierBottom;
     public IIcon iconSoulBrazierSide;
     public IIcon iconSoulCrucibleBottom;
@@ -108,6 +110,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         this.iconGenerator1 = reg.registerIcon("thaummach:generator_1");
         this.iconGenerator2 = reg.registerIcon("thaummach:generator_2");
         this.iconGenerator3 = reg.registerIcon("thaummach:generator_3");
+        this.iconGenerator4 = reg.registerIcon("thaummach:generator_4");
         this.iconSoulBrazierBottom = reg.registerIcon("thaummach:soul_brazier_bottom");
         this.iconSoulBrazierSide = reg.registerIcon("thaummach:soul_brazier_side");
         this.iconSoulCrucibleBottom = reg.registerIcon("thaummach:soul_crucible_bottom");
@@ -168,6 +171,9 @@ public class BlockApparatusMetal extends BlockApparatus {
             case BORE:
                 return BoreApparatusRenderer.INSTANCE;
 
+            case GENERATOR:
+                return GeneratorApparatusRenderer.INSTANCE;
+
             case VOID_CHEST:
                 return VoidChestApparatusRenderer.INSTANCE;
 
@@ -181,7 +187,7 @@ public class BlockApparatusMetal extends BlockApparatus {
                 return TankApparatusRenderer.INSTANCE;
 
             default:
-                return null;
+                throw new IllegalArgumentException("ALEC");
         }
     }
 
@@ -195,7 +201,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (md == MetaVals.ARCANE_FURNACE) {
             return new TileArcaneFurnace();
         } else if (md == MetaVals.GENERATOR) {
-            //return new TileGenerator();
+            return new TileGenerator();
         } else if (md == MetaVals.CRYSTALLIZER) {
             return new TileCrystallizer();
         } else if (md == MetaVals.BORE) {
@@ -327,11 +333,9 @@ public class BlockApparatusMetal extends BlockApparatus {
         } else if (meta == MetaVals.SOUL_BRAZIER) {
             return side == 0 || side == 1 ? this.iconSoulBrazierBottom
                                           : this.iconSoulBrazierSide;
-        }
-        //else if (meta == 5) {
-        //    return 144;
-        //}
-        else if (meta == MetaVals.CRYSTALLIZER) {
+        } else if (meta == MetaVals.GENERATOR) {
+            return this.iconGenerator1;
+        } else if (meta == MetaVals.CRYSTALLIZER) {
             if (side == 1) {
                 return this.iconCrystallizerTop;
             } else if (side == 0) {
@@ -652,33 +656,27 @@ public class BlockApparatusMetal extends BlockApparatus {
         }
 
         if (meta == MetaVals.GENERATOR) {
-            // TODO: generator
-            //TileGenerator tg = (TileGenerator) w.getTileEntity(i, j, k);
-            //int arcs = 20;
-            //if (!ModLoader.getMinecraftInstance().gameSettings.fancyGraphics
-            //    || Config.lowGfx) {
-            //    arcs = 10;
-            //}
+            TileGenerator tg = (TileGenerator) w.getTileEntity(i, j, k);
+            arcs = 20;
 
-            //arcs = arcs * tg.storedEnergy / tg.energyMax;
-            //if (w.rand.nextInt(20) < arcs) {
-            //    LightningBolt bolt = new LightningBolt(
-            //        w,
-            //        (double) i + 0.5,
-            //        (double) j + 0.5,
-            //        (double) k + 0.5,
-            //        (double) i + 0.1 + (double) w.rand.nextFloat() * 0.8,
-            //        (double) j + 0.1 + (double) w.rand.nextFloat() * 0.8,
-            //        (double) k + 0.1 + (double) w.rand.nextFloat() * 0.8,
-            //        w.rand.nextLong(),
-            //        6,
-            //        9.0F
-            //    );
-            //    bolt.defaultFractal();
-            //    bolt.setType(0);
-            //    bolt.setNonLethal();
-            //    bolt.finalizeBolt();
-            //}
+            arcs = arcs * tg.storedEnergy / tg.energyMax;
+            if (w.rand.nextInt(20) < arcs) {
+                FXLightningBolt bolt = new FXLightningBolt(
+                    w,
+                    (double) i + 0.5,
+                    (double) j + 0.5,
+                    (double) k + 0.5,
+                    (double) i + 0.1 + (double) w.rand.nextFloat() * 0.8,
+                    (double) j + 0.1 + (double) w.rand.nextFloat() * 0.8,
+                    (double) k + 0.1 + (double) w.rand.nextFloat() * 0.8,
+                    w.rand.nextLong(),
+                    6,
+                    9.0F
+                );
+                bolt.defaultFractal();
+                bolt.setType(0);
+                bolt.finalizeBolt();
+            }
         }
 
         if (meta == MetaVals.CRYSTALLIZER) {
