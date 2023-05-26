@@ -31,21 +31,6 @@ public class TileBoreRenderer extends TileEntitySpecialRenderer {
         GL11.glRotatef(angleS, 0.0F, 0.0F, 1.0F);
         GL11.glTranslatef(0.25f, 0.25f, 0.0F);
         GL11.glScalef(-0.5f, -0.5f, 1f);
-        // TODO: rüssel
-        //ThaumCraftRenderer.renderItemFromTexture(
-        //    mc,
-        //    "/thaumcraft/resources/items.png",
-        //    16,
-        //    43 + cr.focus,
-        //    0.4F,
-        //    1.5F + jitter,
-        //    true,
-        //    1.0F,
-        //    1.0F,
-        //    1.0F,
-        //    220,
-        //    771
-        //);
 
         if (cr.boreItemStacks[0] != null) {
             mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);

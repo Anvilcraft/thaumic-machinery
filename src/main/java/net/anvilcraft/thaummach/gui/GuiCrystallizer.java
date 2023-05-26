@@ -1,12 +1,11 @@
 package net.anvilcraft.thaummach.gui;
 
-import net.anvilcraft.thaummach.TMItems;
 import net.anvilcraft.thaummach.container.ContainerCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
+import net.anvilcraft.thaummach.utils.UtilsFX;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.util.IIcon;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
@@ -47,13 +46,10 @@ public class GuiCrystallizer extends GuiContainer {
         }
 
         if (this.crystallizerInventory.getUpgrades()[0] >= 0) {
-            IIcon itemIcon = TMItems.upgrade.getIconFromDamage(
-                this.crystallizerInventory.getUpgrades()[0]
-            );
-
             this.mc.renderEngine.bindTexture(TextureMap.locationItemsTexture);
-
-            this.drawTexturedModelRectFromIcon(j + 8, k + 128, itemIcon, 16, 16);
+            UtilsFX.renderUpgradeIntoGUI(
+                this, this.crystallizerInventory.getUpgrades()[0], j + 8, k + 128
+            );
         }
     }
 }

@@ -1,7 +1,9 @@
 package net.anvilcraft.thaummach.utils;
 
 import dev.tilera.auracore.client.FXSparkle;
+import net.anvilcraft.thaummach.TMItems;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
 import thaumcraft.client.fx.particles.FXWisp;
@@ -271,5 +273,18 @@ public class UtilsFX {
         }
 
         tes.draw();
+    }
+
+    /**
+     * Draws an upgrade into the GuiContainer.
+     */
+    public static void
+    renderUpgradeIntoGUI(GuiContainer gui, int upgrade, int x, int y) {
+        if (upgrade < 0)
+            return;
+
+        gui.drawTexturedModelRectFromIcon(
+            x, y, TMItems.upgrade.getIconFromDamage(upgrade), 16, 16
+        );
     }
 }

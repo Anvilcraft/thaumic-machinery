@@ -151,6 +151,9 @@ public class TileConduitTank extends TileEntity implements IConnection {
                                 > ent.getVisSuction(new HelperLocation(this))
                             || this.getTaintSuction((HelperLocation) null)
                                 > ent.getTaintSuction(new HelperLocation(this)))) {
+                        this.worldObj.markBlockForUpdate(
+                            this.xCoord, this.yCoord, this.zCoord
+                        );
                         float[] results = ent.subtractVis(Math.min(
                             this.fillAmount,
                             stackmaxVis - (stackpureVis + stacktaintedVis)

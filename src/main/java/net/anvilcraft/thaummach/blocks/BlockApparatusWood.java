@@ -11,7 +11,9 @@ import net.anvilcraft.thaummach.particles.FXWisp;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.wood.CondenserApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.wood.RepairerAparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
+import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
@@ -93,6 +95,9 @@ public class BlockApparatusWood extends BlockApparatus {
             case CONDENSER:
                 return CondenserApparatusRenderer.INSTANCE;
 
+            case REPAIRER:
+                return RepairerAparatusRenderer.INSTANCE;
+
             default:
                 return null;
         }
@@ -115,6 +120,9 @@ public class BlockApparatusWood extends BlockApparatus {
         switch (md) {
             case CONDENSER:
                 return new TileCondenser();
+
+            case REPAIRER:
+                return new TileRepairer();
 
                 //case DUPLICATOR:
                 //    return new TileDuplicator();
@@ -200,51 +208,6 @@ public class BlockApparatusWood extends BlockApparatus {
     }
 
     @Override
-    public void breakBlock(World world, int i, int j, int k, Block block, int meta_) {
-        // TODO: not sure if param 6 is meta
-        MetaVals meta = MetaVals.get(meta_);
-        if (meta == MetaVals.CONDENSER) {
-            // TODO: condenser
-            //TileCondenser tileentityCondenser
-            //    = (TileCondenser) world.getBlockTileEntity(i, j, k);
-            //if (tileentityCondenser != null && tileentityCondenser.degredation > 0.0F) {
-            //    int at = (int
-            //    ) (25.0F * (4550.0F - tileentityCondenser.degredation) / 4550.0F);
-            //    int auraX = i >> 4;
-            //    int auraZ = k >> 4;
-            //    SIAuraChunk ac = (SIAuraChunk) mod_ThaumCraft.AuraHM.get(
-            //        Arrays.asList(auraX, auraZ, ThaumCraftCore.getDimension(world))
-            //    );
-            //    if (ac != null) {
-            //        ac.taint = (short) (ac.taint + at);
-            //        world.playSoundEffect(
-            //            (double) i,
-            //            (double) j,
-            //            (double) k,
-            //            "random.fizz",
-            //            0.2F,
-            //            2.0F + world.rand.nextFloat() * 0.4F
-            //        );
-
-            //        for (int a = 0; a < at; ++a) {
-            //            world.spawnParticle(
-            //                "largesmoke",
-            //                (double) ((float) i + world.rand.nextFloat()),
-            //                (double) ((float) j + world.rand.nextFloat()),
-            //                (double) ((float) k + world.rand.nextFloat()),
-            //                0.0,
-            //                0.0,
-            //                0.0
-            //            );
-            //        }
-            //    }
-            //}
-        }
-
-        super.breakBlock(world, i, j, k, block, meta_);
-    }
-
-    @Override
     public void onNeighborBlockChange(World world, int i, int j, int k, Block l) {
         super.onNeighborBlockChange(world, i, j, k, l);
         MetaVals meta = MetaVals.get(world.getBlockMetadata(i, j, k));
@@ -311,9 +274,11 @@ public class BlockApparatusWood extends BlockApparatus {
 
         //        return 72;
         //    }
-        //} else if (md == 2) {
-        //    return l <= 1 ? 86 : 87;
-        //} else if (md == 3) {
+        //}
+        else if (md == MetaVals.REPAIRER) {
+            return l <= 1 ? this.iconRestorerTop : this.iconRestorerSide;
+        }
+        //else if (md == 3) {
         //    return l <= 1 ? 127 : 121 + Math.abs((i + j + k) % 6);
         //} else if (md == 4) {
         //    return l <= 1 ? 143 : 137 + Math.abs((i + j + k) % 6);

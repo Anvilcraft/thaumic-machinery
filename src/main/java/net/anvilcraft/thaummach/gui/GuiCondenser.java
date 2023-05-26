@@ -3,6 +3,7 @@ package net.anvilcraft.thaummach.gui;
 import net.anvilcraft.thaummach.TMItems;
 import net.anvilcraft.thaummach.container.ContainerCondenser;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
+import net.anvilcraft.thaummach.utils.UtilsFX;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -40,15 +41,7 @@ public class GuiCondenser extends GuiContainer {
 
         for (int upgIdx = 0; upgIdx <= 1; upgIdx++) {
             int upgMeta = this.arcaneCondenser.getUpgrades()[upgIdx];
-            if (upgMeta >= 0) {
-                this.drawTexturedModelRectFromIcon(
-                    l + 56 + 48 * upgIdx,
-                    i1 + 56,
-                    TMItems.upgrade.getIconFromDamage(upgMeta),
-                    16,
-                    16
-                );
-            }
+            UtilsFX.renderUpgradeIntoGUI(this, upgMeta, l + 56 + 48 * upgIdx, i1 + 56);
         }
     }
 }

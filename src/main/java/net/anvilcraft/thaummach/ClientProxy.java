@@ -9,6 +9,7 @@ import net.anvilcraft.thaummach.gui.GuiArcaneFurnace;
 import net.anvilcraft.thaummach.gui.GuiBore;
 import net.anvilcraft.thaummach.gui.GuiCondenser;
 import net.anvilcraft.thaummach.gui.GuiCrystallizer;
+import net.anvilcraft.thaummach.gui.GuiRepairer;
 import net.anvilcraft.thaummach.gui.GuiSoulBrazier;
 import net.anvilcraft.thaummach.gui.GuiVoidChest;
 import net.anvilcraft.thaummach.gui.GuiVoidInterface;
@@ -18,6 +19,7 @@ import net.anvilcraft.thaummach.render.tile.TileBoreRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCondenserRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
+import net.anvilcraft.thaummach.render.tile.TileRepairerRenderer;
 import net.anvilcraft.thaummach.render.tile.TileSealRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidChestRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidInterfaceRenderer;
@@ -33,6 +35,7 @@ import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
+import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
@@ -76,6 +79,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerTileEntity(TileCondenser.class, "condenser", new TileCondenserRenderer());
         ClientRegistry.registerTileEntity(TileConduitPump.class, "conduit_pump", new TileConduitPumpRenderer());
         ClientRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer());
+        ClientRegistry.registerTileEntity(TileRepairer.class, "repairer", new TileRepairerRenderer());
         ClientRegistry.registerTileEntity(TileSeal.class, "seal", new TileSealRenderer());
         ClientRegistry.registerTileEntity(TileVoidChest.class, "voidChest", new TileVoidChestRenderer());
         ClientRegistry.registerTileEntity(TileVoidInterface.class, "voidInterface", new TileVoidInterfaceRenderer());
@@ -98,6 +102,9 @@ public class ClientProxy extends CommonProxy {
 
             case CRYSTALLIZER:
                 return new GuiCrystallizer(player.inventory, (TileCrystallizer) te);
+
+            case REPAIRER:
+                return new GuiRepairer(player.inventory, (TileRepairer) te);
 
             case SOUL_BRAZIER:
                 return new GuiSoulBrazier(player.inventory, (TileSoulBrazier) te);

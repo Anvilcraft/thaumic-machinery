@@ -44,6 +44,15 @@
             }
         ]
     },
+    "tinkering": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "tinkering",
+                "stream": false
+            }
+        ]
+    },
     "upgrade": {
         "category": "master",
         "sounds": [
