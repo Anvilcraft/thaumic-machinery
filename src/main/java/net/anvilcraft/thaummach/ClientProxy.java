@@ -9,6 +9,7 @@ import net.anvilcraft.thaummach.gui.GuiArcaneFurnace;
 import net.anvilcraft.thaummach.gui.GuiBore;
 import net.anvilcraft.thaummach.gui.GuiCondenser;
 import net.anvilcraft.thaummach.gui.GuiCrystallizer;
+import net.anvilcraft.thaummach.gui.GuiDuplicator;
 import net.anvilcraft.thaummach.gui.GuiGenerator;
 import net.anvilcraft.thaummach.gui.GuiRepairer;
 import net.anvilcraft.thaummach.gui.GuiSoulBrazier;
@@ -20,6 +21,7 @@ import net.anvilcraft.thaummach.render.tile.TileBoreRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCondenserRenderer;
 import net.anvilcraft.thaummach.render.tile.TileConduitPumpRenderer;
 import net.anvilcraft.thaummach.render.tile.TileCrystallizerRenderer;
+import net.anvilcraft.thaummach.render.tile.TileDuplicatorRenderer;
 import net.anvilcraft.thaummach.render.tile.TileGeneratorRenderer;
 import net.anvilcraft.thaummach.render.tile.TileRepairerRenderer;
 import net.anvilcraft.thaummach.render.tile.TileSealRenderer;
@@ -35,6 +37,7 @@ import net.anvilcraft.thaummach.tiles.TileConduitValve;
 import net.anvilcraft.thaummach.tiles.TileConduitValveAdvanced;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
+import net.anvilcraft.thaummach.tiles.TileDuplicator;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TileGenerator;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
@@ -77,6 +80,7 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerTileEntity(TileCondenser.class, "condenser", new TileCondenserRenderer());
         ClientRegistry.registerTileEntity(TileConduitPump.class, "conduit_pump", new TileConduitPumpRenderer());
         ClientRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer", new TileCrystallizerRenderer());
+        ClientRegistry.registerTileEntity(TileDuplicator.class, "duplicator", new TileDuplicatorRenderer());
         ClientRegistry.registerTileEntity(TileGenerator.class, "generator", new TileGeneratorRenderer());
         ClientRegistry.registerTileEntity(TileRepairer.class, "repairer", new TileRepairerRenderer());
         ClientRegistry.registerTileEntity(TileSeal.class, "seal", new TileSealRenderer());
@@ -101,6 +105,9 @@ public class ClientProxy extends CommonProxy {
 
             case CRYSTALLIZER:
                 return new GuiCrystallizer(player.inventory, (TileCrystallizer) te);
+
+            case DUPLICATOR:
+                return new GuiDuplicator(player.inventory, (TileDuplicator) te);
 
             case GENERATOR:
                 return new GuiGenerator((TileGenerator) te);

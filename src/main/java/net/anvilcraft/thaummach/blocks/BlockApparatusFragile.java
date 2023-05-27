@@ -5,7 +5,6 @@ import java.util.Random;
 
 import dev.tilera.auracore.api.HelperLocation;
 import dev.tilera.auracore.client.FXSparkle;
-import net.anvilcraft.thaummach.AuraUtils;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.fragile.ConduitApparatusRenderer;
@@ -125,9 +124,8 @@ public class BlockApparatusFragile extends BlockApparatus {
                 return ConduitPumpApparatusRenderer.INSTANCE;
 
             default:
-                break;
+                throw new IllegalArgumentException("ALEC");
         }
-        return null;
     }
 
     @Override

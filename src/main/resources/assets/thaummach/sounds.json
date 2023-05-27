@@ -62,6 +62,19 @@
             }
         ]
     },
+    "stomp": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "stomp1",
+                "stream": false
+            },
+            {
+                "name": "stomp2",
+                "stream": false
+            }
+        ]
+    },
     "upgrade": {
         "category": "master",
         "sounds": [

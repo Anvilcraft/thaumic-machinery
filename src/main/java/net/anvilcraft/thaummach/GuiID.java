@@ -5,6 +5,7 @@ public enum GuiID {
     BORE,
     CONDENSER,
     CRYSTALLIZER,
+    DUPLICATOR,
     GENERATOR,
     REPAIRER,
     SOUL_BRAZIER,

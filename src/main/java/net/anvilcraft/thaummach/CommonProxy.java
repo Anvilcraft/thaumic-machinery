@@ -6,6 +6,7 @@ import net.anvilcraft.thaummach.container.ContainerArcaneFurnace;
 import net.anvilcraft.thaummach.container.ContainerBore;
 import net.anvilcraft.thaummach.container.ContainerCondenser;
 import net.anvilcraft.thaummach.container.ContainerCrystallizer;
+import net.anvilcraft.thaummach.container.ContainerDuplicator;
 import net.anvilcraft.thaummach.container.ContainerRepairer;
 import net.anvilcraft.thaummach.container.ContainerSoulBrazier;
 import net.anvilcraft.thaummach.container.ContainerVoidChest;
@@ -20,6 +21,7 @@ import net.anvilcraft.thaummach.tiles.TileConduitValve;
 import net.anvilcraft.thaummach.tiles.TileConduitValveAdvanced;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.anvilcraft.thaummach.tiles.TileCrystallizer;
+import net.anvilcraft.thaummach.tiles.TileDuplicator;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TileGenerator;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
@@ -50,6 +52,7 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.registerTileEntity(TileConduitValveAdvanced.class, "conduit_valve_advanced");
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
         GameRegistry.registerTileEntity(TileCrystallizer.class, "crystallizer");
+        GameRegistry.registerTileEntity(TileDuplicator.class, "duplicator");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TileGenerator.class, "generator");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
@@ -79,6 +82,9 @@ public class CommonProxy implements IGuiHandler {
 
             case CRYSTALLIZER:
                 return new ContainerCrystallizer(player.inventory, (TileCrystallizer) te);
+
+            case DUPLICATOR:
+                return new ContainerDuplicator(player.inventory, (TileDuplicator) te);
 
             case REPAIRER:
                 return new ContainerRepairer(player.inventory, (TileRepairer) te);

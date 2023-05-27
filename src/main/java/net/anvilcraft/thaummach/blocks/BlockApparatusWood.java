@@ -11,8 +11,10 @@ import net.anvilcraft.thaummach.particles.FXWisp;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.wood.CondenserApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.apparati.wood.DuplicatorApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.wood.RepairerApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
+import net.anvilcraft.thaummach.tiles.TileDuplicator;
 import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -42,9 +44,9 @@ public class BlockApparatusWood extends BlockApparatus {
     public IIcon[] iconsDuskTotemSide;
 
     public IIcon iconDuplicatorBottom;
+    public IIcon iconDuplicatorFront;
     public IIcon iconDuplicatorInside;
     public IIcon iconDuplicatorSide;
-    public IIcon iconDuplicatorTop;
 
     public IIcon iconRestorerBottom;
     public IIcon iconRestorerSide;
@@ -79,9 +81,9 @@ public class BlockApparatusWood extends BlockApparatus {
                                       .toArray(IIcon[] ::new);
 
         this.iconDuplicatorBottom = reg.apply("duplicator_bottom");
-        this.iconDuplicatorSide = reg.apply("duplicator_side");
+        this.iconDuplicatorFront = reg.apply("duplicator_front");
         this.iconDuplicatorInside = reg.apply("duplicator_inside");
-        this.iconDuplicatorTop = reg.apply("duplicator_top");
+        this.iconDuplicatorSide = reg.apply("duplicator_side");
 
         this.iconRestorerBottom = reg.apply("restorer_bottom");
         this.iconRestorerSide = reg.apply("restorer_side");
@@ -98,7 +100,11 @@ public class BlockApparatusWood extends BlockApparatus {
             case REPAIRER:
                 return RepairerApparatusRenderer.INSTANCE;
 
+            case DUPLICATOR:
+                return DuplicatorApparatusRenderer.INSTANCE;
+
             default:
+                //throw new IllegalArgumentException("ALEC");
                 return null;
         }
     }
@@ -106,11 +112,9 @@ public class BlockApparatusWood extends BlockApparatus {
     @Override
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public void getSubBlocks(Item p_149666_1_, CreativeTabs p_149666_2_, List itemList) {
-        itemList.add(new ItemStack(this, 1, 0));
-        itemList.add(new ItemStack(this, 1, 1));
-        itemList.add(new ItemStack(this, 1, 2));
-        itemList.add(new ItemStack(this, 1, 3));
-        itemList.add(new ItemStack(this, 1, 4));
+        IntStream.rangeClosed(0, 4)
+            .mapToObj((m) -> new ItemStack(this, 1, m))
+            .forEach(itemList::add);
     }
 
     @Override
@@ -124,9 +128,9 @@ public class BlockApparatusWood extends BlockApparatus {
             case REPAIRER:
                 return new TileRepairer();
 
-                //case DUPLICATOR:
-                //    return new TileDuplicator();
-                //
+            case DUPLICATOR:
+                return new TileDuplicator();
+
                 //case REPAIRER:
                 //    return new TileRepairer();
 
@@ -136,8 +140,7 @@ public class BlockApparatusWood extends BlockApparatus {
     }
 
     @Override
-    public void
-    setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
+    public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
         int md = iblockaccess.getBlockMetadata(i, j, k);
         if (md == 0) {
             float w3 = 0.1875F;
@@ -153,12 +156,7 @@ public class BlockApparatusWood extends BlockApparatus {
         if (md == 0) {
             float w3 = 0.1875F;
             AxisAlignedBB.getBoundingBox(
-                (double) w3,
-                0.0,
-                (double) w3,
-                (double) (1.0F - w3),
-                1.0,
-                (double) (1.0F - w3)
+                (double) w3, 0.0, (double) w3, (double) (1.0F - w3), 1.0, (double) (1.0F - w3)
             );
         } else if (md == 10) {
             AxisAlignedBB.getBoundingBox(0.0, 0.0, 0.0, 1.0, 1.0, 1.0);
@@ -169,17 +167,15 @@ public class BlockApparatusWood extends BlockApparatus {
 
     @Override
     public void onBlockPlacedBy(
-        World world, int i, int j, int k, EntityLivingBase entityliving, ItemStack stack
+        World world, int x, int y, int z, EntityLivingBase entityliving, ItemStack stack
     ) {
-        MetaVals md = MetaVals.get(world.getBlockMetadata(i, j, k));
-        int l = MathHelper.floor_double(
-                    (double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5
-                )
-            & 3;
+        MetaVals md = MetaVals.get(world.getBlockMetadata(x, y, z));
         if (md == MetaVals.DUPLICATOR) {
-            // TODO: duplicator
-            //TileDuplicator td = (TileDuplicator) world.getBlockTileEntity(i, j, k);
-            //td.orientation = l;
+            int l
+                = MathHelper.floor_double((double) (entityliving.rotationYaw * 4.0F / 360.0F) + 0.5)
+                & 3;
+            TileDuplicator td = (TileDuplicator) world.getTileEntity(x, y, z);
+            td.orientation = l;
         }
     }
 
@@ -248,34 +244,32 @@ public class BlockApparatusWood extends BlockApparatus {
         MetaVals md = MetaVals.get(iblockaccess.getBlockMetadata(i, j, k));
         if (md == MetaVals.CONDENSER) {
             return l <= 1 ? this.iconCondenserTop : this.iconCondenserSide;
-        }
-        //else if (md == 1) {
-        //    if (l <= 1) {
-        //        return 70;
-        //    } else {
-        //        TileEntity te = iblockaccess.getBlockTileEntity(i, j, k);
-        //        if (te != null && te instanceof TileDuplicator) {
-        //            if (((TileDuplicator) te).orientation == 0 && l == 2) {
-        //                return 71;
-        //            }
+        } else if (md == MetaVals.DUPLICATOR) {
+            if (l <= 1) {
+                return this.iconDuplicatorBottom;
+            } else {
+                TileEntity te = iblockaccess.getTileEntity(i, j, k);
+                if (te != null && te instanceof TileDuplicator) {
+                    if (((TileDuplicator) te).orientation == 0 && l == 2) {
+                        return this.iconDuplicatorFront;
+                    }
 
-        //            if (((TileDuplicator) te).orientation == 1 && l == 5) {
-        //                return 71;
-        //            }
+                    if (((TileDuplicator) te).orientation == 1 && l == 5) {
+                        return this.iconDuplicatorFront;
+                    }
 
-        //            if (((TileDuplicator) te).orientation == 2 && l == 3) {
-        //                return 71;
-        //            }
+                    if (((TileDuplicator) te).orientation == 2 && l == 3) {
+                        return this.iconDuplicatorFront;
+                    }
 
-        //            if (((TileDuplicator) te).orientation == 3 && l == 4) {
-        //                return 71;
-        //            }
-        //        }
+                    if (((TileDuplicator) te).orientation == 3 && l == 4) {
+                        return this.iconDuplicatorFront;
+                    }
+                }
 
-        //        return 72;
-        //    }
-        //}
-        else if (md == MetaVals.REPAIRER) {
+                return this.iconDuplicatorSide;
+            }
+        } else if (md == MetaVals.REPAIRER) {
             return l <= 1 ? this.iconRestorerTop : this.iconRestorerSide;
         }
         //else if (md == 3) {

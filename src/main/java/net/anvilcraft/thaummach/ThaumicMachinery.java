@@ -15,6 +15,8 @@ import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.packets.IPacketFX;
 import net.anvilcraft.thaummach.packets.PacketChangeVoidInterfaceChannel;
 import net.anvilcraft.thaummach.packets.PacketChangeVoidInterfaceContainerPage;
+import net.anvilcraft.thaummach.packets.PacketDuplicatorPress;
+import net.anvilcraft.thaummach.packets.PacketDuplicatorSetRepeat;
 import net.anvilcraft.thaummach.packets.PacketFXSparkle;
 import net.anvilcraft.thaummach.packets.PacketFXWisp;
 import net.anvilcraft.thaummach.tiles.TileSeal;
@@ -39,25 +41,14 @@ public class ThaumicMachinery {
     public void preInit(FMLPreInitializationEvent ev) {
         channel = NetworkRegistry.INSTANCE.newSimpleChannel("thaummach");
         int pktid = 0;
-        channel.registerMessage(
-            new PacketFXWisp.Handler(), PacketFXWisp.class, pktid++, Side.CLIENT
-        );
-        channel.registerMessage(
-            new PacketFXSparkle.Handler(), PacketFXSparkle.class, pktid++, Side.CLIENT
-        );
-        channel.registerMessage(
-            new PacketChangeVoidInterfaceChannel.Handler(),
-            PacketChangeVoidInterfaceChannel.class,
-            pktid++,
-            Side.SERVER
-        );
-        channel.registerMessage(
-            new PacketChangeVoidInterfaceContainerPage.Handler(),
-            PacketChangeVoidInterfaceContainerPage.class,
-            pktid++,
-            Side.SERVER
-        );
-
+        // clang-format off
+        channel.registerMessage(new PacketChangeVoidInterfaceChannel.Handler(), PacketChangeVoidInterfaceChannel.class, pktid++, Side.SERVER);
+        channel.registerMessage(new PacketChangeVoidInterfaceContainerPage.Handler(), PacketChangeVoidInterfaceContainerPage.class, pktid++, Side.SERVER);
+        channel.registerMessage(new PacketDuplicatorPress.Handler(), PacketDuplicatorPress.class, pktid++, Side.CLIENT);
+        channel.registerMessage(new PacketDuplicatorSetRepeat.Handler(), PacketDuplicatorSetRepeat.class, pktid++, Side.SERVER);
+        channel.registerMessage(new PacketFXSparkle.Handler(), PacketFXSparkle.class, pktid++, Side.CLIENT);
+        channel.registerMessage(new PacketFXWisp.Handler(), PacketFXWisp.class, pktid++, Side.CLIENT);
+        // clang-format on
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
 
         proxy.registerTileEntities();
