@@ -6,16 +6,14 @@ import net.minecraft.entity.Entity;
 import org.lwjgl.opengl.GL11;
 
 public class ModelGenCore extends ModelBase {
-    private ModelRenderer cube;
+    private ModelRenderer cube = new ModelRenderer(this, "cube");
     private ModelRenderer outer = new ModelRenderer(this, "glass");
 
     public ModelGenCore(float f) {
         this.outer.setTextureOffset(0, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8);
-        this.cube = new ModelRenderer(this, "cube");
         this.cube.setTextureOffset(32, 0).addBox(-4.0F, -4.0F, -4.0F, 8, 8, 8);
     }
 
-    @Override
     public void
     render(Entity e, float f, float f1, float f2, float f3, float f4, float f5) {
         GL11.glPushMatrix();

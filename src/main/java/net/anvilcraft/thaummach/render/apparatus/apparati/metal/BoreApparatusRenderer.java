@@ -24,100 +24,98 @@ public class BoreApparatusRenderer implements IApparatusRenderer {
         boolean inv
     ) {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
-        if (block.getRenderBlockPass() == 0 || inv) {
-            boolean b1 = false;
-            boolean b2 = false;
-            boolean b3 = false;
-            if (!inv) {
-                TileBore te = (TileBore) w.getTileEntity(i, j, k);
-                if (te.orientation == 0 || te.orientation == 1) {
-                    b1 = true;
-                }
-
-                if (te.orientation == 4 || te.orientation == 5) {
-                    b2 = true;
-                }
-
-                if (te.orientation == 2 || te.orientation == 3) {
-                    b3 = true;
-                }
+        boolean b1 = false;
+        boolean b2 = false;
+        boolean b3 = false;
+        if (!inv) {
+            TileBore te = (TileBore) w.getTileEntity(i, j, k);
+            if (te.orientation == 0 || te.orientation == 1) {
+                b1 = true;
             }
 
-            float t2x = 0.125F;
-            float t4x = 0.25F;
-            IIcon t1 = block.iconGenerator3;
-            IIcon t2 = block.iconGenerator2;
-            IIcon tx = block.iconGenerator3;
-            rb.overrideBlockTexture = tx;
-            rb.setRenderBounds(t2x, t2x, t2x, 1.0F - t2x, 1.0F - t2x, 1.0F - t2x);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, t1, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
+            if (te.orientation == 4 || te.orientation == 5) {
+                b2 = true;
             }
 
-            if (b1) {
-                tx = t2;
-            } else {
-                tx = t1;
+            if (te.orientation == 2 || te.orientation == 3) {
+                b3 = true;
             }
+        }
 
-            rb.overrideBlockTexture = tx;
-            rb.setRenderBounds(t4x, 0.0F, t4x, 1.0F - t4x, t2x, 1.0F - t4x);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, tx, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        float t2x = 0.125F;
+        float t4x = 0.25F;
+        IIcon t1 = block.iconGenerator3;
+        IIcon t2 = block.iconGenerator2;
+        IIcon tx = block.iconGenerator3;
+        rb.overrideBlockTexture = tx;
+        rb.setRenderBounds(t2x, t2x, t2x, 1.0F - t2x, 1.0F - t2x, 1.0F - t2x);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, t1, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(t4x, 1.0F - t2x, t4x, 1.0F - t4x, 1.0F, 1.0F - t4x);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, tx, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        if (b1) {
+            tx = t2;
+        } else {
+            tx = t1;
+        }
 
-            if (b2) {
-                tx = t2;
-            } else {
-                tx = t1;
-            }
+        rb.overrideBlockTexture = tx;
+        rb.setRenderBounds(t4x, 0.0F, t4x, 1.0F - t4x, t2x, 1.0F - t4x);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, tx, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.overrideBlockTexture = tx;
-            rb.setRenderBounds(0.0F, t4x, t4x, t2x, 1.0F - t4x, 1.0F - t4x);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, tx, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(t4x, 1.0F - t2x, t4x, 1.0F - t4x, 1.0F, 1.0F - t4x);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, tx, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(1.0F - t2x, t4x, t4x, 1.0F, 1.0F - t4x, 1.0F - t4x);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, tx, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        if (b2) {
+            tx = t2;
+        } else {
+            tx = t1;
+        }
 
-            if (b3) {
-                tx = t2;
-            } else {
-                tx = t1;
-            }
+        rb.overrideBlockTexture = tx;
+        rb.setRenderBounds(0.0F, t4x, t4x, t2x, 1.0F - t4x, 1.0F - t4x);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, tx, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.overrideBlockTexture = tx;
-            rb.setRenderBounds(t4x, t4x, 0.0F, 1.0F - t4x, 1.0F - t4x, t2x);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, tx, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(1.0F - t2x, t4x, t4x, 1.0F, 1.0F - t4x, 1.0F - t4x);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, tx, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(t4x, t4x, 1.0F - t2x, 1.0F - t4x, 1.0F - t4x, 1.0F);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, tx, true);
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        if (b3) {
+            tx = t2;
+        } else {
+            tx = t1;
+        }
+
+        rb.overrideBlockTexture = tx;
+        rb.setRenderBounds(t4x, t4x, 0.0F, 1.0F - t4x, 1.0F - t4x, t2x);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, tx, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
+
+        rb.setRenderBounds(t4x, t4x, 1.0F - t2x, 1.0F - t4x, 1.0F - t4x, 1.0F);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, tx, true);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
         }
 
         rb.overrideBlockTexture = null;

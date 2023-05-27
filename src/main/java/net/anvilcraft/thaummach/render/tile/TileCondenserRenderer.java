@@ -61,10 +61,10 @@ public class TileCondenserRenderer extends TileEntitySpecialRenderer {
                 new ResourceLocation("thaumcraft", "textures/models/crystal.png")
             );
 
-            GL11.glEnable(2977);
-            GL11.glEnable(3042);
+            GL11.glEnable(0xba1);
+            GL11.glEnable(0xbe2);
             GL11.glPushMatrix();
-            GL11.glEnable(32826);
+            GL11.glEnable(0x803a);
             GL11.glBlendFunc(770, 771);
             Color c = new Color(CrystalColors.getColorForShard(condenser.currentType));
             GL11.glColor4f(
@@ -81,9 +81,9 @@ public class TileCondenserRenderer extends TileEntitySpecialRenderer {
             this.model.render();
             GL11.glScalef(1.0F, 1.0F, 1.0F);
             GL11.glPopMatrix();
-            GL11.glDisable(32826);
+            GL11.glDisable(0x803a);
             GL11.glPopMatrix();
-            GL11.glDisable(3042);
+            GL11.glDisable(0xbe2);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             if (condenser.hasUpgrade((byte) 1)) {
                 this.drawDisk(

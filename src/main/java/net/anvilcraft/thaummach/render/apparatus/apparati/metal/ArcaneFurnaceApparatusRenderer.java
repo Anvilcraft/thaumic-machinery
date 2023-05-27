@@ -23,7 +23,7 @@ public class ArcaneFurnaceApparatusRenderer implements IApparatusRenderer {
         boolean inv
     ) {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
-        if (block.getRenderBlockPass() == 0 && !inv) {
+        if (!inv) {
             float w3 = 0.1875F;
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             rb.renderStandardBlock(block, i, j, k);
@@ -62,7 +62,7 @@ public class ArcaneFurnaceApparatusRenderer implements IApparatusRenderer {
                 (double) ((float) (k + 1) - w3),
                 block.iconArcaneFurnaceInside
             );
-        } else if (inv) {
+        } else {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             BlockRenderer.drawFaces(
                 rb,

@@ -36,7 +36,7 @@ public class VoidChestApparatusRenderer implements IApparatusRenderer {
                 block.iconVoidChestSide,
                 true
             );
-        } else if (block.getRenderBlockPass() == 0) {
+        } else {
             rb.renderStandardBlock(block, x, y, z);
         }
     }

@@ -26,7 +26,6 @@ public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
         float t3x = 0.1875F;
         float t4x = 0.25F;
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
-        if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, t3x, 1.0F);
             if (inv) {
                 BlockRenderer.drawFaces(
@@ -77,7 +76,6 @@ public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
-        }
 
         rb.setRenderBounds(t1x, t3x, t1x, 1.0F - t1x, 0.5F - t4x, 1.0F - t1x);
         if (!inv) {

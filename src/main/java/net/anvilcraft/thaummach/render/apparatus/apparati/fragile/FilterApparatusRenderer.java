@@ -31,57 +31,55 @@ public class FilterApparatusRenderer implements IApparatusRenderer {
         float w4 = 0.25F;
         float w3 = 0.1875F;
         float w2 = 0.125F;
-        if (block.getRenderBlockPass() == 0 || inv) {
-            rb.setRenderBounds(w2, 0.0F, w2, 1.0F - w2, w3, 1.0F - w2);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconFilterBottom,
-                    block.iconFilterBottom,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    false
-                );
-            } else {
-                rb.renderStandardBlock(block, x, y, z);
-            }
+        rb.setRenderBounds(w2, 0.0F, w2, 1.0F - w2, w3, 1.0F - w2);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconFilterBottom,
+                block.iconFilterBottom,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                false
+            );
+        } else {
+            rb.renderStandardBlock(block, x, y, z);
+        }
 
-            rb.setRenderBounds(w2, 1.0F - w3, w2, 1.0F - w2, 1.0F, 1.0F - w2);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconFilterBottom,
-                    block.iconFilterBottom,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    false
-                );
-            } else {
-                rb.renderStandardBlock(block, x, y, z);
-            }
+        rb.setRenderBounds(w2, 1.0F - w3, w2, 1.0F - w2, 1.0F, 1.0F - w2);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconFilterBottom,
+                block.iconFilterBottom,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                false
+            );
+        } else {
+            rb.renderStandardBlock(block, x, y, z);
+        }
 
-            rb.setRenderBounds(w3, w3, w3, 1.0F - w3, 1.0F - w3, 1.0F - w3);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconFilterBottom,
-                    block.iconFilterBottom,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    block.iconFilterSide,
-                    false
-                );
-            } else {
-                rb.renderStandardBlock(block, x, y, z);
-            }
+        rb.setRenderBounds(w3, w3, w3, 1.0F - w3, 1.0F - w3, 1.0F - w3);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconFilterBottom,
+                block.iconFilterBottom,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                block.iconFilterSide,
+                false
+            );
+        } else {
+            rb.renderStandardBlock(block, x, y, z);
         }
 
         if (!inv) {
@@ -93,17 +91,13 @@ public class FilterApparatusRenderer implements IApparatusRenderer {
             float total = 0.0F;
             float hfill = 0.0F;
             boolean visible = false;
-            if (block.getRenderBlockPass() != 0) {
-                visible = tc.pureVis + tc.taintedVis >= 0.1F;
-                if (visible) {
-                    b = Math.min(
-                        1.0F, tc.pureVis / (tc.taintedVis + tc.pureVis)
-                    );
-                    total = Math.min(tc.pureVis + tc.taintedVis, tc.maxVis);
-                    hfill = (1.0F - wq * 2.0F) * (total / tc.maxVis);
-                    tessellator.setBrightness(20 + (int) (b * 210.0F));
-                    tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-                }
+            visible = tc.pureVis + tc.taintedVis >= 0.1F;
+            if (visible) {
+                b = Math.min(1.0F, tc.pureVis / (tc.taintedVis + tc.pureVis));
+                total = Math.min(tc.pureVis + tc.taintedVis, tc.maxVis);
+                hfill = (1.0F - wq * 2.0F) * (total / tc.maxVis);
+                tessellator.setBrightness(20 + (int) (b * 210.0F));
+                tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
             }
 
             for (int dir = 2; dir < 6; ++dir) {
@@ -124,34 +118,27 @@ public class FilterApparatusRenderer implements IApparatusRenderer {
 
                 TileEntity te = loc.getConnectableTile(w);
                 if (te != null && tc.getConnectable(loc.facing)) {
-                    if (block.getRenderBlockPass() == 0) {
-                        rb.overrideBlockTexture = block.iconConduitConnection;
-                        switch (dir) {
-                            case 2:
-                                rb.setRenderBounds(
-                                    w6, w6, 1.0F - w3, w6 + w4, w6 + w4, 1.0F
-                                );
-                                rb.renderStandardBlock(block, x, y, z);
-                                break;
-                            case 3:
-                                rb.setRenderBounds(w6, w6, 0.0F, w6 + w4, w6 + w4, w3);
-                                rb.renderStandardBlock(block, x, y, z);
-                                break;
-                            case 4:
-                                rb.setRenderBounds(
-                                    1.0F - w3, w6, w6, 1.0F, w6 + w4, w6 + w4
-                                );
-                                rb.renderStandardBlock(block, x, y, z);
-                                break;
-                            case 5:
-                                rb.setRenderBounds(0.0F, w6, w6, w3, w6 + w4, w6 + w4);
-                                rb.renderStandardBlock(block, x, y, z);
-                        }
-                    } else if (visible && (((IConnection)te).getPureVis() + ((IConnection)te).getTaintedVis() > 0.1F || !((IConnection)te).isVisConduit())) {
-                        ConduitApparatusRenderer.renderConduitVis(
-                            w, rb, x, y, z, block, dir, hfill
-                        );
+                    rb.overrideBlockTexture = block.iconConduitConnection;
+                    switch (dir) {
+                        case 2:
+                            rb.setRenderBounds(w6, w6, 1.0F - w3, w6 + w4, w6 + w4, 1.0F);
+                            rb.renderStandardBlock(block, x, y, z);
+                            break;
+                        case 3:
+                            rb.setRenderBounds(w6, w6, 0.0F, w6 + w4, w6 + w4, w3);
+                            rb.renderStandardBlock(block, x, y, z);
+                            break;
+                        case 4:
+                            rb.setRenderBounds(1.0F - w3, w6, w6, 1.0F, w6 + w4, w6 + w4);
+                            rb.renderStandardBlock(block, x, y, z);
+                            break;
+                        case 5:
+                            rb.setRenderBounds(0.0F, w6, w6, w3, w6 + w4, w6 + w4);
+                            rb.renderStandardBlock(block, x, y, z);
                     }
+                    ConduitApparatusRenderer.renderConduitVis(
+                        w, rb, x, y, z, block, dir, hfill
+                    );
                 }
             }
         }

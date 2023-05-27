@@ -2,7 +2,6 @@ package net.anvilcraft.thaummach.blocks;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.FMLCommonHandler;
 import net.anvilcraft.thaummach.AuraUtils;
 import net.anvilcraft.thaummach.GuiID;
 import net.anvilcraft.thaummach.ITileGui;
@@ -20,7 +19,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
-import net.minecraftforge.client.MinecraftForgeClient;
 
 public abstract class BlockApparatus extends BlockContainer {
     protected int currentPass;
@@ -132,17 +130,6 @@ public abstract class BlockApparatus extends BlockContainer {
         AuraUtils.spillTaint(world, x, y, z);
 
         super.breakBlock(world, x, y, z, block, meta);
-    }
-
-    @Override
-    public boolean canRenderInPass(int n) {
-        this.currentPass = n;
-        return true;
-    }
-
-    @Override
-    public int getRenderBlockPass() {
-        return this.currentPass;
     }
 
     @Override

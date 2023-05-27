@@ -31,71 +31,65 @@ public abstract class AbstractTankApparatusRenderer<Apparatus extends BlockAppar
         BlockApparatus block = (BlockApparatus) block_;
         float w1;
         float w2;
-        if (block.getRenderBlockPass() == 0 || inv) {
-            w1 = 0.0625F;
-            w2 = 0.125F;
-            IIcon t1 = this.getBottomIcon((Apparatus) block);
-            IIcon t2 = this.getSideIcon((Apparatus) block);
+        w1 = 0.0625F;
+        w2 = 0.125F;
+        IIcon t1 = this.getBottomIcon((Apparatus) block);
+        IIcon t2 = this.getSideIcon((Apparatus) block);
 
-            rb.setRenderBounds(w1, 0.0F, w1, 1.0F - w1, 1.0F, 1.0F - w1);
-            if (inv) {
-                BlockRenderer.drawFaces(rb, block, t1, t1, t2, t2, t2, t2, false);
-            } else {
+        rb.setRenderBounds(w1, 0.0F, w1, 1.0F - w1, 1.0F, 1.0F - w1);
+        if (inv) {
+            BlockRenderer.drawFaces(rb, block, t1, t1, t2, t2, t2, t2, false);
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
+
+        if (!inv) {
+            rb.overrideBlockTexture = this.getBottomIcon((Apparatus) block);
+            TileConduitTank tc = (TileConduitTank) w.getTileEntity(i, j, k);
+            HelperLocation loc = new HelperLocation(tc);
+            loc.facing = ForgeDirection.WEST;
+            TileEntity te = loc.getConnectableTile(w);
+            if (te != null && tc.getConnectable(loc.facing)
+                && !(te instanceof TileConduitTank)) {
+                rb.setRenderBounds(0.0F, 0.5F - w2, 0.5F - w2, w1, 0.5F + w2, 0.5F + w2);
                 rb.renderStandardBlock(block, i, j, k);
             }
 
-            if (!inv) {
-                rb.overrideBlockTexture = this.getBottomIcon((Apparatus) block);
-                TileConduitTank tc = (TileConduitTank) w.getTileEntity(i, j, k);
-                HelperLocation loc = new HelperLocation(tc);
-                loc.facing = ForgeDirection.WEST;
-                TileEntity te = loc.getConnectableTile(w);
-                if (te != null && tc.getConnectable(loc.facing)
-                    && !(te instanceof TileConduitTank)) {
-                    rb.setRenderBounds(
-                        0.0F, 0.5F - w2, 0.5F - w2, w1, 0.5F + w2, 0.5F + w2
-                    );
-                    rb.renderStandardBlock(block, i, j, k);
-                }
+            loc = new HelperLocation(tc);
+            loc.facing = ForgeDirection.EAST;
+            te = loc.getConnectableTile(w);
+            if (te != null && tc.getConnectable(loc.facing)
+                && !(te instanceof TileConduitTank)) {
+                rb.setRenderBounds(
+                    1.0F - w1, 0.5F - w2, 0.5F - w2, 1.0F, 0.5F + w2, 0.5F + w2
+                );
+                rb.renderStandardBlock(block, i, j, k);
+            }
 
-                loc = new HelperLocation(tc);
-                loc.facing = ForgeDirection.EAST;
-                te = loc.getConnectableTile(w);
-                if (te != null && tc.getConnectable(loc.facing)
-                    && !(te instanceof TileConduitTank)) {
-                    rb.setRenderBounds(
-                        1.0F - w1, 0.5F - w2, 0.5F - w2, 1.0F, 0.5F + w2, 0.5F + w2
-                    );
-                    rb.renderStandardBlock(block, i, j, k);
-                }
+            loc = new HelperLocation(tc);
+            loc.facing = ForgeDirection.NORTH;
+            te = loc.getConnectableTile(w);
+            if (te != null && tc.getConnectable(loc.facing)
+                && !(te instanceof TileConduitTank)) {
+                rb.setRenderBounds(0.5F - w2, 0.5F - w2, 0.0F, 0.5F + w2, 0.5F + w2, w1);
+                rb.renderStandardBlock(block, i, j, k);
+            }
 
-                loc = new HelperLocation(tc);
-                loc.facing = ForgeDirection.NORTH;
-                te = loc.getConnectableTile(w);
-                if (te != null && tc.getConnectable(loc.facing)
-                    && !(te instanceof TileConduitTank)) {
-                    rb.setRenderBounds(
-                        0.5F - w2, 0.5F - w2, 0.0F, 0.5F + w2, 0.5F + w2, w1
-                    );
-                    rb.renderStandardBlock(block, i, j, k);
-                }
-
-                loc = new HelperLocation(tc);
-                loc.facing = ForgeDirection.SOUTH;
-                te = loc.getConnectableTile(w);
-                if (te != null && tc.getConnectable(loc.facing)
-                    && !(te instanceof TileConduitTank)) {
-                    rb.setRenderBounds(
-                        0.5F - w2, 0.5F - w2, 1.0F - w1, 0.5F + w2, 0.5F + w2, 1.0F
-                    );
-                    rb.renderStandardBlock(block, i, j, k);
-                }
+            loc = new HelperLocation(tc);
+            loc.facing = ForgeDirection.SOUTH;
+            te = loc.getConnectableTile(w);
+            if (te != null && tc.getConnectable(loc.facing)
+                && !(te instanceof TileConduitTank)) {
+                rb.setRenderBounds(
+                    0.5F - w2, 0.5F - w2, 1.0F - w1, 0.5F + w2, 0.5F + w2, 1.0F
+                );
+                rb.renderStandardBlock(block, i, j, k);
             }
         }
 
         rb.overrideBlockTexture = null;
 
-        if (block.getRenderBlockPass() == 0 && !inv) {
+        if (!inv) {
             w1 = 0.003F;
             w2 = 0.0625F;
             TileConduitTank tc = (TileConduitTank) w.getTileEntity(i, j, k);

@@ -24,64 +24,62 @@ public class CrystallizerApparatusRenderer implements IApparatusRenderer {
     ) {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
         float w2 = 0.125F;
-        if (block.getRenderBlockPass() == 0 || inv) {
-            rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F + w2, 1.0F);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconCrystallizerBottom,
-                    block.iconCrystallizerTop,
-                    block.iconCrystallizerSide,
-                    block.iconCrystallizerSide,
-                    block.iconCrystallizerSide,
-                    block.iconCrystallizerSide,
-                    true
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F + w2, 1.0F);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconCrystallizerBottom,
+                block.iconCrystallizerTop,
+                block.iconCrystallizerSide,
+                block.iconCrystallizerSide,
+                block.iconCrystallizerSide,
+                block.iconCrystallizerSide,
+                true
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            // TODO: no inside in inventory
-            if (!inv) {
-                float w3 = 0.1875F;
-                rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F + w2, 1.0F);
-                rb.renderFaceXPos(
-                    block,
-                    (double) ((float) (i - 1) + w3),
-                    (double) j,
-                    (double) k,
-                    block.iconArcaneFurnaceInside
-                );
-                rb.renderFaceXNeg(
-                    block,
-                    (double) ((float) (i + 1) - w3),
-                    (double) j,
-                    (double) k,
-                    block.iconArcaneFurnaceInside
-                );
-                rb.renderFaceZPos(
-                    block,
-                    (double) i,
-                    (double) j,
-                    (double) ((float) (k - 1) + w3),
-                    block.iconArcaneFurnaceInside
-                );
-                rb.renderFaceZNeg(
-                    block,
-                    (double) i,
-                    (double) j,
-                    (double) ((float) (k + 1) - w3),
-                    block.iconArcaneFurnaceInside
-                );
-                rb.renderFaceYPos(
-                    block,
-                    (double) i,
-                    (double) ((float) j - 0.49F),
-                    (double) k,
-                    block.iconArcaneFurnaceInside
-                );
-            }
+        // TODO: no inside in inventory
+        if (!inv) {
+            float w3 = 0.1875F;
+            rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F + w2, 1.0F);
+            rb.renderFaceXPos(
+                block,
+                (double) ((float) (i - 1) + w3),
+                (double) j,
+                (double) k,
+                block.iconArcaneFurnaceInside
+            );
+            rb.renderFaceXNeg(
+                block,
+                (double) ((float) (i + 1) - w3),
+                (double) j,
+                (double) k,
+                block.iconArcaneFurnaceInside
+            );
+            rb.renderFaceZPos(
+                block,
+                (double) i,
+                (double) j,
+                (double) ((float) (k - 1) + w3),
+                block.iconArcaneFurnaceInside
+            );
+            rb.renderFaceZNeg(
+                block,
+                (double) i,
+                (double) j,
+                (double) ((float) (k + 1) - w3),
+                block.iconArcaneFurnaceInside
+            );
+            rb.renderFaceYPos(
+                block,
+                (double) i,
+                (double) ((float) j - 0.49F),
+                (double) k,
+                block.iconArcaneFurnaceInside
+            );
         }
 
         rb.overrideBlockTexture = null;

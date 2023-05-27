@@ -24,94 +24,92 @@ public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
     ) {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
 
-        if (block.getRenderBlockPass() == 0 || inv) {
-            float t4 = 0.25F;
-            float t2 = 0.125F;
-            float t6 = 0.375F;
-            rb.setRenderBounds(t2, 0.5F, t6, t4, 1.0F, 1.0F - t6);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    true
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        float t4 = 0.25F;
+        float t2 = 0.125F;
+        float t6 = 0.375F;
+        rb.setRenderBounds(t2, 0.5F, t6, t4, 1.0F, 1.0F - t6);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                true
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(t6, 0.5F, t2, 1.0F - t6, 1.0F, t4);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    true
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(t6, 0.5F, t2, 1.0F - t6, 1.0F, t4);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                true
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(1.0F - t4, 0.5F, t6, 1.0F - t2, 1.0F, 1.0F - t6);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    true
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(1.0F - t4, 0.5F, t6, 1.0F - t2, 1.0F, 1.0F - t6);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                true
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(t6, 0.5F, 1.0F - t4, 1.0F - t6, 1.0F, 1.0F - t2);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    true
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(t6, 0.5F, 1.0F - t4, 1.0F - t6, 1.0F, 1.0F - t2);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                true
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
+        }
 
-            rb.setRenderBounds(t4, 0.0F, t4, 1.0F - t4, 0.5F + t4, 1.0F - t4);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    block.iconSoulBrazierBottom,
-                    true
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(t4, 0.0F, t4, 1.0F - t4, 0.5F + t4, 1.0F - t4);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                block.iconSoulBrazierBottom,
+                true
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
         }
 
         rb.overrideBlockTexture = null;

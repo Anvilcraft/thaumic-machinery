@@ -29,14 +29,11 @@ public class CrucibleApparatusRenderer implements IApparatusRenderer {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
         MetaVals md = MetaVals.get(meta);
         IIcon[] icons = getIcons(block, md);
-        if (block.getRenderBlockPass() == 0 && !inv) {
+        if (!inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             rb.renderStandardBlock(block, i, j, k);
-        } else if (inv &&
-                (md == MetaVals.NORMAL_CRUCIBLE
-                 || md == MetaVals.EYES_CRUCIBLE
-                 || md == MetaVals.THAUMIUM_CRUCIBLE)
-        ) {
+        } else if ((md == MetaVals.NORMAL_CRUCIBLE || md == MetaVals.EYES_CRUCIBLE
+                    || md == MetaVals.THAUMIUM_CRUCIBLE)) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             BlockRenderer.drawFaces(
                 rb,
@@ -49,7 +46,7 @@ public class CrucibleApparatusRenderer implements IApparatusRenderer {
                 icons[5],
                 true
             );
-        } else if (inv && md == MetaVals.SOUL_CRUCIBLE) {
+        } else if (md == MetaVals.SOUL_CRUCIBLE) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             BlockRenderer.drawFaces(
                 rb,
@@ -88,75 +85,73 @@ public class CrucibleApparatusRenderer implements IApparatusRenderer {
 
         f5 = 0.123F;
         if (!inv) {
-            if (block.getRenderBlockPass() == 0) {
-                rb.renderFaceXPos(
-                    block, (double) ((float) i - 1.0F + f5), (double) j, (double) k, c
-                );
-                rb.renderFaceXNeg(
-                    block, (double) ((float) i + 1.0F - f5), (double) j, (double) k, c
-                );
-                rb.renderFaceZPos(
-                    block, (double) i, (double) j, (double) ((float) k - 1.0F + f5), c
-                );
-                rb.renderFaceZNeg(
-                    block, (double) i, (double) j, (double) ((float) k + 1.0F - f5), c
-                );
+            rb.renderFaceXPos(
+                block, (double) ((float) i - 1.0F + f5), (double) j, (double) k, c
+            );
+            rb.renderFaceXNeg(
+                block, (double) ((float) i + 1.0F - f5), (double) j, (double) k, c
+            );
+            rb.renderFaceZPos(
+                block, (double) i, (double) j, (double) ((float) k - 1.0F + f5), c
+            );
+            rb.renderFaceZNeg(
+                block, (double) i, (double) j, (double) ((float) k + 1.0F - f5), c
+            );
+            rb.renderFaceYPos(
+                block, (double) i, (double) ((float) j - 1.0F + 0.25F), (double) k, c1
+            );
+            rb.renderFaceYNeg(
+                block, (double) i, (double) ((float) j + 1.0F - 0.75F), (double) k, c1
+            );
+
+            TileCrucible tc = (TileCrucible) w.getTileEntity(i, j, k);
+            float tvis = tc.pureVis + tc.taintedVis;
+            if (tvis > 0.1F) {
+                float h = Math.min(tvis, tc.maxVis);
+                float level = 0.75F * (h / tc.maxVis);
+                if (tc.maxVis == tvis) {
+                    level = (float) ((double) level - 0.001);
+                }
+
+                float b = Math.min(1.0F, tc.pureVis / (tc.taintedVis + tc.pureVis));
+                tessellator.setBrightness(20 + (int) (b * 210.0F));
                 rb.renderFaceYPos(
-                    block, (double) i, (double) ((float) j - 1.0F + 0.25F), (double) k, c1
+                    block,
+                    (double) i,
+                    (double) ((float) j + 0.25F + level - 1.0F),
+                    (double) k,
+                    block.iconTcubeanim
                 );
-                rb.renderFaceYNeg(
-                    block, (double) i, (double) ((float) j + 1.0F - 0.75F), (double) k, c1
-                );
-
-                TileCrucible tc = (TileCrucible) w.getTileEntity(i, j, k);
-                float tvis = tc.pureVis + tc.taintedVis;
-                if (tvis > 0.1F) {
-                    float h = Math.min(tvis, tc.maxVis);
-                    float level = 0.75F * (h / tc.maxVis);
-                    if (tc.maxVis == tvis) {
-                        level = (float) ((double) level - 0.001);
-                    }
-
-                    float b = Math.min(1.0F, tc.pureVis / (tc.taintedVis + tc.pureVis));
-                    tessellator.setBrightness(20 + (int) (b * 210.0F));
-                    rb.renderFaceYPos(
-                        block,
-                        (double) i,
-                        (double) ((float) j + 0.25F + level - 1.0F),
-                        (double) k,
-                        block.iconTcubeanim
-                    );
-                    if (tvis > tc.maxVis) {
-                        // TODO: WTF
-                        //rb.renderSouthFace(
-                        //    block,
-                        //    (double) i,
-                        //    (double) j,
-                        //    (double) k,
-                        //    mod_ThaumCraft.visDripFX
-                        //);
-                        //rb.renderNorthFace(
-                        //    block,
-                        //    (double) i,
-                        //    (double) j,
-                        //    (double) k,
-                        //    mod_ThaumCraft.visDripFX
-                        //);
-                        //rb.renderWestFace(
-                        //    block,
-                        //    (double) i,
-                        //    (double) j,
-                        //    (double) k,
-                        //    mod_ThaumCraft.visDripFX
-                        //);
-                        //rb.renderEastFace(
-                        //    block,
-                        //    (double) i,
-                        //    (double) j,
-                        //    (double) k,
-                        //    mod_ThaumCraft.visDripFX
-                        //);
-                    }
+                if (tvis > tc.maxVis) {
+                    // TODO: WTF
+                    //rb.renderSouthFace(
+                    //    block,
+                    //    (double) i,
+                    //    (double) j,
+                    //    (double) k,
+                    //    mod_ThaumCraft.visDripFX
+                    //);
+                    //rb.renderNorthFace(
+                    //    block,
+                    //    (double) i,
+                    //    (double) j,
+                    //    (double) k,
+                    //    mod_ThaumCraft.visDripFX
+                    //);
+                    //rb.renderWestFace(
+                    //    block,
+                    //    (double) i,
+                    //    (double) j,
+                    //    (double) k,
+                    //    mod_ThaumCraft.visDripFX
+                    //);
+                    //rb.renderEastFace(
+                    //    block,
+                    //    (double) i,
+                    //    (double) j,
+                    //    (double) k,
+                    //    mod_ThaumCraft.visDripFX
+                    //);
                 }
             }
         }

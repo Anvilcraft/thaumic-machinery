@@ -39,39 +39,35 @@ public class ConduitValveApparatusRenderer implements IApparatusRenderer {
             float total = 0.0F;
             float hfill = 0.0F;
             boolean visible = tc.pureVis + tc.taintedVis >= 0.1F;
-            if (block.getRenderBlockPass() == 0) {
-                if (tc.open) {
-                    rb.overrideBlockTexture = block.iconValveOn;
-                } else {
-                    rb.overrideBlockTexture = block.iconValveOff;
-                }
-
-                rb.setRenderBounds(w4, w4, w4, 1.0F - w4, 1.0F - w4, 1.0F - w4);
-                rb.renderStandardBlock(block, i, j, k);
-                rb.overrideBlockTexture = block.iconConduitExtension;
+            if (tc.open) {
+                rb.overrideBlockTexture = block.iconValveOn;
             } else {
-                if (visible) {
-                    total = Math.min(tc.pureVis + tc.taintedVis, tc.maxVis);
-                    hfill = (1.0F - wq * 2.0F) * (total / tc.maxVis);
-                    tessellator.setBrightness(20 + (int) (b * 210.0F));
-                    tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-                    if (Minecraft.getMinecraft().theWorld.rand.nextInt(50) == 1
-                        && w.isAirBlock(i, j - 1, k)
-                        && tc.pureVis + tc.taintedVis > 3.5F) {
-                        // TODO: FXDrip
-                        //FXDrip obj = new FXDrip(
-                        //    w,
-                        //    (double) ((float) i + w4 + w.rand.nextFloat() * w6),
-                        //    (double) ((float) j + w4 - 0.05F),
-                        //    (double) ((float) k + w4 + w.rand.nextFloat() * w6)
-                        //);
-                        //obj.func_40097_b(
-                        //    (0.4F + w.rand.nextFloat() * 0.2F) * (b + 0.1F),
-                        //    0.0F,
-                        //    (0.8F + w.rand.nextFloat() * 0.2F) * (b + 0.1F)
-                        //);
-                        //ModLoader.getMinecraftInstance().effectRenderer.addEffect(obj);
-                    }
+                rb.overrideBlockTexture = block.iconValveOff;
+            }
+
+            rb.setRenderBounds(w4, w4, w4, 1.0F - w4, 1.0F - w4, 1.0F - w4);
+            rb.renderStandardBlock(block, i, j, k);
+            rb.overrideBlockTexture = block.iconConduitExtension;
+            if (visible) {
+                total = Math.min(tc.pureVis + tc.taintedVis, tc.maxVis);
+                hfill = (1.0F - wq * 2.0F) * (total / tc.maxVis);
+                tessellator.setBrightness(20 + (int) (b * 210.0F));
+                tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
+                if (Minecraft.getMinecraft().theWorld.rand.nextInt(50) == 1
+                    && w.isAirBlock(i, j - 1, k) && tc.pureVis + tc.taintedVis > 3.5F) {
+                    // TODO: FXDrip
+                    //FXDrip obj = new FXDrip(
+                    //    w,
+                    //    (double) ((float) i + w4 + w.rand.nextFloat() * w6),
+                    //    (double) ((float) j + w4 - 0.05F),
+                    //    (double) ((float) k + w4 + w.rand.nextFloat() * w6)
+                    //);
+                    //obj.func_40097_b(
+                    //    (0.4F + w.rand.nextFloat() * 0.2F) * (b + 0.1F),
+                    //    0.0F,
+                    //    (0.8F + w.rand.nextFloat() * 0.2F) * (b + 0.1F)
+                    //);
+                    //ModLoader.getMinecraftInstance().effectRenderer.addEffect(obj);
                 }
             }
 
@@ -151,9 +147,7 @@ public class ConduitValveApparatusRenderer implements IApparatusRenderer {
             }
         } else {
             rb.setRenderBounds(w6, 0.0F, w6, 1.0F - w6, 1.0F, 1.0F - w6);
-            BlockRenderer.drawFaces(
-                rb, block, block.iconConduitInventory, false
-            );
+            BlockRenderer.drawFaces(rb, block, block.iconConduitInventory, false);
             rb.setRenderBounds(w4, w4, w4, 1.0F - w4, 1.0F - w4, 1.0F - w4);
             BlockRenderer.drawFaces(rb, block, block.iconValveOn, false);
         }

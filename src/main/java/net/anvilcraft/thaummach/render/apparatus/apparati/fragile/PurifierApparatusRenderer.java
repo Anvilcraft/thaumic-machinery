@@ -22,23 +22,21 @@ public class PurifierApparatusRenderer implements IApparatusRenderer {
         boolean inv
     ) {
         BlockApparatusFragile block = (BlockApparatusFragile) block_;
-        if (block.getRenderBlockPass() == 0 || inv) {
-            rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            if (inv) {
-                BlockRenderer.drawFaces(
-                    rb,
-                    block,
-                    block.iconPurifierTop,
-                    block.iconPurifierTop,
-                    block.iconPurifierFront,
-                    block.iconPurifierFront,
-                    block.iconPurifierSide,
-                    block.iconPurifierSide,
-                    false
-                );
-            } else {
-                rb.renderStandardBlock(block, i, j, k);
-            }
+        rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+        if (inv) {
+            BlockRenderer.drawFaces(
+                rb,
+                block,
+                block.iconPurifierTop,
+                block.iconPurifierTop,
+                block.iconPurifierFront,
+                block.iconPurifierFront,
+                block.iconPurifierSide,
+                block.iconPurifierSide,
+                false
+            );
+        } else {
+            rb.renderStandardBlock(block, i, j, k);
         }
 
         rb.overrideBlockTexture = null;
