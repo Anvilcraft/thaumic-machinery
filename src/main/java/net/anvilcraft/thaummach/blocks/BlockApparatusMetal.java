@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 import dev.tilera.auracore.client.FXSparkle;
+import net.anvilcraft.alec.jalec.factories.AlecUnexpectedRuntimeErrorExceptionFactory;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.ArcaneFurnaceApparatusRenderer;
@@ -187,7 +188,7 @@ public class BlockApparatusMetal extends BlockApparatus {
                 return TankApparatusRenderer.INSTANCE;
 
             default:
-                throw new IllegalArgumentException("ALEC");
+                throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException();
         }
     }
 

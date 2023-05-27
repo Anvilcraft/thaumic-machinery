@@ -54,6 +54,7 @@ dependencies {
     //implementation "com.eloraam.redpower:redpower:2.0pr10-dirty:deobf"
     implementation "com.github.tox1cozZ:mixin-booter-legacy:1.1.2"
     implementation "dev.tilera:auracore:1.9.0:deobf"
+    implementation "net.anvilcraft:jalec:0.1.2"
     implementation "net.industrial-craft:industrialcraft-2:2.2.660-experimental:dev"
     implementation "thaumcraft:Thaumcraft:1.7.10-4.2.3.5:deobf"
     implementation "universalelectricity:universalelectricity:5.2.2:deobf"

@@ -2,6 +2,7 @@ package net.anvilcraft.thaummach;
 
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.anvilcraft.alec.jalec.factories.AlecUnexpectedRuntimeErrorExceptionFactory;
 import net.anvilcraft.thaummach.container.ContainerArcaneFurnace;
 import net.anvilcraft.thaummach.container.ContainerBore;
 import net.anvilcraft.thaummach.container.ContainerCondenser;
@@ -70,9 +71,7 @@ public class CommonProxy implements IGuiHandler {
         TileEntity te = world.getTileEntity(x, y, z);
         switch (GuiID.get(id)) {
             case ARCANE_FURNACE:
-                return new ContainerArcaneFurnace(
-                    player.inventory, (TileArcaneFurnace) te
-                );
+                return new ContainerArcaneFurnace(player.inventory, (TileArcaneFurnace) te);
 
             case BORE:
                 return new ContainerBore(player.inventory, (TileBore) te);
@@ -96,9 +95,7 @@ public class CommonProxy implements IGuiHandler {
                 return new ContainerVoidChest(player.inventory, (TileVoidChest) te);
 
             case VOID_INTERFACE:
-                return new ContainerVoidInterface(
-                    player.inventory, (TileVoidInterface) te
-                );
+                return new ContainerVoidInterface(player.inventory, (TileVoidInterface) te);
 
             // GUIs with no meaningful container
             case GENERATOR:
@@ -110,7 +107,7 @@ public class CommonProxy implements IGuiHandler {
                 };
 
             default:
-                throw new IllegalArgumentException("ALEC");
+                throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException();
         }
     }
 

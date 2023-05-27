@@ -4,6 +4,7 @@ import cpw.mods.fml.client.registry.ClientRegistry;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.anvilcraft.alec.jalec.factories.AlecUnexpectedRuntimeErrorExceptionFactory;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
 import net.anvilcraft.thaummach.gui.GuiArcaneFurnace;
 import net.anvilcraft.thaummach.gui.GuiBore;
@@ -125,7 +126,9 @@ public class ClientProxy extends CommonProxy {
                 return new GuiVoidInterface(player.inventory, (TileVoidInterface) te);
 
             default:
-                throw new IllegalArgumentException("ALEC");
+                throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException(
+                    "invalid GUI ID"
+                );
         }
     }
 }
