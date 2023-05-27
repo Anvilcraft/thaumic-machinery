@@ -1,11 +1,11 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.fragile;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusFragile;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class PurifierApparatusRenderer implements IApparatusRenderer {
     public static PurifierApparatusRenderer INSTANCE = new PurifierApparatusRenderer();
@@ -25,7 +25,7 @@ public class PurifierApparatusRenderer implements IApparatusRenderer {
         if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconPurifierTop,

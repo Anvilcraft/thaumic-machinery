@@ -3,7 +3,6 @@ package net.anvilcraft.thaummach.render.apparatus.apparati.fragile;
 import dev.tilera.auracore.api.HelperLocation;
 import dev.tilera.auracore.api.machine.IConnection;
 import net.anvilcraft.thaummach.blocks.BlockApparatusFragile;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.minecraft.block.Block;
@@ -13,6 +12,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class ConduitApparatusRenderer implements IApparatusRenderer {
     public static ConduitApparatusRenderer INSTANCE = new ConduitApparatusRenderer();
@@ -154,7 +154,7 @@ public class ConduitApparatusRenderer implements IApparatusRenderer {
             }
         } else {
             rb.setRenderBounds(w6, 0.0F, w6, w6 + w4, 1.0F, w6 + w4);
-            ApparatusRenderingHelper.drawFaces(
+            BlockRenderer.drawFaces(
                 rb, block, block.iconConduitInventory, false
             );
         }

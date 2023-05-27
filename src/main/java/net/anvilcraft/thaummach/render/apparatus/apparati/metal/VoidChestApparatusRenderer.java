@@ -1,11 +1,11 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class VoidChestApparatusRenderer implements IApparatusRenderer {
     public static final VoidChestApparatusRenderer INSTANCE
@@ -25,7 +25,7 @@ public class VoidChestApparatusRenderer implements IApparatusRenderer {
         BlockApparatusMetal block = (BlockApparatusMetal) block_;
         if (inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            ApparatusRenderingHelper.drawFaces(
+            BlockRenderer.drawFaces(
                 rb,
                 block,
                 block.iconVoidChestBottom,

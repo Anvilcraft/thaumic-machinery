@@ -1,11 +1,11 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
     public static SoulBrazierApparatusRenderer INSTANCE
@@ -30,7 +30,7 @@ public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
             float t6 = 0.375F;
             rb.setRenderBounds(t2, 0.5F, t6, t4, 1.0F, 1.0F - t6);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconSoulBrazierBottom,
@@ -47,7 +47,7 @@ public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(t6, 0.5F, t2, 1.0F - t6, 1.0F, t4);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconSoulBrazierBottom,
@@ -64,7 +64,7 @@ public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(1.0F - t4, 0.5F, t6, 1.0F - t2, 1.0F, 1.0F - t6);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconSoulBrazierBottom,
@@ -81,7 +81,7 @@ public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(t6, 0.5F, 1.0F - t4, 1.0F - t6, 1.0F, 1.0F - t2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconSoulBrazierBottom,
@@ -98,7 +98,7 @@ public class SoulBrazierApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(t4, 0.0F, t4, 1.0F - t4, 0.5F + t4, 1.0F - t4);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconSoulBrazierBottom,

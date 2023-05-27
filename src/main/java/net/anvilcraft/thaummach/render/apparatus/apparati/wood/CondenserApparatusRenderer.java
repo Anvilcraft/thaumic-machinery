@@ -1,12 +1,12 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.wood;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusWood;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class CondenserApparatusRenderer implements IApparatusRenderer {
     public static final CondenserApparatusRenderer INSTANCE
@@ -31,7 +31,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
         if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(w3, 1.0F - w4, w3, 1.0F - w3, 1.0F, 1.0F - w3);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconCondenserTop,
@@ -48,7 +48,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(w3, 0.0F, w3, 1.0F - w3, w4, 1.0F - w3);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconCondenserTop,
@@ -66,7 +66,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
             rb.overrideBlockTexture = block.iconCondenserPart;
             rb.setRenderBounds(0.5F - w2, w2, 0.0F, 0.5F + w2, 1.0F - w2, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb, block, block.iconCondenserPart, false
                 );
             } else {
@@ -75,7 +75,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(0.0F, w2, 0.5F - w2, 1.0F, 1.0F - w2, 0.5F + w2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb, block, block.iconCondenserPart, false
                 );
             } else {
@@ -84,7 +84,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(0.5F - w2, w2, 0.0F, 0.5F + w2, 1.0F - w2, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb, block, block.iconCondenserPart, false
                 );
             } else {
@@ -93,7 +93,7 @@ public class CondenserApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(0.0F, w2, 0.5F - w2, 1.0F, 1.0F - w2, 0.5F + w2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb, block, block.iconCondenserPart, false
                 );
             } else {

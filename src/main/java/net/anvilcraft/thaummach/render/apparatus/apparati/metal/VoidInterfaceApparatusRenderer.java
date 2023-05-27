@@ -1,11 +1,11 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
     public static VoidInterfaceApparatusRenderer INSTANCE
@@ -29,7 +29,7 @@ public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
         if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, t3x, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconVoidInterfaceBottom,
@@ -46,7 +46,7 @@ public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(0.0F, 0.5F - t4x, 0.0F, 1.0F, 0.5F - t1x, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconVoidInterfaceBottom,
@@ -63,7 +63,7 @@ public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(t4x, 0.5F - t1x, t4x, 1.0F - t4x, 0.5F + t4x, 1.0F - t4x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconVoidInterfaceBottom,
@@ -95,7 +95,7 @@ public class VoidInterfaceApparatusRenderer implements IApparatusRenderer {
             );
         } else {
             rb.overrideBlockTexture = block.iconTcubeanim;
-            ApparatusRenderingHelper.drawFaces(rb, block, block.iconTcubeanim, true);
+            BlockRenderer.drawFaces(rb, block, block.iconTcubeanim, true);
         }
 
         rb.overrideBlockTexture = null;

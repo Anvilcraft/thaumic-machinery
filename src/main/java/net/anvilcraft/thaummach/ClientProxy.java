@@ -49,20 +49,15 @@ import net.minecraft.world.World;
 
 public class ClientProxy extends CommonProxy {
     @Override
-    public void preInit() {
-        super.preInit();
-
-        BlockApparatusRenderer.RI = RenderingRegistry.getNextAvailableRenderId();
-        RenderingRegistry.registerBlockHandler(new BlockApparatusRenderer());
-    }
-
-    @Override
     public void init() {
         RenderingRegistry.registerEntityRenderingHandler(
             EntitySingularity.class, new EntitySingularityRenderer()
         );
 
         FMLCommonHandler.instance().bus().register(new RenderTicker());
+
+        BlockApparatusRenderer.RI = RenderingRegistry.getNextAvailableRenderId();
+        RenderingRegistry.registerBlockHandler(new BlockApparatusRenderer());
     }
 
     @Override

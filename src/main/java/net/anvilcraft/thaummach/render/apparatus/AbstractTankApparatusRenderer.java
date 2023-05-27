@@ -10,8 +10,10 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
-public abstract class AbstractTankApparatusRenderer<Apparatus extends BlockApparatus> implements IApparatusRenderer {
+public abstract class AbstractTankApparatusRenderer<Apparatus extends BlockApparatus>
+    implements IApparatusRenderer {
     public abstract IIcon getBottomIcon(Apparatus block);
     public abstract IIcon getSideIcon(Apparatus block);
 
@@ -32,20 +34,18 @@ public abstract class AbstractTankApparatusRenderer<Apparatus extends BlockAppar
         if (block.getRenderBlockPass() == 0 || inv) {
             w1 = 0.0625F;
             w2 = 0.125F;
-            IIcon t1 = this.getBottomIcon((Apparatus)block);
-            IIcon t2 = this.getSideIcon((Apparatus)block);
+            IIcon t1 = this.getBottomIcon((Apparatus) block);
+            IIcon t2 = this.getSideIcon((Apparatus) block);
 
             rb.setRenderBounds(w1, 0.0F, w1, 1.0F - w1, 1.0F, 1.0F - w1);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
-                    rb, block, t1, t1, t2, t2, t2, t2, false
-                );
+                BlockRenderer.drawFaces(rb, block, t1, t1, t2, t2, t2, t2, false);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
 
             if (!inv) {
-                rb.overrideBlockTexture = this.getBottomIcon((Apparatus)block);
+                rb.overrideBlockTexture = this.getBottomIcon((Apparatus) block);
                 TileConduitTank tc = (TileConduitTank) w.getTileEntity(i, j, k);
                 HelperLocation loc = new HelperLocation(tc);
                 loc.facing = ForgeDirection.WEST;

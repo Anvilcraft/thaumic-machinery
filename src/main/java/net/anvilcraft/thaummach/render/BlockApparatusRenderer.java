@@ -16,8 +16,9 @@ public class BlockApparatusRenderer implements ISimpleBlockRenderingHandler {
         if (block instanceof BlockApparatus) {
             IApparatusRenderer ren
                 = ((BlockApparatus) block).getApparatusRenderer(metadata);
-            if (ren != null)
+            if (ren != null) {
                 ren.renderApparatus(null, renderer, 0, 0, 0, block, metadata, true);
+            }
         }
     }
 
@@ -33,8 +34,7 @@ public class BlockApparatusRenderer implements ISimpleBlockRenderingHandler {
     ) {
         if (block instanceof BlockApparatus) {
             int meta = world.getBlockMetadata(x, y, z);
-            IApparatusRenderer ren
-                = ((BlockApparatus) block).getApparatusRenderer(meta);
+            IApparatusRenderer ren = ((BlockApparatus) block).getApparatusRenderer(meta);
             if (ren != null)
                 ren.renderApparatus(world, renderer, x, y, z, block, meta, false);
             if (block.getRenderBlockPass() == 0)

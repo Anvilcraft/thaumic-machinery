@@ -1,11 +1,11 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class ArcaneFurnaceApparatusRenderer implements IApparatusRenderer {
     public static ArcaneFurnaceApparatusRenderer INSTANCE
@@ -64,7 +64,7 @@ public class ArcaneFurnaceApparatusRenderer implements IApparatusRenderer {
             );
         } else if (inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            ApparatusRenderingHelper.drawFaces(
+            BlockRenderer.drawFaces(
                 rb,
                 block,
                 block.iconArcaneFurnaceBottom,
@@ -76,7 +76,7 @@ public class ArcaneFurnaceApparatusRenderer implements IApparatusRenderer {
                 true
             );
             rb.setRenderBounds(0.1F, 0.1F, 0.1F, 0.9F, 0.99F, 0.9F);
-            ApparatusRenderingHelper.drawFaces(
+            BlockRenderer.drawFaces(
                 rb, block, block.iconArcaneFurnaceInside, false
             );
         }

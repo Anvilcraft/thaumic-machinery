@@ -3,11 +3,11 @@ package net.anvilcraft.thaummach.render.apparatus.apparati.wood;
 import net.anvilcraft.thaummach.TMBlocks;
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
 import net.anvilcraft.thaummach.blocks.BlockApparatusWood;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class RepairerApparatusRenderer implements IApparatusRenderer {
     public static final RepairerApparatusRenderer INSTANCE
@@ -28,7 +28,7 @@ public class RepairerApparatusRenderer implements IApparatusRenderer {
         if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconRestorerBottom,
@@ -88,7 +88,7 @@ public class RepairerApparatusRenderer implements IApparatusRenderer {
                 );
             } else {
                 rb.setRenderBounds(0.01F, 0.01F, 0.01F, 0.99F, 0.99F, 0.99F);
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     ((BlockApparatusMetal) TMBlocks.apparatusMetal)

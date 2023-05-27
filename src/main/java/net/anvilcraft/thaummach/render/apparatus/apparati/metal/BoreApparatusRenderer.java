@@ -1,13 +1,13 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class BoreApparatusRenderer implements IApparatusRenderer {
     public static final BoreApparatusRenderer INSTANCE = new BoreApparatusRenderer();
@@ -51,7 +51,7 @@ public class BoreApparatusRenderer implements IApparatusRenderer {
             rb.overrideBlockTexture = tx;
             rb.setRenderBounds(t2x, t2x, t2x, 1.0F - t2x, 1.0F - t2x, 1.0F - t2x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, t1, true);
+                BlockRenderer.drawFaces(rb, block, t1, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
@@ -65,14 +65,14 @@ public class BoreApparatusRenderer implements IApparatusRenderer {
             rb.overrideBlockTexture = tx;
             rb.setRenderBounds(t4x, 0.0F, t4x, 1.0F - t4x, t2x, 1.0F - t4x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, tx, true);
+                BlockRenderer.drawFaces(rb, block, tx, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
 
             rb.setRenderBounds(t4x, 1.0F - t2x, t4x, 1.0F - t4x, 1.0F, 1.0F - t4x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, tx, true);
+                BlockRenderer.drawFaces(rb, block, tx, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
@@ -86,14 +86,14 @@ public class BoreApparatusRenderer implements IApparatusRenderer {
             rb.overrideBlockTexture = tx;
             rb.setRenderBounds(0.0F, t4x, t4x, t2x, 1.0F - t4x, 1.0F - t4x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, tx, true);
+                BlockRenderer.drawFaces(rb, block, tx, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
 
             rb.setRenderBounds(1.0F - t2x, t4x, t4x, 1.0F, 1.0F - t4x, 1.0F - t4x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, tx, true);
+                BlockRenderer.drawFaces(rb, block, tx, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
@@ -107,14 +107,14 @@ public class BoreApparatusRenderer implements IApparatusRenderer {
             rb.overrideBlockTexture = tx;
             rb.setRenderBounds(t4x, t4x, 0.0F, 1.0F - t4x, 1.0F - t4x, t2x);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, tx, true);
+                BlockRenderer.drawFaces(rb, block, tx, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }
 
             rb.setRenderBounds(t4x, t4x, 1.0F - t2x, 1.0F - t4x, 1.0F - t4x, 1.0F);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, tx, true);
+                BlockRenderer.drawFaces(rb, block, tx, true);
             } else {
                 rb.renderStandardBlock(block, i, j, k);
             }

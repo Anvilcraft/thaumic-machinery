@@ -1,6 +1,5 @@
 package net.anvilcraft.thaummach.gui;
 
-import net.anvilcraft.thaummach.TMItems;
 import net.anvilcraft.thaummach.container.ContainerCondenser;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
 import net.anvilcraft.thaummach.utils.UtilsFX;

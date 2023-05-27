@@ -2,7 +2,6 @@ package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal.MetaVals;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileCrucible;
 import net.minecraft.block.Block;
@@ -11,6 +10,7 @@ import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class CrucibleApparatusRenderer implements IApparatusRenderer {
     public static CrucibleApparatusRenderer INSTANCE = new CrucibleApparatusRenderer();
@@ -38,7 +38,7 @@ public class CrucibleApparatusRenderer implements IApparatusRenderer {
                  || md == MetaVals.THAUMIUM_CRUCIBLE)
         ) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            ApparatusRenderingHelper.drawFaces(
+            BlockRenderer.drawFaces(
                 rb,
                 block,
                 icons[3],
@@ -51,7 +51,7 @@ public class CrucibleApparatusRenderer implements IApparatusRenderer {
             );
         } else if (inv && md == MetaVals.SOUL_CRUCIBLE) {
             rb.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-            ApparatusRenderingHelper.drawFaces(
+            BlockRenderer.drawFaces(
                 rb,
                 block,
                 block.iconSoulCrucibleBottom,

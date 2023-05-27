@@ -1,12 +1,11 @@
 package net.anvilcraft.thaummach.render.apparatus.apparati.metal;
 
 import net.anvilcraft.thaummach.blocks.BlockApparatusMetal;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
-import net.minecraft.init.Blocks;
 import net.minecraft.world.IBlockAccess;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class GeneratorApparatusRenderer implements IApparatusRenderer {
     public static final GeneratorApparatusRenderer INSTANCE
@@ -29,14 +28,14 @@ public class GeneratorApparatusRenderer implements IApparatusRenderer {
         if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(w4, 0.0F, w4, 1.0F - w4, w2, 1.0F - w4);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator1, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator1, true);
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
 
             rb.setRenderBounds(w4, 1.0F - w2, w4, 1.0F - w4, 1.0F, 1.0F - w4);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator1, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator1, true);
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
@@ -45,14 +44,14 @@ public class GeneratorApparatusRenderer implements IApparatusRenderer {
                 1.0F - w2, 0.5F - w4, 0.5F - w4, 1.0F, 0.5F + w4, 0.5F + w4
             );
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator1, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator1, true);
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
 
             rb.setRenderBounds(0.0F, 0.5F - w4, 0.5F - w4, w2, 0.5F + w4, 0.5F + w4);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator1, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator1, true);
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
@@ -61,14 +60,14 @@ public class GeneratorApparatusRenderer implements IApparatusRenderer {
                 0.5F - w4, 0.5F - w4, 1.0F - w2, 0.5F + w4, 0.5F + w4, 1.0F
             );
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator1, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator1, true);
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
 
             rb.setRenderBounds(0.5F - w4, 0.5F - w4, 0.0F, 0.5F + w4, 0.5F + w4, w2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator1, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator1, true);
             } else {
                 rb.renderStandardBlock(block, x, y, z);
             }
@@ -78,7 +77,7 @@ public class GeneratorApparatusRenderer implements IApparatusRenderer {
             rb.overrideBlockTexture = null;
             rb.setRenderBounds(w2, w2, w2, 1.0F - w2, 1.0F - w2, 1.0F - w2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(rb, block, block.iconGenerator4, true);
+                BlockRenderer.drawFaces(rb, block, block.iconGenerator4, true);
             } else {
                 rb.renderFaceYNeg(block, x, y, z, block.iconGenerator4);
                 rb.renderFaceYPos(block, x, y, z, block.iconGenerator4);

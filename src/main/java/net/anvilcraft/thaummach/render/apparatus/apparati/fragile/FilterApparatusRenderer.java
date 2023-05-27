@@ -3,7 +3,6 @@ package net.anvilcraft.thaummach.render.apparatus.apparati.fragile;
 import dev.tilera.auracore.api.HelperLocation;
 import dev.tilera.auracore.api.machine.IConnection;
 import net.anvilcraft.thaummach.blocks.BlockApparatusFragile;
-import net.anvilcraft.thaummach.render.apparatus.ApparatusRenderingHelper;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileConduit;
 import net.minecraft.block.Block;
@@ -12,6 +11,7 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.IBlockAccess;
 import net.minecraftforge.common.util.ForgeDirection;
+import thaumcraft.client.renderers.block.BlockRenderer;
 
 public class FilterApparatusRenderer implements IApparatusRenderer {
     public static final FilterApparatusRenderer INSTANCE = new FilterApparatusRenderer();
@@ -34,7 +34,7 @@ public class FilterApparatusRenderer implements IApparatusRenderer {
         if (block.getRenderBlockPass() == 0 || inv) {
             rb.setRenderBounds(w2, 0.0F, w2, 1.0F - w2, w3, 1.0F - w2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconFilterBottom,
@@ -51,7 +51,7 @@ public class FilterApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(w2, 1.0F - w3, w2, 1.0F - w2, 1.0F, 1.0F - w2);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconFilterBottom,
@@ -68,7 +68,7 @@ public class FilterApparatusRenderer implements IApparatusRenderer {
 
             rb.setRenderBounds(w3, w3, w3, 1.0F - w3, 1.0F - w3, 1.0F - w3);
             if (inv) {
-                ApparatusRenderingHelper.drawFaces(
+                BlockRenderer.drawFaces(
                     rb,
                     block,
                     block.iconFilterBottom,
