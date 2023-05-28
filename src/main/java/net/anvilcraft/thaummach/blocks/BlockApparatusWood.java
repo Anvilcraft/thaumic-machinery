@@ -105,7 +105,8 @@ public class BlockApparatusWood extends BlockApparatus {
                 return DuplicatorApparatusRenderer.INSTANCE;
 
             default:
-                throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException();
+                //throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException();
+                return null;
         }
     }
 

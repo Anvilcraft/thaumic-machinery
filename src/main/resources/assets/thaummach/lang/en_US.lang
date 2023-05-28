@@ -53,6 +53,8 @@ item.thaummach:upgrade_6.name=Collected Wisdom
 
 item.thaummach:soul_fragment.name=Soul Fragment
 
+item.thaummach:void_bracelet.name=Void Bracelet
+
 item.thaummach:singularity.name=Arcane Singularity
 item.thaummach:crystalline_bell.name=Crystalline Bell
 

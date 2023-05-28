@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.IChatComponent;
+import net.minecraft.world.chunk.EmptyChunk;
 import org.lwjgl.opengl.EXTFramebufferObject;
 import org.lwjgl.opengl.GL11;
 
@@ -31,9 +32,7 @@ public class PortalRenderer {
         GL11.glBindTexture(3553, this.portalTexture);
         GL11.glTexParameterf(3553, 10241, 9729.0F);
         GL11.glTexImage2D(3553, 0, 32856, 512, 512, 0, 6408, 5124, (ByteBuffer) null);
-        EXTFramebufferObject.glFramebufferTexture2DEXT(
-            36160, 36064, 3553, this.portalTexture, 0
-        );
+        EXTFramebufferObject.glFramebufferTexture2DEXT(36160, 36064, 3553, this.portalTexture, 0);
         EXTFramebufferObject.glBindRenderbufferEXT(36161, this.depthRenderBuffer);
         EXTFramebufferObject.glRenderbufferStorageEXT(36161, 35056, 512, 512);
         EXTFramebufferObject.glFramebufferRenderbufferEXT(
@@ -57,22 +56,26 @@ public class PortalRenderer {
 
         RuneTileData target = this.seal.otherSeal;
         Minecraft mc = Minecraft.getMinecraft();
+
+        if (mc.theWorld.getChunkFromBlockCoords(target.x, target.z) instanceof EmptyChunk)
+            return;
+
         GL11.glPushMatrix();
         GL11.glLoadIdentity();
 
         int prevFbo = GL11.glGetInteger(EXTFramebufferObject.GL_FRAMEBUFFER_BINDING_EXT);
-        EXTFramebufferObject.glBindFramebufferEXT(36160, this.frameBuffer);
+        EXTFramebufferObject.glBindFramebufferEXT(0x8d40, this.frameBuffer);
 
         // TODO: stencils aren't stenciling
-        GL11.glEnable(2960);
+        GL11.glEnable(0xb90);
         GL11.glStencilFunc(519, 1, 1);
-        GL11.glStencilOp(7680, 7680, 7681);
+        GL11.glStencilOp(0x1e00, 0x1e00, 0x1e01);
         GL11.glViewport(0, 0, 512, 512);
-        GL11.glMatrixMode(5889);
+        GL11.glMatrixMode(0x1701);
         GL11.glLoadIdentity();
-        GL11.glMatrixMode(5888);
+        GL11.glMatrixMode(0x1700);
         GL11.glLoadIdentity();
-        GL11.glDisable(3553);
+        GL11.glDisable(0xde1);
         GL11.glColor3f(1.0F, 1.0F, 1.0F);
         GL11.glBegin(6);
         GL11.glVertex2f(0.0F, 0.0F);
@@ -88,9 +91,7 @@ public class PortalRenderer {
         GL11.glEnable(3553);
         Entity rve = mc.renderViewEntity;
 
-        mc.renderViewEntity = new EntityPlayer(
-            mc.theWorld, mc.getSession().func_148256_e()
-        ) {
+        mc.renderViewEntity = new EntityPlayer(mc.theWorld, mc.getSession().func_148256_e()) {
             @Override
             public void addChatMessage(IChatComponent p_145747_1_) {}
 

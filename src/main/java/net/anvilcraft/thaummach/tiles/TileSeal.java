@@ -34,7 +34,6 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
-import net.minecraft.network.play.server.S08PacketPlayerPosLook;
 import net.minecraft.network.play.server.S12PacketEntityVelocity;
 import net.minecraft.network.play.server.S18PacketEntityTeleport;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
@@ -201,9 +200,7 @@ public class TileSeal extends TileEntity {
                 RuneTileData sd = new RuneTileData(this);
                 if (!SEALS.contains(sd)) {
                     SEALS.add(sd);
-                    this.worldObj.markBlockForUpdate(
-                        this.xCoord, this.yCoord, this.zCoord
-                    );
+                    this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
                 }
 
                 this.handlePortals();
@@ -229,15 +226,9 @@ public class TileSeal extends TileEntity {
                                 (double) this.sealX(false),
                                 (double) this.sealY(false),
                                 (double) this.sealZ(false),
-                                (double
-                                ) ((float) super.xCoord + super.worldObj.rand.nextFloat()
-                                ),
-                                (double
-                                ) ((float) super.yCoord + super.worldObj.rand.nextFloat()
-                                ),
-                                (double
-                                ) ((float) super.zCoord + super.worldObj.rand.nextFloat()
-                                ),
+                                (double) ((float) super.xCoord + super.worldObj.rand.nextFloat()),
+                                (double) ((float) super.yCoord + super.worldObj.rand.nextFloat()),
+                                (double) ((float) super.zCoord + super.worldObj.rand.nextFloat()),
                                 1.0F,
                                 super.worldObj.rand.nextBoolean() ? 0 : 3,
                                 4
@@ -252,12 +243,9 @@ public class TileSeal extends TileEntity {
                             (double) this.sealX(false),
                             (double) this.sealY(false),
                             (double) this.sealZ(false),
-                            (double
-                            ) ((float) super.xCoord + super.worldObj.rand.nextFloat()),
-                            (double
-                            ) ((float) super.yCoord + super.worldObj.rand.nextFloat()),
-                            (double
-                            ) ((float) super.zCoord + super.worldObj.rand.nextFloat()),
+                            (double) ((float) super.xCoord + super.worldObj.rand.nextFloat()),
+                            (double) ((float) super.yCoord + super.worldObj.rand.nextFloat()),
+                            (double) ((float) super.zCoord + super.worldObj.rand.nextFloat()),
                             1.0F,
                             super.worldObj.rand.nextBoolean() ? 0 : 3,
                             4
@@ -382,9 +370,8 @@ public class TileSeal extends TileEntity {
                         break;
                     case 4:
                         this.pushEntity(true, true, true, 6, 0.07F);
-                        List<Entity> list = this.getEntities(
-                            super.worldObj, 0.0F, this.orientation, false
-                        );
+                        List<Entity> list
+                            = this.getEntities(super.worldObj, 0.0F, this.orientation, false);
                         int a = 0;
 
                         while (true) {
@@ -417,9 +404,8 @@ public class TileSeal extends TileEntity {
                         }
                     case 5:
                         this.pushEntity(true, false, true, 6, 0.04F);
-                        List<Entity> list2 = this.getEntities(
-                            super.worldObj, 0.2F, this.orientation, false
-                        );
+                        List<Entity> list2
+                            = this.getEntities(super.worldObj, 0.2F, this.orientation, false);
 
                         for (int b = 0; b < list2.size(); ++b) {
                             Entity entity = (Entity) list2.get(b);
@@ -882,8 +868,7 @@ public class TileSeal extends TileEntity {
     }
 
     private void preventSpawn(int range) {
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         for (int a = 0; a < list.size(); ++a) {
             Entity entity = (Entity) list.get(a);
@@ -893,20 +878,17 @@ public class TileSeal extends TileEntity {
         }
     }
 
-    private boolean
-    scan(int range, boolean items, boolean mobs, boolean animals, boolean pvp) {
+    private boolean scan(int range, boolean items, boolean mobs, boolean animals, boolean pvp) {
         if (super.worldObj.isRemote)
             return false;
 
         boolean foundsomething = false;
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         int q;
         for (q = 0; q < list.size(); ++q) {
             Entity entity = (Entity) list.get(q);
-            if (items && entity instanceof EntityItem
-                || animals && entity instanceof EntityAnimal
+            if (items && entity instanceof EntityItem || animals && entity instanceof EntityAnimal
                 || mobs && (entity instanceof EntityMob || entity instanceof IMob)
                 || pvp && entity instanceof EntityPlayer) {
                 this.worked = true;
@@ -943,8 +925,7 @@ public class TileSeal extends TileEntity {
             return false;
 
         boolean didsomething = false;
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         for (int a = 0; a < list.size(); ++a) {
             Entity entity = (Entity) list.get(a);
@@ -1049,10 +1030,7 @@ public class TileSeal extends TileEntity {
                         && super.yCoord + y + 1 <= super.worldObj.getHeight()
                         && super.yCoord + y - 1 >= 0) {
                         if (Utils.useBonemealAtLoc(
-                                super.worldObj,
-                                super.xCoord + x,
-                                super.yCoord + y,
-                                super.zCoord + z
+                                super.worldObj, super.xCoord + x, super.yCoord + y, super.zCoord + z
                             )) {
                             net.anvilcraft.thaummach.utils.UtilsFX.poofUpwards(
                                 super.worldObj,
@@ -1242,8 +1220,7 @@ public class TileSeal extends TileEntity {
         for (int x = xm; x <= xp; ++x) {
             for (int y = ym; y <= yp; ++y) {
                 for (int z = zm; z <= zp; ++z) {
-                    if (super.yCoord + y <= super.worldObj.getHeight()
-                        && super.yCoord + y >= 0) {
+                    if (super.yCoord + y <= super.worldObj.getHeight() && super.yCoord + y >= 0) {
                         Block cbID = super.worldObj.getBlock(
                             super.xCoord + x, super.yCoord + y, super.zCoord + z
                         );
@@ -1430,16 +1407,14 @@ public class TileSeal extends TileEntity {
         for (int x = xm; x <= xp; ++x) {
             for (int y = ym; y <= yp; ++y) {
                 for (int z = zm; z <= zp; ++z) {
-                    if (super.yCoord + y <= super.worldObj.getHeight()
-                        && super.yCoord + y >= 0) {
+                    if (super.yCoord + y <= super.worldObj.getHeight() && super.yCoord + y >= 0) {
                         Block cbID = super.worldObj.getBlock(
                             super.xCoord + x, super.yCoord + y, super.zCoord + z
                         );
                         Block tbID = super.worldObj.getBlock(
                             super.xCoord + x, super.yCoord + y + 1, super.zCoord + z
                         );
-                        if ((cbID == Blocks.dirt || cbID == Blocks.grass)
-                            && tbID == Blocks.air
+                        if ((cbID == Blocks.dirt || cbID == Blocks.grass) && tbID == Blocks.air
                             && super.worldObj.rand.nextInt(10) == 0) {
                             super.worldObj.setBlock(
                                 super.xCoord + x,
@@ -1500,8 +1475,7 @@ public class TileSeal extends TileEntity {
     }
 
     private void handlePortals() {
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, 1, this.orientation, false);
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, 1, this.orientation, false);
         boolean p = false;
 
         int q;
@@ -1516,44 +1490,56 @@ public class TileSeal extends TileEntity {
             Iterator<RuneTileData> i$ = SEALS.iterator();
 
             boolean fs = false;
-        label74: {
-            RuneTileData pd;
-            do {
-                do {
-                    do {
-                        if (!i$.hasNext()) {
-                            break label74;
-                        }
+            //RuneTileData pd;
+            //do {
+            //    do {
+            //        do {
+            //            if (!i$.hasNext()) {
+            //                break label74;
+            //            }
 
-                        pd = i$.next();
-                    } while (pd.dim != list.get(0).worldObj.provider.dimensionId);
-                } while (pd.rune != this.runes[2]);
-            } while (pd.x == super.xCoord && pd.y == super.yCoord && pd.z == super.zCoord
-            );
+            //            pd = i$.next();
+            //        } while (pd.dim != list.get(0).worldObj.provider.dimensionId);
+            //    } while (pd.rune != this.runes[2]);
+            //} while (pd.x == super.xCoord && pd.y == super.yCoord && pd.z == super.zCoord);
 
-            this.otherSeal = pd;
-            super.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+            this.portalWindow %= SEALS.size() - 1;
+            RuneTileData pd = SEALS.stream()
+                                  .filter(
+                                      (rtd)
+                                          -> rtd.dim == this.worldObj.provider.dimensionId
+                                          && rtd.rune == this.runes[2]
+                                          && !(rtd.x == this.xCoord && rtd.y == this.yCoord
+                                               && rtd.z == this.zCoord)
+                                  )
+                                  .skip(this.portalWindow)
+                                  .findFirst()
+                                  .orElse(null);
 
-            if (!this.pOpen && p) {
-                super.worldObj.playSoundEffect(
-                    (double) super.xCoord + 0.5,
-                    (double) super.yCoord + 0.5,
-                    (double) super.zCoord + 0.5,
-                    "thaummach:popen",
-                    0.4F,
-                    1.0F + super.worldObj.rand.nextFloat() * 0.2F
-                );
+            if (pd != null) {
+                this.otherSeal = pd;
+                super.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
+
+                if (!this.pOpen && p) {
+                    super.worldObj.playSoundEffect(
+                        (double) super.xCoord + 0.5,
+                        (double) super.yCoord + 0.5,
+                        (double) super.zCoord + 0.5,
+                        "thaummach:popen",
+                        0.4F,
+                        1.0F + super.worldObj.rand.nextFloat() * 0.2F
+                    );
+                }
+
+                if (this.delay <= 0 && p) {
+                    //this.renderTeleportDest();
+                    this.delay = 10;
+                }
+
+                --this.delay;
+                this.pOpen = true;
+                fs = true;
             }
-
-            if (this.delay <= 0 && p) {
-                //this.renderTeleportDest();
-                this.delay = 10;
-            }
-
-            --this.delay;
-            this.pOpen = true;
-            fs = true;
-        }
             if (!fs && this.pOpen) {
                 this.pOpen = false;
             }
@@ -1644,230 +1630,198 @@ public class TileSeal extends TileEntity {
             return false;
         } else {
             Entity entity = (Entity) list.get(0);
-            if (entity instanceof EntityFX) {
+            if (entity instanceof EntityFX)
                 return false;
-            } else {
-                if (this.otherSeal == null) {
-                    return false;
-                } else {
-                    RuneTileData targetDest = this.otherSeal;
-                    TileEntity ts = super.worldObj.getTileEntity(
-                        targetDest.x, targetDest.y, targetDest.z
-                    );
-                    if (ts != null && ts instanceof TileSeal) {
-                        TileSeal target = (TileSeal) ts;
-                        if (target.runes[0] == 0 && target.runes[1] == 1) {
-                            target.delay = 40;
-                            float tYaw = entity.rotationYaw;
-                            switch (target.orientation) {
-                                case 2:
-                                    tYaw = 180.0F;
-                                    break;
-                                case 3:
-                                    tYaw = 0.0F;
-                                    break;
-                                case 4:
-                                    tYaw = 90.0F;
-                                    break;
-                                case 5:
-                                    tYaw = 270.0F;
-                            }
+            if (this.otherSeal == null)
+                return false;
+            RuneTileData targetDest = this.otherSeal;
+            TileEntity ts = super.worldObj.getTileEntity(targetDest.x, targetDest.y, targetDest.z);
+            if (ts != null && ts instanceof TileSeal) {
+                TileSeal target = (TileSeal) ts;
+                if (target.runes[0] == 0 && target.runes[1] == 1) {
+                    target.delay = 40;
+                    float tYaw = entity.rotationYaw;
+                    switch (target.orientation) {
+                        case 2:
+                            tYaw = 180.0F;
+                            break;
+                        case 3:
+                            tYaw = 0.0F;
+                            break;
+                        case 4:
+                            tYaw = 90.0F;
+                            break;
+                        case 5:
+                            tYaw = 270.0F;
+                    }
 
-                            int diff = this.orientation - target.orientation;
-                            double t;
-                            if (diff == -3 || diff == 2
-                                || diff == -1
-                                    && this.orientation + target.orientation != 5
-                                    && this.orientation + target.orientation != 9) {
-                                t = entity.motionX;
-                                entity.motionX = entity.motionZ;
-                                entity.motionZ = -t;
-                                if (entity.ridingEntity != null) {
-                                    entity.ridingEntity.motionX
-                                        = entity.ridingEntity.motionZ;
-                                    entity.ridingEntity.motionZ = -t;
-                                }
-                            } else if (diff == -2 || diff == 3 || diff == 1 &&
+                    int diff = this.orientation - target.orientation;
+                    double t;
+                    if (diff == -3 || diff == 2
+                        || diff == -1 && this.orientation + target.orientation != 5
+                            && this.orientation + target.orientation != 9) {
+                        t = entity.motionX;
+                        entity.motionX = entity.motionZ;
+                        entity.motionZ = -t;
+                        if (entity.ridingEntity != null) {
+                            entity.ridingEntity.motionX = entity.ridingEntity.motionZ;
+                            entity.ridingEntity.motionZ = -t;
+                        }
+                    } else if (diff == -2 || diff == 3 || diff == 1 &&
                                     this.orientation + target.orientation != 5 &&
                                     this.orientation + target.orientation != 9) {
-                                t = entity.motionX;
-                                entity.motionX = -entity.motionZ;
-                                entity.motionZ = t;
-                                if (entity.ridingEntity != null) {
-                                    entity.ridingEntity.motionX
-                                        = -entity.ridingEntity.motionZ;
-                                    entity.ridingEntity.motionZ = t;
-                                }
-                            } else if (diff == 0) {
-                                entity.motionX = -entity.motionX;
-                                entity.motionZ = -entity.motionZ;
-                                if (entity.ridingEntity != null) {
-                                    entity.ridingEntity.motionX
-                                        = -entity.ridingEntity.motionX;
-                                    entity.ridingEntity.motionZ
-                                        = -entity.ridingEntity.motionZ;
-                                }
-                            }
+                        t = entity.motionX;
+                        entity.motionX = -entity.motionZ;
+                        entity.motionZ = t;
+                        if (entity.ridingEntity != null) {
+                            entity.ridingEntity.motionX = -entity.ridingEntity.motionZ;
+                            entity.ridingEntity.motionZ = t;
+                        }
+                    } else if (diff == 0) {
+                        entity.motionX = -entity.motionX;
+                        entity.motionZ = -entity.motionZ;
+                        if (entity.ridingEntity != null) {
+                            entity.ridingEntity.motionX = -entity.ridingEntity.motionX;
+                            entity.ridingEntity.motionZ = -entity.ridingEntity.motionZ;
+                        }
+                    }
 
-                            if (diff == 0
-                                && (this.orientation == 1 || this.orientation == 0)) {
-                                entity.motionY = -entity.motionY;
-                                if (entity.ridingEntity != null) {
-                                    entity.ridingEntity.motionY
-                                        = -entity.ridingEntity.motionY;
-                                }
-                            }
+                    if (diff == 0 && (this.orientation == 1 || this.orientation == 0)) {
+                        entity.motionY = -entity.motionY;
+                        if (entity.ridingEntity != null) {
+                            entity.ridingEntity.motionY = -entity.ridingEntity.motionY;
+                        }
+                    }
 
-                            UtilsFX.poof(
-                                super.worldObj,
-                                (float) entity.posX - 0.5F,
-                                (float) entity.posY - 0.5F,
-                                (float) entity.posZ - 0.5F
-                            );
-                            super.worldObj.playSoundEffect(
+                    UtilsFX.poof(
+                        super.worldObj,
+                        (float) entity.posX - 0.5F,
+                        (float) entity.posY - 0.5F,
+                        (float) entity.posZ - 0.5F
+                    );
+                    super.worldObj.playSoundEffect(
+                        entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F
+                    );
+                    int xm = 0;
+                    int zm = 0;
+                    int ym = 0;
+                    switch (target.orientation) {
+                        case 0:
+                            ym = -1;
+                            break;
+                        case 1:
+                            ym = 1;
+                            break;
+                        case 2:
+                            zm = -1;
+                            break;
+                        case 3:
+                            zm = 1;
+                            break;
+                        case 4:
+                            xm = -1;
+                            break;
+                        case 5:
+                            xm = 1;
+                    }
+
+                    if (target.orientation > 1
+                        && super.worldObj.isAirBlock(
+                            target.xCoord + xm, target.yCoord + ym - 1, target.zCoord + zm
+                        )) {
+                        --ym;
+                    }
+
+                    entity.setLocationAndAngles(
+                        (double) target.xCoord + 0.5 + (double) xm,
+                        (double) target.yCoord + 0.5 + (double) ym,
+                        (double) target.zCoord + 0.5 + (double) zm,
+                        tYaw,
+                        entity.rotationPitch
+                    );
+                    if (entity.ridingEntity != null) {
+                        entity.ridingEntity.setLocationAndAngles(
+                            (double) target.xCoord + 0.5 + (double) xm,
+                            (double) target.yCoord + 0.5 + (double) ym,
+                            (double) target.zCoord + 0.5 + (double) zm,
+                            tYaw,
+                            entity.ridingEntity.rotationPitch
+                        );
+                    }
+
+                    UtilsFX.poof(
+                        super.worldObj,
+                        (float) entity.posX - 0.5F,
+                        (float) entity.posY - 0.5F,
+                        (float) entity.posZ - 0.5F
+                    );
+                    super.worldObj.playSoundEffect(
+                        entity.posX, entity.posY, entity.posZ, "mob.endermen.portal", 1.0F, 1.0F
+                    );
+
+                    // TODO: use specific aspect for flux
+                    int thisAura = AuraManager.getClosestAuraWithinRange(
+                        this.worldObj, this.xCoord, this.yCoord, this.zCoord, 512
+                    );
+
+                    if (thisAura >= 0) {
+                        AuraManager.addRandomFlux(
+                            this.worldObj,
+                            AuraManager.getNode(thisAura),
+                            (entity instanceof EntityItem) ? 1 : 4
+                        );
+                    }
+
+                    int otherAura = AuraManager.getClosestAuraWithinRange(
+                        target.worldObj, target.xCoord, target.yCoord, target.zCoord, 512
+                    );
+
+                    if (otherAura >= 0) {
+                        AuraManager.addRandomFlux(
+                            this.worldObj,
+                            AuraManager.getNode(otherAura),
+                            (entity instanceof EntityItem) ? 1 : 4
+                        );
+                    }
+
+                    if (entity instanceof EntityPlayer) {
+                        this.worldObj.getChunkProvider().loadChunk(
+                            target.xCoord >> 4, target.zCoord >> 4
+                        );
+                        ((EntityPlayerMP) entity)
+                            .playerNetServerHandler.setPlayerLocation(
+
                                 entity.posX,
-                                entity.posY,
+                                entity.posY + 1.6,
                                 entity.posZ,
-                                "mob.endermen.portal",
-                                1.0F,
-                                1.0F
-                            );
-                            int xm = 0;
-                            int zm = 0;
-                            int ym = 0;
-                            switch (target.orientation) {
-                                case 0:
-                                    ym = -1;
-                                    break;
-                                case 1:
-                                    ym = 1;
-                                    break;
-                                case 2:
-                                    zm = -1;
-                                    break;
-                                case 3:
-                                    zm = 1;
-                                    break;
-                                case 4:
-                                    xm = -1;
-                                    break;
-                                case 5:
-                                    xm = 1;
-                            }
-
-                            if (target.orientation > 1
-                                && super.worldObj.isAirBlock(
-                                    target.xCoord + xm,
-                                    target.yCoord + ym - 1,
-                                    target.zCoord + zm
-                                )) {
-                                --ym;
-                            }
-
-                            entity.setLocationAndAngles(
-                                (double) target.xCoord + 0.5 + (double) xm,
-                                (double) target.yCoord + 0.5 + (double) ym,
-                                (double) target.zCoord + 0.5 + (double) zm,
-                                tYaw,
+                                entity.rotationYaw,
                                 entity.rotationPitch
                             );
-                            if (entity.ridingEntity != null) {
-                                entity.ridingEntity.setLocationAndAngles(
-                                    (double) target.xCoord + 0.5 + (double) xm,
-                                    (double) target.yCoord + 0.5 + (double) ym,
-                                    (double) target.zCoord + 0.5 + (double) zm,
-                                    tYaw,
-                                    entity.ridingEntity.rotationPitch
-                                );
-                            }
-
-                            UtilsFX.poof(
-                                super.worldObj,
-                                (float) entity.posX - 0.5F,
-                                (float) entity.posY - 0.5F,
-                                (float) entity.posZ - 0.5F
-                            );
-                            super.worldObj.playSoundEffect(
-                                entity.posX,
-                                entity.posY,
-                                entity.posZ,
-                                "mob.endermen.portal",
-                                1.0F,
-                                1.0F
-                            );
-
-                            // TODO: use specific aspect for flux
-                            int thisAura = AuraManager.getClosestAuraWithinRange(
-                                this.worldObj, this.xCoord, this.yCoord, this.zCoord, 512
-                            );
-
-                            if (thisAura >= 0) {
-                                AuraManager.addRandomFlux(
-                                    this.worldObj,
-                                    AuraManager.getNode(thisAura),
-                                    (entity instanceof EntityItem) ? 1 : 4
-                                );
-                            }
-
-                            int otherAura = AuraManager.getClosestAuraWithinRange(
-                                target.worldObj,
-                                target.xCoord,
-                                target.yCoord,
-                                target.zCoord,
-                                512
-                            );
-
-                            if (otherAura >= 0) {
-                                AuraManager.addRandomFlux(
-                                    this.worldObj,
-                                    AuraManager.getNode(otherAura),
-                                    (entity instanceof EntityItem) ? 1 : 4
-                                );
-                            }
-
-                            if (entity instanceof EntityPlayer) {
-                                ((EntityPlayerMP) entity)
-                                    .playerNetServerHandler.sendPacket(
-                                        new S08PacketPlayerPosLook(
-                                            entity.posX,
-                                            entity.posY + 1.6,
-                                            entity.posZ,
-                                            entity.rotationYaw,
-                                            entity.rotationPitch,
-                                            false
-                                        )
-                                    );
-                            } else {
-                                System.out.println(entity.posX + " " + entity.posY + " " + entity.posZ);
-                                    Packet pkt1
-                                    = new S18PacketEntityTeleport(
-                                        entity.getEntityId(),
-                                        MathHelper.floor_double(entity.posX * 32.0D),
-                                        MathHelper.floor_double(entity.posY * 32.0D),
-                                        MathHelper.floor_double(entity.posZ * 32.0D),
-                                        (byte
-                                        ) ((int) (entity.rotationYaw * 256.0F / 360.0F)),
-                                        (byte
-                                        ) ((int) (entity.rotationPitch * 256.0F / 360.0F))
-                                    );
-                                Packet pkt2 = new S12PacketEntityVelocity(entity);
-
-                                for (EntityPlayerMP pl : (List<EntityPlayerMP>) this
-                                                             .worldObj.playerEntities) {
-                                    pl.playerNetServerHandler.sendPacket(pkt1);
-                                    pl.playerNetServerHandler.sendPacket(pkt2);
-                                }
-                            }
-
-                            this.worked = true;
-                            return true;
-                        } else {
-                            return false;
-                        }
                     } else {
-                        return false;
+                        Packet pkt1 = new S18PacketEntityTeleport(
+                            entity.getEntityId(),
+                            MathHelper.floor_double(entity.posX * 32.0D),
+                            MathHelper.floor_double(entity.posY * 32.0D),
+                            MathHelper.floor_double(entity.posZ * 32.0D),
+                            (byte) ((int) (entity.rotationYaw * 256.0F / 360.0F)),
+                            (byte) ((int) (entity.rotationPitch * 256.0F / 360.0F))
+                        );
+                        Packet pkt2 = new S12PacketEntityVelocity(entity);
+
+                        for (EntityPlayerMP pl :
+                             (List<EntityPlayerMP>) this.worldObj.playerEntities) {
+                            pl.playerNetServerHandler.sendPacket(pkt1);
+                            pl.playerNetServerHandler.sendPacket(pkt2);
+                        }
                     }
+
+                    this.worked = true;
+                    return true;
+                } else {
+                    return false;
                 }
+            } else {
+                return false;
             }
         }
     }
@@ -1882,8 +1836,7 @@ public class TileSeal extends TileEntity {
         float speed1,
         float speed2
     ) {
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         for (int a = 0; a < list.size(); ++a) {
             Entity entity = (Entity) list.get(a);
@@ -1922,24 +1875,18 @@ public class TileSeal extends TileEntity {
         }
     }
 
-    private void
-    heal(int range, boolean mobs, boolean animals, boolean player, boolean buff) {
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+    private void heal(int range, boolean mobs, boolean animals, boolean player, boolean buff) {
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         for (int a = list.size() - 1; a >= 0; --a) {
             Entity entity = (Entity) list.get(a);
             if (entity instanceof EntityLivingBase
-                && (animals
-                        && (entity instanceof EntityAnimal
-                            || entity instanceof EntityVillager)
+                && (animals && (entity instanceof EntityAnimal || entity instanceof EntityVillager)
                     || mobs && (entity instanceof EntityMob || entity instanceof IMob)
                     || player
-                        && (entity instanceof EntityPlayer
-                            || entity instanceof EntityTameable))) {
+                        && (entity instanceof EntityPlayer || entity instanceof EntityTameable))) {
                 if (!(entity instanceof EntityPlayer)
-                    && ((EntityLivingBase) entity).getActivePotionEffect(Potion.hunger)
-                        != null) {
+                    && ((EntityLivingBase) entity).getActivePotionEffect(Potion.hunger) != null) {
                     break;
                 }
 
@@ -1948,14 +1895,10 @@ public class TileSeal extends TileEntity {
                     ((EntityLivingBase) entity).heal(1);
                     if (buff) {
                         ((EntityLivingBase) entity)
-                            .addPotionEffect(
-                                new PotionEffect(Potion.regeneration.id, 60, 1)
-                            );
+                            .addPotionEffect(new PotionEffect(Potion.regeneration.id, 60, 1));
                     }
 
-                    super.worldObj.playSoundAtEntity(
-                        entity, "thaumcraft.heal", 1.0F, 1.0F
-                    );
+                    super.worldObj.playSoundAtEntity(entity, "thaumcraft.heal", 1.0F, 1.0F);
 
                     for (int qq = 0; qq < 5; ++qq) {
                         FXWisp ef = new FXWisp(
@@ -1993,16 +1936,13 @@ public class TileSeal extends TileEntity {
         }
     }
 
-    private void
-    scorch(int range, int damage, boolean mobs, boolean animals, boolean pvp) {
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+    private void scorch(int range, int damage, boolean mobs, boolean animals, boolean pvp) {
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         for (int a = list.size() - 1; a >= 0; --a) {
             Entity entity = (Entity) list.get(a);
             if (entity instanceof EntityLivingBase
-                && (animals && entity instanceof EntityAnimal
-                        && !(entity instanceof EntityTameable)
+                && (animals && entity instanceof EntityAnimal && !(entity instanceof EntityTameable)
                     || mobs && (entity instanceof EntityMob || entity instanceof IMob)
                     || pvp && entity instanceof EntityPlayer)) {
                 for (int q = 0; q < damage; ++q) {
@@ -2055,15 +1995,13 @@ public class TileSeal extends TileEntity {
             animals = false;
         }
 
-        List<Entity> list
-            = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
+        List<Entity> list = this.getEntitiesSorted(super.worldObj, range, this.orientation, true);
 
         for (int a = 0; a < list.size(); ++a) {
             if (list.get(a) instanceof EntityLivingBase
                 && this.canEntityBeSeen((Entity) list.get(a))) {
                 EntityLivingBase entity = (EntityLivingBase) list.get(a);
-                if (animals && entity instanceof EntityAnimal
-                        && !(entity instanceof EntityTameable)
+                if (animals && entity instanceof EntityAnimal && !(entity instanceof EntityTameable)
                     || mobs && (entity instanceof EntityMob || entity instanceof IMob)
                     || pvp && entity instanceof EntityPlayer) {
                     shocked = true;
@@ -2077,9 +2015,9 @@ public class TileSeal extends TileEntity {
                     bolt.setType(2);
                     bolt.finalizeBolt();
                     entity.attackEntityFrom(DamageSource.magic, 3);
-                    entity.addPotionEffect(new PotionEffect(
-                        Potion.moveSlowdown.id, 100, this.runeAmount(2) * 4
-                    ));
+                    entity.addPotionEffect(
+                        new PotionEffect(Potion.moveSlowdown.id, 100, this.runeAmount(2) * 4)
+                    );
                     this.worked = true;
                     if (this.runeAmount(4) < 2) {
                         break;
@@ -2102,9 +2040,8 @@ public class TileSeal extends TileEntity {
         return false;
     }
 
-    private void pushEntity(
-        boolean pull, boolean creatures, boolean items, int range, float strength
-    ) {
+    private void
+    pushEntity(boolean pull, boolean creatures, boolean items, int range, float strength) {
         boolean pushed = false;
         List<Entity> list
             = this.getEntities(super.worldObj, (float) range, this.orientation, false);
@@ -2112,22 +2049,19 @@ public class TileSeal extends TileEntity {
         for (int a = 0; a < list.size(); ++a) {
             Entity entity = (Entity) list.get(a);
             if (!(entity instanceof IProjectile) && !(entity instanceof EntityXPOrb)
-                && !(entity instanceof EntityPlayer)
-                && !(entity instanceof EntityTameable)
+                && !(entity instanceof EntityPlayer) && !(entity instanceof EntityTameable)
                 && (creatures || !(entity instanceof EntityLivingBase))
                 && (items || !(entity instanceof EntityItem))) {
                 double d6 = entity.posX - (double) this.sealX(false);
                 double d8 = entity.posY - (double) this.sealY(false);
                 double d10 = entity.posZ - (double) this.sealZ(false);
-                double d11
-                    = (double) MathHelper.sqrt_double(d6 * d6 + d8 * d8 + d10 * d10);
+                double d11 = (double) MathHelper.sqrt_double(d6 * d6 + d8 * d8 + d10 * d10);
                 d6 /= d11;
                 d8 /= d11;
                 d10 /= d11;
                 if (pull) {
                     entity.motionX -= d6 * (double) strength * 2.0;
-                    if (this.orientation <= 1 || this.runes[2] == 4
-                        || this.runes[2] == 5) {
+                    if (this.orientation <= 1 || this.runes[2] == 4 || this.runes[2] == 5) {
                         entity.motionY -= d8 * (double) strength * 3.0;
                     }
 
@@ -2273,9 +2207,7 @@ public class TileSeal extends TileEntity {
                                             1,
                                             3
                                         );
-                                        Minecraft.getMinecraft().effectRenderer.addEffect(
-                                            ef1
-                                        );
+                                        Minecraft.getMinecraft().effectRenderer.addEffect(ef1);
                                         ef2 = new FXSparkle(
                                             super.worldObj,
                                             entity.posX
@@ -2300,9 +2232,7 @@ public class TileSeal extends TileEntity {
                                             1,
                                             3
                                         );
-                                        Minecraft.getMinecraft().effectRenderer.addEffect(
-                                            ef2
-                                        );
+                                        Minecraft.getMinecraft().effectRenderer.addEffect(ef2);
                                     }
 
                                     return;
@@ -2346,9 +2276,7 @@ public class TileSeal extends TileEntity {
                                             1,
                                             3
                                         );
-                                        Minecraft.getMinecraft().effectRenderer.addEffect(
-                                            ef1
-                                        );
+                                        Minecraft.getMinecraft().effectRenderer.addEffect(ef1);
                                         ef2 = new FXSparkle(
                                             super.worldObj,
                                             entity.posX
@@ -2373,9 +2301,7 @@ public class TileSeal extends TileEntity {
                                             1,
                                             3
                                         );
-                                        Minecraft.getMinecraft().effectRenderer.addEffect(
-                                            ef2
-                                        );
+                                        Minecraft.getMinecraft().effectRenderer.addEffect(ef2);
                                     }
 
                                     return;
@@ -2458,9 +2384,7 @@ public class TileSeal extends TileEntity {
     }
 
     private WRVector3 sealPos(boolean reverse) {
-        return new WRVector3(
-            this.sealX(reverse), this.sealY(reverse), this.sealZ(reverse)
-        );
+        return new WRVector3(this.sealX(reverse), this.sealY(reverse), this.sealZ(reverse));
     }
 
     public int runeAmount(int type) {
@@ -2616,7 +2540,8 @@ public class TileSeal extends TileEntity {
     @Override
     public void onChunkUnload() {
         super.onChunkUnload();
-        this.invalidate();
+        if (this.worldObj.isRemote && this.renderer != null)
+            this.renderer.deinit();
     }
 
     public boolean canEntityBeSeen(Entity entity) {
@@ -2627,9 +2552,7 @@ public class TileSeal extends TileEntity {
                        (double) this.zCoord + 0.5
                    ),
                    Vec3.createVectorHelper(
-                       entity.posX,
-                       entity.posY + (double) entity.getEyeHeight(),
-                       entity.posZ
+                       entity.posX, entity.posY + (double) entity.getEyeHeight(), entity.posZ
                    ),
                    true
                )
@@ -2638,8 +2561,7 @@ public class TileSeal extends TileEntity {
 
     public List<Entity>
     getEntitiesSorted(World world, int range, int orientation, boolean visibleonly) {
-        List<Entity> ws
-            = this.getEntities(world, (float) range, orientation, visibleonly);
+        List<Entity> ws = this.getEntities(world, (float) range, orientation, visibleonly);
         boolean didSort = false;
 
         do {
@@ -2649,8 +2571,7 @@ public class TileSeal extends TileEntity {
                 Entity entity = (Entity) ws.get(a);
                 double dist = this.getDistanceFrom(entity.posX, entity.posY, entity.posZ);
                 Entity entity2 = (Entity) ws.get(a + 1);
-                double dist2
-                    = this.getDistanceFrom(entity2.posX, entity2.posY, entity2.posZ);
+                double dist2 = this.getDistanceFrom(entity2.posX, entity2.posY, entity2.posZ);
                 if (dist > dist2) {
                     ws.remove(a);
                     ws.add(entity);

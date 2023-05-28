@@ -25,7 +25,7 @@ public class TileSoulBrazier extends TileEntity implements ISidedInventory, ITil
     private boolean previousLight;
     private int lightingDelay;
 
-    public static ItemStack VALID_ITEM = new ItemStack(TMItems.soul_fragment);
+    public static ItemStack VALID_ITEM = new ItemStack(TMItems.soulFragment);
 
     @Override
     public GuiID getGuiID() {

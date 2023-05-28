@@ -41,6 +41,9 @@ public class BlockSeal extends BlockContainer {
         float alec3,
         float alec4
     ) {
+        if (world.isRemote)
+            return true;
+
         TileEntity te = world.getTileEntity(i, j, k);
         if (te != null && ((TileSeal) te).runes[0] == 0
             && ((TileSeal) te).runes[1] == 1) {
