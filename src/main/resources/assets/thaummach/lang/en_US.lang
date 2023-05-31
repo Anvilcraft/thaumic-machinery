@@ -25,6 +25,14 @@ tile.thaummach:apparatus_metal_void_interface.name=Void Interface
 tile.thaummach:apparatus_metal_tank.name=Thaumium Reinforced Tank
 tile.thaummach:apparatus_metal_soul_brazier.name=Soul Brazier
 
+tile.thaummach:apparatus_stone_infuser.name=Thaumic Infuser
+tile.thaummach:apparatus_stone_infuser_dark.name=Dark Infuser
+tile.thaummach:apparatus_stone_enchanter.name=Thaumic Enchanter
+tile.thaummach:apparatus_stone_eldritch_stone.name=Eldritch Stone
+tile.thaummach:apparatus_stone_darkness_generator.name=Darkness Generator
+tile.thaummach:apparatus_stone_enchanter_advanced.name=Occultic Enchanter
+tile.thaummach:apparatus_stone_urn.name=Everfull Urn
+
 tile.thaummach:apparatus_wood_condenser.name=Vis Condenser
 tile.thaummach:apparatus_wood_duplicator.name=Thaumic Duplicator
 tile.thaummach:apparatus_wood_repairer.name=Thaumic Restorer

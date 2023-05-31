@@ -8,6 +8,7 @@ import dev.tilera.auracore.client.FXSparkle;
 import net.anvilcraft.alec.jalec.factories.AlecUnexpectedRuntimeErrorExceptionFactory;
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
+import net.anvilcraft.thaummach.render.apparatus.SimpleBlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.ArcaneFurnaceApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.BoreApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrucibleApparatusRenderer;
@@ -15,7 +16,6 @@ import net.anvilcraft.thaummach.render.apparatus.apparati.metal.CrystallizerAppa
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.GeneratorApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.SoulBrazierApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.TankApparatusRenderer;
-import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidChestApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.apparati.metal.VoidInterfaceApparatusRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
@@ -176,7 +176,7 @@ public class BlockApparatusMetal extends BlockApparatus {
                 return GeneratorApparatusRenderer.INSTANCE;
 
             case VOID_CHEST:
-                return VoidChestApparatusRenderer.INSTANCE;
+                return SimpleBlockApparatusRenderer.INSTANCE;
 
             case VOID_INTERFACE:
                 return VoidInterfaceApparatusRenderer.INSTANCE;
