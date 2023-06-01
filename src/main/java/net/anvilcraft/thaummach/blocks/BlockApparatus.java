@@ -41,6 +41,8 @@ public abstract class BlockApparatus extends BlockContainer {
 
     public abstract IApparatusRenderer getApparatusRenderer(int meta);
 
+    public void setBlockBoundsForItemRenderBasedOnMeta(int meta) {}
+
     @Override
     public int quantityDropped(Random random) {
         return 1;

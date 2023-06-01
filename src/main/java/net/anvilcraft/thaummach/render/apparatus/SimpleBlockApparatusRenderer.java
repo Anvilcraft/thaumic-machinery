@@ -1,5 +1,6 @@
 package net.anvilcraft.thaummach.render.apparatus;
 
+import net.anvilcraft.thaummach.blocks.BlockApparatus;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
@@ -13,6 +14,7 @@ public class SimpleBlockApparatusRenderer implements IApparatusRenderer {
         IBlockAccess w, RenderBlocks rb, int x, int y, int z, Block block, int meta, boolean inv
     ) {
         if (inv) {
+            ((BlockApparatus) block).setBlockBoundsForItemRenderBasedOnMeta(meta);
             rb.setRenderBoundsFromBlock(block);
             BlockRenderer.drawFaces(
                 rb,

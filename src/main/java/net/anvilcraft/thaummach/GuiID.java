@@ -6,6 +6,7 @@ public enum GuiID {
     CONDENSER,
     CRYSTALLIZER,
     DUPLICATOR,
+    ENCHANTER,
     GENERATOR,
     REPAIRER,
     SOUL_BRAZIER,

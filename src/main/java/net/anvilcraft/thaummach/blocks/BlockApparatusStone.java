@@ -9,6 +9,7 @@ import net.anvilcraft.alec.jalec.factories.AlecUnexpectedRuntimeErrorExceptionFa
 import net.anvilcraft.thaummach.render.BlockApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.IApparatusRenderer;
 import net.anvilcraft.thaummach.render.apparatus.SimpleBlockApparatusRenderer;
+import net.anvilcraft.thaummach.tiles.TileEnchanter;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
@@ -23,9 +24,13 @@ import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class BlockApparatusStone extends BlockApparatus {
     public IIcon iconEldritchStone;
+    public IIcon iconEnchanterBottom;
+    public IIcon iconEnchanterSide;
+    public IIcon iconEnchanterTop;
 
     public BlockApparatusStone() {
         super(Material.rock);
@@ -39,6 +44,9 @@ public class BlockApparatusStone extends BlockApparatus {
         Function<String, IIcon> reg = (s) -> register.registerIcon("thaummach:" + s);
 
         this.iconEldritchStone = reg.apply("eldritch_stone");
+        this.iconEnchanterBottom = reg.apply("enchanter_bottom");
+        this.iconEnchanterSide = reg.apply("enchanter_side");
+        this.iconEnchanterTop = reg.apply("enchanter_top");
     }
 
     @Override
@@ -46,6 +54,7 @@ public class BlockApparatusStone extends BlockApparatus {
         MetaVals meta = MetaVals.get(meta_);
         switch (meta) {
             case ELDRITCH_STONE:
+            case ENCHANTER:
                 return SimpleBlockApparatusRenderer.INSTANCE;
 
             default:
@@ -159,6 +168,9 @@ public class BlockApparatusStone extends BlockApparatus {
             case ELDRITCH_STONE:
                 return null;
 
+            case ENCHANTER:
+                return new TileEnchanter();
+
             default:
                 throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException(
                     "Invalid meta!"
@@ -195,10 +207,29 @@ public class BlockApparatusStone extends BlockApparatus {
     @Override
     public IIcon getIcon(int i, int j) {
         MetaVals meta = MetaVals.get(j);
+        ForgeDirection side = ForgeDirection.getOrientation(i);
 
         switch (meta) {
             case ELDRITCH_STONE:
                 return this.iconEldritchStone;
+
+            case ENCHANTER:
+                switch (side) {
+                    case UP:
+                        return this.iconEnchanterTop;
+
+                    case DOWN:
+                        return this.iconEnchanterBottom;
+
+                    case NORTH:
+                    case EAST:
+                    case SOUTH:
+                    case WEST:
+                        return this.iconEnchanterSide;
+
+                    default:
+                        return null;
+                }
 
             default:
                 return null;
@@ -386,37 +417,7 @@ public class BlockApparatusStone extends BlockApparatus {
     @Override
     public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k) {
         int md = iblockaccess.getBlockMetadata(i, j, k);
-        if (md == 0) {
-            if (iblockaccess.getTileEntity(i, j, k) == null) {
-                return;
-            }
-
-            int l = ((TileSeal) ((TileSeal) iblockaccess.getTileEntity(i, j, k))).orientation;
-            float thickness = 0.0625F;
-            if (l == 0) {
-                this.setBlockBounds(0.3F, 1.0F - thickness, 0.3F, 0.7F, 1.0F, 0.7F);
-            }
-
-            if (l == 1) {
-                this.setBlockBounds(0.3F, 0.0F, 0.3F, 0.7F, thickness, 0.7F);
-            }
-
-            if (l == 2) {
-                this.setBlockBounds(0.3F, 0.3F, 1.0F - thickness, 0.7F, 0.7F, 1.0F);
-            }
-
-            if (l == 3) {
-                this.setBlockBounds(0.3F, 0.3F, 0.0F, 0.7F, 0.7F, thickness);
-            }
-
-            if (l == 4) {
-                this.setBlockBounds(1.0F - thickness, 0.3F, 0.3F, 1.0F, 0.7F, 0.7F);
-            }
-
-            if (l == 5) {
-                this.setBlockBounds(0.0F, 0.3F, 0.3F, thickness, 0.7F, 0.7F);
-            }
-        } else if (md == 3) {
+        if (md == 3) {
             this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
         } else {
             float w1;
@@ -464,6 +465,29 @@ public class BlockApparatusStone extends BlockApparatus {
         }
 
         return super.getSelectedBoundingBoxFromPool(w, i, j, k);
+    }
+
+    @Override
+    public void setBlockBoundsForItemRenderBasedOnMeta(int meta) {
+        MetaVals md = MetaVals.get(meta);
+        if (md == MetaVals.ENCHANTER) {
+            this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.75F, 1.0F);
+        } else {
+            float w1;
+            if (md != MetaVals.INFUSER && md != MetaVals.INFUSER_DARK) {
+                if (md == MetaVals.DARKNESS_GENERATOR) {
+                    w1 = 0.0625F;
+                    this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 0.5F - w1, 1.0F);
+                } else if (md == MetaVals.URN) {
+                    this.setBlockBounds(0.125F, 0.0F, 0.125F, 0.875F, 0.5625F, 0.875F);
+                } else {
+                    this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
+                }
+            } else {
+                w1 = 0.0625F;
+                this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F - w1, 1.0F);
+            }
+        }
     }
 
     @Override
