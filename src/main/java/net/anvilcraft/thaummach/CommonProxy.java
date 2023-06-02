@@ -27,12 +27,15 @@ import net.anvilcraft.thaummach.tiles.TileDuplicator;
 import net.anvilcraft.thaummach.tiles.TileEnchanter;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TileGenerator;
+import net.anvilcraft.thaummach.tiles.TileMonolith;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
 import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
+import net.anvilcraft.thaummach.tiles.TileVoidCube;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
+import net.anvilcraft.thaummach.tiles.TileVoidLock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.tileentity.TileEntity;
@@ -59,12 +62,15 @@ public class CommonProxy implements IGuiHandler {
         GameRegistry.registerTileEntity(TileEnchanter.class, "enchanter");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TileGenerator.class, "generator");
+        GameRegistry.registerTileEntity(TileMonolith.class, "monolith");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
         GameRegistry.registerTileEntity(TileRepairer.class, "repairer");
         GameRegistry.registerTileEntity(TileSeal.class, "seal");
-        GameRegistry.registerTileEntity(TileSoulBrazier.class, "soulBrazier");
-        GameRegistry.registerTileEntity(TileVoidChest.class, "voidChest");
-        GameRegistry.registerTileEntity(TileVoidInterface.class, "voidInterface");
+        GameRegistry.registerTileEntity(TileSoulBrazier.class, "soul_brazier");
+        GameRegistry.registerTileEntity(TileVoidChest.class, "void_chest");
+        GameRegistry.registerTileEntity(TileVoidCube.class, "void_cube");
+        GameRegistry.registerTileEntity(TileVoidInterface.class, "void_interface");
+        GameRegistry.registerTileEntity(TileVoidLock.class, "void_lock");
         // clang-format on
     }
 

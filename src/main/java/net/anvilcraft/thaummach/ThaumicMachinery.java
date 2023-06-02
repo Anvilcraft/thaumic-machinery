@@ -9,6 +9,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.network.NetworkRegistry.TargetPoint;
 import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.common.registry.EntityRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import dev.tilera.auracore.api.HelperLocation;
 import net.anvilcraft.thaummach.entities.EntitySingularity;
@@ -22,6 +23,7 @@ import net.anvilcraft.thaummach.packets.PacketFXSparkle;
 import net.anvilcraft.thaummach.packets.PacketFXWisp;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
+import net.anvilcraft.thaummach.worldgen.TMWorldGenerator;
 import net.minecraft.world.World;
 
 @Mod(modid = "thaummach")
@@ -52,6 +54,8 @@ public class ThaumicMachinery {
         channel.registerMessage(new PacketFXWisp.Handler(), PacketFXWisp.class, pktid++, Side.CLIENT);
         // clang-format on
         NetworkRegistry.INSTANCE.registerGuiHandler(this, proxy);
+
+        GameRegistry.registerWorldGenerator(new TMWorldGenerator(), 0);
 
         proxy.registerTileEntities();
         TMBlocks.init();

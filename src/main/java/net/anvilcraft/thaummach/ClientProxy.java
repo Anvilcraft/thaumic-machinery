@@ -28,8 +28,8 @@ import net.anvilcraft.thaummach.render.tile.TileEnchanterRenderer;
 import net.anvilcraft.thaummach.render.tile.TileGeneratorRenderer;
 import net.anvilcraft.thaummach.render.tile.TileRepairerRenderer;
 import net.anvilcraft.thaummach.render.tile.TileSealRenderer;
-import net.anvilcraft.thaummach.render.tile.TileVoidChestRenderer;
 import net.anvilcraft.thaummach.render.tile.TileVoidInterfaceRenderer;
+import net.anvilcraft.thaummach.render.tile.TileVoidRenderer;
 import net.anvilcraft.thaummach.tiles.TileArcaneFurnace;
 import net.anvilcraft.thaummach.tiles.TileBore;
 import net.anvilcraft.thaummach.tiles.TileCondenser;
@@ -44,12 +44,15 @@ import net.anvilcraft.thaummach.tiles.TileDuplicator;
 import net.anvilcraft.thaummach.tiles.TileEnchanter;
 import net.anvilcraft.thaummach.tiles.TileFilter;
 import net.anvilcraft.thaummach.tiles.TileGenerator;
+import net.anvilcraft.thaummach.tiles.TileMonolith;
 import net.anvilcraft.thaummach.tiles.TilePurifier;
 import net.anvilcraft.thaummach.tiles.TileRepairer;
 import net.anvilcraft.thaummach.tiles.TileSeal;
 import net.anvilcraft.thaummach.tiles.TileSoulBrazier;
 import net.anvilcraft.thaummach.tiles.TileVoidChest;
+import net.anvilcraft.thaummach.tiles.TileVoidCube;
 import net.anvilcraft.thaummach.tiles.TileVoidInterface;
+import net.anvilcraft.thaummach.tiles.TileVoidLock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.world.World;
@@ -78,7 +81,7 @@ public class ClientProxy extends CommonProxy {
         GameRegistry.registerTileEntity(TileCrucible.class, "crucible");
         GameRegistry.registerTileEntity(TileFilter.class, "filter");
         GameRegistry.registerTileEntity(TilePurifier.class, "purifier");
-        GameRegistry.registerTileEntity(TileSoulBrazier.class, "soulBrazier");
+        GameRegistry.registerTileEntity(TileSoulBrazier.class, "soul_brazier");
 
         ClientRegistry.registerTileEntity(TileBore.class, "bore", new TileBoreRenderer());
         ClientRegistry.registerTileEntity(TileCondenser.class, "condenser", new TileCondenserRenderer());
@@ -87,10 +90,13 @@ public class ClientProxy extends CommonProxy {
         ClientRegistry.registerTileEntity(TileDuplicator.class, "duplicator", new TileDuplicatorRenderer());
         ClientRegistry.registerTileEntity(TileEnchanter.class, "enchanter", new TileEnchanterRenderer());
         ClientRegistry.registerTileEntity(TileGenerator.class, "generator", new TileGeneratorRenderer());
+        ClientRegistry.registerTileEntity(TileMonolith.class, "monolith", new TileVoidRenderer());
         ClientRegistry.registerTileEntity(TileRepairer.class, "repairer", new TileRepairerRenderer());
         ClientRegistry.registerTileEntity(TileSeal.class, "seal", new TileSealRenderer());
-        ClientRegistry.registerTileEntity(TileVoidChest.class, "voidChest", new TileVoidChestRenderer());
-        ClientRegistry.registerTileEntity(TileVoidInterface.class, "voidInterface", new TileVoidInterfaceRenderer());
+        ClientRegistry.registerTileEntity(TileVoidChest.class, "void_chest", new TileVoidRenderer());
+        ClientRegistry.registerTileEntity(TileVoidCube.class, "void_cube", new TileVoidRenderer());
+        ClientRegistry.registerTileEntity(TileVoidInterface.class, "void_interface", new TileVoidInterfaceRenderer());
+        ClientRegistry.registerTileEntity(TileVoidLock.class, "void_lock", new TileVoidRenderer());
         // clang-format on
     }
 

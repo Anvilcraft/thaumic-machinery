@@ -4,16 +4,27 @@ import java.nio.FloatBuffer;
 import java.util.Random;
 
 import cpw.mods.fml.client.FMLClientHandler;
+import net.anvilcraft.alec.jalec.factories.AlecUnexpectedRuntimeErrorExceptionFactory;
+import net.anvilcraft.thaummach.TMBlocks;
+import net.anvilcraft.thaummach.blocks.BlockHidden;
+import net.anvilcraft.thaummach.tiles.TileMonolith;
+import net.anvilcraft.thaummach.tiles.TileVoidChest;
+import net.anvilcraft.thaummach.tiles.TileVoidCube;
+import net.anvilcraft.thaummach.tiles.TileVoidLock;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityClientPlayerMP;
 import net.minecraft.client.renderer.ActiveRenderInfo;
 import net.minecraft.client.renderer.GLAllocation;
+import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.client.renderer.tileentity.TileEntitySpecialRenderer;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
-public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
+public class TileVoidRenderer extends TileEntitySpecialRenderer {
     FloatBuffer fBuffer = GLAllocation.createDirectFloatBuffer(16);
 
     private FloatBuffer calcFloatBuffer(float f, float f1, float f2, float f3) {
@@ -43,9 +54,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             float f6 = 0.0625F;
             float f7 = 1.0F / (f5 + 1.0F);
             if (i == 0) {
-                this.bindTexture(
-                    new ResourceLocation("thaummach", "textures/misc/tunnel.png")
-                );
+                this.bindTexture(new ResourceLocation("thaummach", "textures/misc/tunnel.png"));
                 f7 = 0.1F;
                 f5 = 65.0F;
                 f6 = 0.125F;
@@ -93,9 +102,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
             GL11.glTranslatef(-px, -pz, -py);
             GL11.glTranslatef(
-                ActiveRenderInfo.objectX * f5 / f9,
-                ActiveRenderInfo.objectZ * f5 / f9,
-                -py
+                ActiveRenderInfo.objectX * f5 / f9, ActiveRenderInfo.objectZ * f5 / f9, -py
             );
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
@@ -141,9 +148,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             float f6 = 0.0625F;
             float f7 = 1.0F / (f5 + 1.0F);
             if (i == 0) {
-                this.bindTexture(
-                    new ResourceLocation("thaummach", "textures/misc/tunnel.png")
-                );
+                this.bindTexture(new ResourceLocation("thaummach", "textures/misc/tunnel.png"));
                 f7 = 0.1F;
                 f5 = 65.0F;
                 f6 = 0.125F;
@@ -191,9 +196,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
             GL11.glTranslatef(-f1, -f3, -f2);
             GL11.glTranslatef(
-                ActiveRenderInfo.objectX * f5 / f9,
-                ActiveRenderInfo.objectZ * f5 / f9,
-                -f2
+                ActiveRenderInfo.objectX * f5 / f9, ActiveRenderInfo.objectZ * f5 / f9, -f2
             );
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
@@ -239,9 +242,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             float f6 = 0.0625F;
             float f7 = 1.0F / (f5 + 1.0F);
             if (i == 0) {
-                this.bindTexture(
-                    new ResourceLocation("thaummach", "textures/misc/tunnel.png")
-                );
+                this.bindTexture(new ResourceLocation("thaummach", "textures/misc/tunnel.png"));
                 f7 = 0.1F;
                 f5 = 65.0F;
                 f6 = 0.125F;
@@ -289,9 +290,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
             GL11.glTranslatef(-px, -py, -pz);
             GL11.glTranslatef(
-                ActiveRenderInfo.objectX * f5 / f9,
-                ActiveRenderInfo.objectY * f5 / f9,
-                -pz
+                ActiveRenderInfo.objectX * f5 / f9, ActiveRenderInfo.objectY * f5 / f9, -pz
             );
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
@@ -337,9 +336,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             float f6 = 0.0625F;
             float f7 = 1.0F / (f5 + 1.0F);
             if (i == 0) {
-                this.bindTexture(
-                    new ResourceLocation("thaummach", "textures/misc/tunnel.png")
-                );
+                this.bindTexture(new ResourceLocation("thaummach", "textures/misc/tunnel.png"));
                 f7 = 0.1F;
                 f5 = 65.0F;
                 f6 = 0.125F;
@@ -387,9 +384,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
             GL11.glTranslatef(-px, -py, -pz);
             GL11.glTranslatef(
-                ActiveRenderInfo.objectX * f5 / f9,
-                ActiveRenderInfo.objectY * f5 / f9,
-                -pz
+                ActiveRenderInfo.objectX * f5 / f9, ActiveRenderInfo.objectY * f5 / f9, -pz
             );
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
@@ -435,9 +430,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             float f6 = 0.0625F;
             float f7 = 1.0F / (f5 + 1.0F);
             if (i == 0) {
-                this.bindTexture(
-                    new ResourceLocation("thaummach", "textures/misc/tunnel.png")
-                );
+                this.bindTexture(new ResourceLocation("thaummach", "textures/misc/tunnel.png"));
                 f7 = 0.1F;
                 f5 = 65.0F;
                 f6 = 0.125F;
@@ -485,9 +478,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
             GL11.glTranslatef(-pz, -py, -px);
             GL11.glTranslatef(
-                ActiveRenderInfo.objectZ * f5 / f9,
-                ActiveRenderInfo.objectY * f5 / f9,
-                -px
+                ActiveRenderInfo.objectZ * f5 / f9, ActiveRenderInfo.objectY * f5 / f9, -px
             );
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
@@ -533,9 +524,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             float f6 = 0.0625F;
             float f7 = 1.0F / (f5 + 1.0F);
             if (i == 0) {
-                this.bindTexture(
-                    new ResourceLocation("thaummach", "textures/misc/tunnel.png")
-                );
+                this.bindTexture(new ResourceLocation("thaummach", "textures/misc/tunnel.png"));
                 f7 = 0.1F;
                 f5 = 65.0F;
                 f6 = 0.125F;
@@ -583,9 +572,7 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
             GL11.glTranslatef(-0.5F, -0.5F, 0.0F);
             GL11.glTranslatef(-pz, -py, -px);
             GL11.glTranslatef(
-                ActiveRenderInfo.objectZ * f5 / f9,
-                ActiveRenderInfo.objectY * f5 / f9,
-                -px
+                ActiveRenderInfo.objectZ * f5 / f9, ActiveRenderInfo.objectY * f5 / f9, -px
             );
             Tessellator tessellator = Tessellator.instance;
             tessellator.startDrawingQuads();
@@ -619,9 +606,72 @@ public class TileVoidChestRenderer extends TileEntitySpecialRenderer {
 
     @Override
     public void renderTileEntityAt(TileEntity te, double x, double y, double z, float f) {
-        this.drawPlaneZNeg(x, y, z, f);
-        this.drawPlaneZPos(x, y, z, f);
-        this.drawPlaneXNeg(x, y, z, f);
-        this.drawPlaneXPos(x, y, z, f);
+        if (te instanceof TileVoidChest) {
+            this.drawPlaneZNeg(x, y, z, f);
+            this.drawPlaneZPos(x, y, z, f);
+            this.drawPlaneXNeg(x, y, z, f);
+            this.drawPlaneXPos(x, y, z, f);
+        } else if (te instanceof TileVoidCube || te instanceof TileVoidLock) {
+            this.drawPlaneYNeg(x, y, z, f);
+            this.drawPlaneYPos(x, y, z, f);
+            this.drawPlaneZNeg(x, y, z, f);
+            this.drawPlaneZPos(x, y, z, f);
+            this.drawPlaneXNeg(x, y, z, f);
+            this.drawPlaneXPos(x, y, z, f);
+        } else if (te instanceof TileMonolith) {
+            BlockHidden block = (BlockHidden) TMBlocks.hidden;
+            int b = Minecraft.getMinecraft().thePlayer.ticksExisted;
+            float bob = MathHelper.sin((float) b / 10.0F) * 0.1F + 0.1F;
+            GL11.glPushMatrix();
+            GL11.glTranslatef((float) x, (float) (y + bob), (float) z);
+            RenderBlocks rb = RenderBlocks.getInstance();
+            rb.setRenderBounds(0, 0, 0, 1, 1, 1);
+            this.bindTexture(TextureMap.locationBlocksTexture);
+            if (!(te.getWorldObj().getTileEntity(te.xCoord, te.yCoord + 1, te.zCoord)
+                      instanceof TileMonolith)) {
+                Tessellator.instance.startDrawingQuads();
+                rb.renderFaceYPos(block, 0, 0, 0, block.iconMonolithEnd);
+                rb.renderFaceXPos(block, 0, 0, 0, block.iconMonolithTop);
+                rb.renderFaceXNeg(block, 0, 0, 0, block.iconMonolithTop);
+                rb.renderFaceZPos(block, 0, 0, 0, block.iconMonolithTop);
+                rb.renderFaceZNeg(block, 0, 0, 0, block.iconMonolithTop);
+                Tessellator.instance.draw();
+                this.drawPlaneYPos(0, 0, 0, f);
+                this.drawPlaneXPos(0, 0, 0, f);
+                this.drawPlaneXNeg(0, 0, 0, f);
+                this.drawPlaneZPos(0, 0, 0, f);
+                this.drawPlaneZNeg(0, 0, 0, f);
+            } else if (!(te.getWorldObj().getTileEntity(te.xCoord, te.yCoord - 1, te.zCoord)
+                             instanceof TileMonolith)) {
+                Tessellator.instance.startDrawingQuads();
+                rb.renderFaceYNeg(block, 0, 0, 0, block.iconMonolithEnd);
+                rb.renderFaceXPos(block, 0, 0, 0, block.iconMonolithBottom);
+                rb.renderFaceXNeg(block, 0, 0, 0, block.iconMonolithBottom);
+                rb.renderFaceZPos(block, 0, 0, 0, block.iconMonolithBottom);
+                rb.renderFaceZNeg(block, 0, 0, 0, block.iconMonolithBottom);
+                Tessellator.instance.draw();
+                this.drawPlaneYNeg(0, 0, 0, f);
+                this.drawPlaneXPos(0, 0, 0, f);
+                this.drawPlaneXNeg(0, 0, 0, f);
+                this.drawPlaneZPos(0, 0, 0, f);
+                this.drawPlaneZNeg(0, 0, 0, f);
+            } else {
+                Tessellator.instance.startDrawingQuads();
+                rb.renderFaceXPos(block, 0, 0, 0, block.iconMonolithMiddle);
+                rb.renderFaceXNeg(block, 0, 0, 0, block.iconMonolithMiddle);
+                rb.renderFaceZPos(block, 0, 0, 0, block.iconMonolithMiddle);
+                rb.renderFaceZNeg(block, 0, 0, 0, block.iconMonolithMiddle);
+                Tessellator.instance.draw();
+                this.drawPlaneXPos(0, 0, 0, f);
+                this.drawPlaneXNeg(0, 0, 0, f);
+                this.drawPlaneZPos(0, 0, 0, f);
+                this.drawPlaneZNeg(0, 0, 0, f);
+            }
+            GL11.glPopMatrix();
+        } else {
+            throw AlecUnexpectedRuntimeErrorExceptionFactory.PLAIN.createAlecException(
+                "Invalid TileEntity!"
+            );
+        }
     }
 }

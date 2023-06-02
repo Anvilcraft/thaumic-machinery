@@ -75,6 +75,24 @@
             }
         ]
     },
+    "monolith": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "monolith",
+                "stream": false
+            }
+        ]
+    },
+    "rumble": {
+        "category": "block",
+        "sounds": [
+            {
+                "name": "rumble",
+                "stream": false
+            }
+        ]
+    },
     "upgrade": {
         "category": "master",
         "sounds": [

@@ -123,7 +123,7 @@ public class BlockApparatusMetal extends BlockApparatus {
         this.iconSoulCrucibleTopInv = reg.registerIcon("thaummach:soul_crucible_top_inv");
         this.iconTankBottom = reg.registerIcon("thaummach:reinforced_tank_bottom");
         this.iconTankSide = reg.registerIcon("thaummach:reinforced_tank_side");
-        this.iconVoidChestBottom = reg.registerIcon("thaummach:void_chest_bottom");
+        this.iconVoidChestBottom = reg.registerIcon("thaummach:eldritch_stone");
         this.iconVoidChestSide = reg.registerIcon("thaummach:void_chest_side");
         this.iconVoidChestSideTransparent
             = reg.registerIcon("thaummach:void_chest_side_transparent");

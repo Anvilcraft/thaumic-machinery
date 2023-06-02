@@ -26,44 +26,24 @@ public class TMItems {
     public static Item voidBracelet;
 
     public static void init() {
-        crystallineBell = new ItemCrystallineBell();
+        GameRegistry.registerItem(crystallineBell = new ItemCrystallineBell(), "crystalline_bell");
 
-        detector = new ItemDetector();
+        GameRegistry.registerItem(detector = new ItemDetector(), "detector");
 
-        focus0 = new ItemFocus(0);
-        focus1 = new ItemFocus(1);
-        focus2 = new ItemFocus(2);
-        focus3 = new ItemFocus(3);
-        focus4 = new ItemFocus(4);
+        GameRegistry.registerItem(focus0 = new ItemFocus(0), "focus0");
+        GameRegistry.registerItem(focus1 = new ItemFocus(1), "focus1");
+        GameRegistry.registerItem(focus2 = new ItemFocus(2), "focus2");
+        GameRegistry.registerItem(focus3 = new ItemFocus(3), "focus3");
+        GameRegistry.registerItem(focus4 = new ItemFocus(4), "focus4");
 
-        runicEssence = new ItemRunicEssence();
+        GameRegistry.registerItem(runicEssence = new ItemRunicEssence(), "runic_essence");
 
-        singularity = new ItemSingularity();
+        GameRegistry.registerItem(singularity = new ItemSingularity(), "singularity");
 
-        soulFragment = new ItemSoulFragment();
+        GameRegistry.registerItem(soulFragment = new ItemSoulFragment(), "soul_fragment");
 
-        upgrade = new ItemUpgrade();
+        GameRegistry.registerItem(upgrade = new ItemUpgrade(), "upgrade");
 
-        voidBracelet = new ItemVoidBracelet();
-
-        GameRegistry.registerItem(crystallineBell, "crystalline_bell");
-
-        GameRegistry.registerItem(detector, "detector");
-
-        GameRegistry.registerItem(focus0, "focus0");
-        GameRegistry.registerItem(focus1, "focus1");
-        GameRegistry.registerItem(focus2, "focus2");
-        GameRegistry.registerItem(focus3, "focus3");
-        GameRegistry.registerItem(focus4, "focus4");
-
-        GameRegistry.registerItem(runicEssence, "runic_essence");
-
-        GameRegistry.registerItem(singularity, "singularity");
-
-        GameRegistry.registerItem(soulFragment, "soul_fragment");
-
-        GameRegistry.registerItem(upgrade, "upgrade");
-
-        GameRegistry.registerItem(voidBracelet, "voidBracelet");
+        GameRegistry.registerItem(voidBracelet = new ItemVoidBracelet(), "voidBracelet");
     }
 }

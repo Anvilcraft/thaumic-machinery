@@ -2,11 +2,11 @@ package net.anvilcraft.thaummach.utils;
 
 import dev.tilera.auracore.client.FXSparkle;
 import net.anvilcraft.thaummach.TMItems;
+import net.anvilcraft.thaummach.particles.FXWisp;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.world.World;
-import thaumcraft.client.fx.particles.FXWisp;
 
 public class UtilsFX {
     public static void poof(World worldObj, float x, float y, float z) {
@@ -44,6 +44,38 @@ public class UtilsFX {
             );
             ef.tinkle = false;
             ef.shrink = true;
+            Minecraft.getMinecraft().effectRenderer.addEffect(ef);
+        }
+    }
+
+    public static void poofBad(World w, float x, float y, float z) {
+        poofBad(w, x, y, z, false);
+    }
+
+    public static void poofBad(World w, float x, float y, float z, boolean sound) {
+        int puffs = 10;
+
+        if (sound) {
+            w.playSoundEffect(
+                (double) (x + 0.5F),
+                (double) (y + 0.5F),
+                (double) (z + 0.5F),
+                "thaummach:roots",
+                0.05F,
+                1.1F + w.rand.nextFloat() * 0.2F
+            );
+        }
+
+        for (int a = 0; a < puffs; ++a) {
+            FXWisp ef = new FXWisp(
+                w,
+                (double) (x + 0.5F + w.rand.nextFloat() - w.rand.nextFloat()),
+                (double) (y + 0.5F + w.rand.nextFloat() - w.rand.nextFloat()),
+                (double) (z + 0.5F + w.rand.nextFloat() - w.rand.nextFloat()),
+                0.3F,
+                5
+            );
+            ef.tinkle = false;
             Minecraft.getMinecraft().effectRenderer.addEffect(ef);
         }
     }
@@ -117,32 +149,16 @@ public class UtilsFX {
         tes.setBrightness(brightness);
         tes.setNormal(0.0F, 0.0F, -1.0F);
         tes.addVertexWithUV(
-            0.0D,
-            1.0D,
-            (double) (0.0F - p_78439_7_),
-            (double) p_78439_1_,
-            (double) p_78439_2_
+            0.0D, 1.0D, (double) (0.0F - p_78439_7_), (double) p_78439_1_, (double) p_78439_2_
         );
         tes.addVertexWithUV(
-            1.0D,
-            1.0D,
-            (double) (0.0F - p_78439_7_),
-            (double) p_78439_3_,
-            (double) p_78439_2_
+            1.0D, 1.0D, (double) (0.0F - p_78439_7_), (double) p_78439_3_, (double) p_78439_2_
         );
         tes.addVertexWithUV(
-            1.0D,
-            0.0D,
-            (double) (0.0F - p_78439_7_),
-            (double) p_78439_3_,
-            (double) p_78439_4_
+            1.0D, 0.0D, (double) (0.0F - p_78439_7_), (double) p_78439_3_, (double) p_78439_4_
         );
         tes.addVertexWithUV(
-            0.0D,
-            0.0D,
-            (double) (0.0F - p_78439_7_),
-            (double) p_78439_1_,
-            (double) p_78439_4_
+            0.0D, 0.0D, (double) (0.0F - p_78439_7_), (double) p_78439_1_, (double) p_78439_4_
         );
         tes.draw();
         float f5 = 0.5F * (p_78439_1_ - p_78439_3_) / (float) p_78439_5_;
@@ -158,24 +174,12 @@ public class UtilsFX {
             f7 = (float) k / (float) p_78439_5_;
             f8 = p_78439_1_ + (p_78439_3_ - p_78439_1_) * f7 - f5;
             tes.addVertexWithUV(
-                (double) f7,
-                0.0D,
-                (double) (0.0F - p_78439_7_),
-                (double) f8,
-                (double) p_78439_4_
+                (double) f7, 0.0D, (double) (0.0F - p_78439_7_), (double) f8, (double) p_78439_4_
             );
+            tes.addVertexWithUV((double) f7, 0.0D, 0.0D, (double) f8, (double) p_78439_4_);
+            tes.addVertexWithUV((double) f7, 1.0D, 0.0D, (double) f8, (double) p_78439_2_);
             tes.addVertexWithUV(
-                (double) f7, 0.0D, 0.0D, (double) f8, (double) p_78439_4_
-            );
-            tes.addVertexWithUV(
-                (double) f7, 1.0D, 0.0D, (double) f8, (double) p_78439_2_
-            );
-            tes.addVertexWithUV(
-                (double) f7,
-                1.0D,
-                (double) (0.0F - p_78439_7_),
-                (double) f8,
-                (double) p_78439_2_
+                (double) f7, 1.0D, (double) (0.0F - p_78439_7_), (double) f8, (double) p_78439_2_
             );
         }
 
@@ -190,24 +194,12 @@ public class UtilsFX {
             f8 = p_78439_1_ + (p_78439_3_ - p_78439_1_) * f7 - f5;
             f9 = f7 + 1.0F / (float) p_78439_5_;
             tes.addVertexWithUV(
-                (double) f9,
-                1.0D,
-                (double) (0.0F - p_78439_7_),
-                (double) f8,
-                (double) p_78439_2_
+                (double) f9, 1.0D, (double) (0.0F - p_78439_7_), (double) f8, (double) p_78439_2_
             );
+            tes.addVertexWithUV((double) f9, 1.0D, 0.0D, (double) f8, (double) p_78439_2_);
+            tes.addVertexWithUV((double) f9, 0.0D, 0.0D, (double) f8, (double) p_78439_4_);
             tes.addVertexWithUV(
-                (double) f9, 1.0D, 0.0D, (double) f8, (double) p_78439_2_
-            );
-            tes.addVertexWithUV(
-                (double) f9, 0.0D, 0.0D, (double) f8, (double) p_78439_4_
-            );
-            tes.addVertexWithUV(
-                (double) f9,
-                0.0D,
-                (double) (0.0F - p_78439_7_),
-                (double) f8,
-                (double) p_78439_4_
+                (double) f9, 0.0D, (double) (0.0F - p_78439_7_), (double) f8, (double) p_78439_4_
             );
         }
 
@@ -220,25 +212,13 @@ public class UtilsFX {
             f7 = (float) k / (float) p_78439_6_;
             f8 = p_78439_4_ + (p_78439_2_ - p_78439_4_) * f7 - f6;
             f9 = f7 + 1.0F / (float) p_78439_6_;
+            tes.addVertexWithUV(0.0D, (double) f9, 0.0D, (double) p_78439_1_, (double) f8);
+            tes.addVertexWithUV(1.0D, (double) f9, 0.0D, (double) p_78439_3_, (double) f8);
             tes.addVertexWithUV(
-                0.0D, (double) f9, 0.0D, (double) p_78439_1_, (double) f8
+                1.0D, (double) f9, (double) (0.0F - p_78439_7_), (double) p_78439_3_, (double) f8
             );
             tes.addVertexWithUV(
-                1.0D, (double) f9, 0.0D, (double) p_78439_3_, (double) f8
-            );
-            tes.addVertexWithUV(
-                1.0D,
-                (double) f9,
-                (double) (0.0F - p_78439_7_),
-                (double) p_78439_3_,
-                (double) f8
-            );
-            tes.addVertexWithUV(
-                0.0D,
-                (double) f9,
-                (double) (0.0F - p_78439_7_),
-                (double) p_78439_1_,
-                (double) f8
+                0.0D, (double) f9, (double) (0.0F - p_78439_7_), (double) p_78439_1_, (double) f8
             );
         }
 
@@ -250,25 +230,13 @@ public class UtilsFX {
         for (k = 0; k < p_78439_6_; ++k) {
             f7 = (float) k / (float) p_78439_6_;
             f8 = p_78439_4_ + (p_78439_2_ - p_78439_4_) * f7 - f6;
+            tes.addVertexWithUV(1.0D, (double) f7, 0.0D, (double) p_78439_3_, (double) f8);
+            tes.addVertexWithUV(0.0D, (double) f7, 0.0D, (double) p_78439_1_, (double) f8);
             tes.addVertexWithUV(
-                1.0D, (double) f7, 0.0D, (double) p_78439_3_, (double) f8
+                0.0D, (double) f7, (double) (0.0F - p_78439_7_), (double) p_78439_1_, (double) f8
             );
             tes.addVertexWithUV(
-                0.0D, (double) f7, 0.0D, (double) p_78439_1_, (double) f8
-            );
-            tes.addVertexWithUV(
-                0.0D,
-                (double) f7,
-                (double) (0.0F - p_78439_7_),
-                (double) p_78439_1_,
-                (double) f8
-            );
-            tes.addVertexWithUV(
-                1.0D,
-                (double) f7,
-                (double) (0.0F - p_78439_7_),
-                (double) p_78439_3_,
-                (double) f8
+                1.0D, (double) f7, (double) (0.0F - p_78439_7_), (double) p_78439_3_, (double) f8
             );
         }
 
@@ -278,13 +246,10 @@ public class UtilsFX {
     /**
      * Draws an upgrade into the GuiContainer.
      */
-    public static void
-    renderUpgradeIntoGUI(Gui gui, int upgrade, int x, int y) {
+    public static void renderUpgradeIntoGUI(Gui gui, int upgrade, int x, int y) {
         if (upgrade < 0)
             return;
 
-        gui.drawTexturedModelRectFromIcon(
-            x, y, TMItems.upgrade.getIconFromDamage(upgrade), 16, 16
-        );
+        gui.drawTexturedModelRectFromIcon(x, y, TMItems.upgrade.getIconFromDamage(upgrade), 16, 16);
     }
 }
